@@ -101,6 +101,25 @@
     background:#fffdfa;
   }
 
+  /* 直接リンクするバー（開閉なし） */
+  .linkbar{
+    display:flex;align-items:center;gap:11px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:15px;
+    padding:16px 17px;
+    margin-bottom:12px;
+    font-size:16.5px;font-weight:700;
+    text-decoration:none;color:inherit;
+    box-shadow:0 2px 10px rgba(120,90,40,.05);
+    transition:background .15s ease, transform .12s ease;
+  }
+  .linkbar:active{transform:scale(.99);background:var(--soft);}
+  @media(hover:hover){.linkbar:hover{background:var(--soft);}}
+  .linkbar .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex:none;}
+  .linkbar .stitle{flex:1;min-width:0;}
+  .linkbar .go{flex:none;color:var(--accent);font-size:18px;}
+
   /* ===== 教材カード ===== */
   .card{
     display:flex;
@@ -277,21 +296,12 @@
     </div>
   </details>
 
-  <!-- そのほかの教材 -->
-  <details class="acc">
-    <summary>
-      <span class="dot"></span>
-      <span class="stitle">そのほかの教材</span>
-      <span class="count">1件</span>
-      <span class="chev">▶</span>
-    </summary>
-    <div class="acc-body">
-      <a class="btn" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
-        プロンプトテンプレート
-        <span class="s">使えるプロンプトの型を見る</span>
-      </a>
-    </div>
-  </details>
+  <!-- プロンプトテンプレート（直接リンク） -->
+  <a class="linkbar" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
+    <span class="dot"></span>
+    <span class="stitle">プロンプトテンプレート（指示文の雛形）</span>
+    <span class="go">↗</span>
+  </a>
 
   <footer>
     © TERACO.LABO<br>
