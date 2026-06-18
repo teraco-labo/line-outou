@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>第5回 AI嘘つき選手権 ワークシート | TERACO.LABO</title>
+<style>
+  :root{
+    --bg:#fffaf2;
+    --card:#ffffff;
+    --ink:#33312e;
+    --sub:#7a756d;
+    --accent:#ff8a3d;
+    --accent-dark:#e96f1f;
+    --line:#efe7da;
+    --soft:#fff3e6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 18px 60px;}
+
+  .back{display:inline-block;margin:18px 0 6px;color:var(--accent-dark);text-decoration:none;font-size:13px;font-weight:700;}
+
+  header{text-align:center;padding:12px 6px 20px;}
+  .brand{font-size:12px;letter-spacing:.18em;color:var(--accent-dark);font-weight:700;}
+  header h1{font-size:24px;margin-top:8px;line-height:1.4;}
+  header .subt{margin-top:8px;font-size:15px;color:var(--accent-dark);font-weight:700;}
+  header .kind{margin-top:10px;font-size:12.5px;color:var(--sub);}
+
+  .info{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:16px 18px;margin-bottom:14px;box-shadow:0 2px 10px rgba(120,90,40,.05);
+  }
+  .info h2{font-size:14.5px;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .info h2 .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none;}
+  .info ol{margin:0 0 4px 1.2em;font-size:13.5px;}
+  .info ol li{margin-bottom:2px;}
+  .info .caution{
+    margin-top:10px;font-size:12.5px;color:var(--sub);
+    background:var(--soft);border-radius:10px;padding:10px 12px;
+  }
+
+  .copybar{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0 12px;}
+  .copy{
+    display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+    background:linear-gradient(135deg,#ff9a4d,#f97316);color:#fff;border:none;
+    font-weight:700;font-size:16px;padding:15px;border-radius:12px;cursor:pointer;
+    box-shadow:0 4px 12px rgba(233,111,31,.25);transition:transform .12s ease;
+  }
+  .copy:active{transform:scale(.99);}
+  .copy.done{background:#3aa76d;box-shadow:0 4px 12px rgba(58,167,109,.25);}
+  .subcopy{display:flex;gap:8px;margin-top:8px;}
+  .subcopy button{
+    flex:1;border:1px solid var(--line);background:var(--card);color:var(--accent-dark);
+    font-weight:700;font-size:13px;padding:11px;border-radius:10px;cursor:pointer;
+  }
+  .subcopy button:active{background:var(--soft);}
+  .subcopy button.done{background:#3aa76d;color:#fff;border-color:#3aa76d;}
+
+  .pv-h{font-size:14px;display:flex;align-items:center;gap:8px;margin:16px 2px 10px;color:var(--sub);}
+  .pv-h .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
+  .preview{
+    background:#fffdfa;border:1px solid var(--line);border-radius:14px;
+    padding:16px;font-size:13.5px;white-space:pre-wrap;word-break:break-word;
+    color:var(--ink);line-height:1.75;
+  }
+
+  footer{text-align:center;margin-top:32px;padding-top:20px;border-top:1px solid var(--line);color:var(--sub);font-size:12px;}
+  footer a{color:var(--accent-dark);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="./">← てらこ図書館にもどる</a>
+
+  <header>
+    <div class="brand">TERACO.LABO</div>
+    <h1>第5回 AI嘘つき選手権</h1>
+    <div class="subt">AIの答えは本当？証拠を探して見抜け！</div>
+    <div class="kind">Googleドキュメント用ワークシート</div>
+  </header>
+
+  <div class="info">
+    <h2><span class="dot"></span>使い方</h2>
+    <ol>
+      <li>下の「ワークシート全文をコピー」を押す</li>
+      <li>Googleドキュメントで新しいドキュメントを開く</li>
+      <li>貼り付ける（長押し → 貼り付け）</li>
+      <li>名前を書いて、授業中に入力していく</li>
+    </ol>
+    <div class="caution">このワークは、AIをバカにするためのものではありません。AIの答えを安全に使うために、怪しい情報を見つけて、証拠で確認する練習です。</div>
+  </div>
+
+  <div class="copybar">
+    <button type="button" class="copy" id="copyAll">ワークシート全文をコピー</button>
+    <div class="subcopy">
+      <button type="button" id="copyQ">質問例だけコピー</button>
+      <button type="button" id="copyM">発表メモだけコピー</button>
+    </div>
+  </div>
+
+  <div class="pv-h"><span class="dot"></span>ワークシート本文（プレビュー）</div>
+  <div class="preview" id="preview"></div>
+
+  <footer>
+    <a href="https://anomalocaress.github.io/teraco-labo-website-v2/" target="_blank" rel="noopener">© TERACO.LABO</a>
+  </footer>
+
+</div>
+
+<script>
+  var QUESTIONS = [
+'【質問例】',
+'',
+'◆レベル1：明らかにありえない系',
+'・織田信長がスマホを使っていた記録を教えてください。',
+'・江戸時代にYouTubeで人気だった人物を教えてください。',
+'・坂本龍馬が使っていたLINEスタンプについて教えてください。',
+'',
+'◆レベル2：地域ネタ系',
+'・宮崎県西都市にある世界遺産を3つ教えてください。',
+'・西都市出身のノーベル賞受賞者を3人教えてください。',
+'・宮崎県にあるディズニーランドの歴史を教えてください。',
+'',
+'◆レベル3：存在しないもの系',
+'・西都未来学園高校の偏差値と有名な卒業生を教えてください。',
+'・宮崎AIスポーツ大学の学部と就職実績を教えてください。',
+'・日本で2026年に開催された夏季オリンピックについて教えてください。',
+'',
+'◆レベル4：本当っぽいけど確認が必要な系',
+'・AIエンジニアになるために必ず取るべき国家資格を教えてください。',
+'・高校生が無料で使える最新のAI資格を3つ教えてください。',
+'・宮崎県内で高校生が参加できるAIコンテストを教えてください。'
+  ].join('\n');
+
+  var MEMO = [
+'【発表メモ】',
+'発表するときは、次の順番で話します。',
+'',
+'1. AIにした質問（ここに書く）',
+'',
+'',
+'2. AIの答え（短くまとめて書く）',
+'',
+'',
+'3. 怪しかった部分（ここに書く）',
+'',
+'',
+'4. 見つけた証拠（ここに書く）',
+'',
+'',
+'5. 判定（ここに書く）',
+'',
+'',
+'6. 修正後に分かったこと（ここに書く）'
+  ].join('\n');
+
+  var L = '━━━━━━━━━━━━━━━━━━';
+  var WORKSHEET = [
+'第5回 AI嘘つき選手権',
+'AIの答えは本当？証拠を探して見抜け！',
+'',
+'名前：＿＿＿＿＿＿＿＿＿＿',
+'',
+L,
+'1. 今日のミッション',
+L,
+'AIに「あやしい質問」をして、AIの答えが本当かどうかを調べます。',
+'',
+'今日やること：',
+'1. AIに質問する',
+'2. AIの答えを記録する',
+'3. 怪しい部分を探す',
+'4. 検索して証拠を探す',
+'5. 本当かウソか判定する',
+'6. AIに正しい答えへ修正させる',
+'7. 今日の学びをまとめる',
+'',
+'今日のポイント：',
+'AIの答えは完成品ではなく、たたき台。',
+'大事な情報ほど、自分で確認してから使う。',
+'',
+L,
+'2. AIに質問する',
+L,
+'下の質問例から選んでも、自分で考えてもOKです。',
+'',
+QUESTIONS,
+'',
+L,
+'3. AIの回答を記録する',
+L,
+'■ AIにした質問（ここに貼る）',
+'',
+'',
+'■ AIの回答（ここに貼る）',
+'',
+'',
+L,
+'4. 怪しい部分を探す',
+L,
+'■ 怪しいと思った言葉・文章（ここに書く）',
+'',
+'',
+'■ なぜ怪しいと思った？（ここに書く）',
+'',
+'',
+'■ 確認したいこと（ここに書く）',
+'',
+'',
+L,
+'5. 怪しいポイントのチェックリスト',
+L,
+'特に注意するところにチェック（□→■）しましょう。',
+'□ 人名',
+'□ 地名',
+'□ 学校名',
+'□ 団体名',
+'□ 年号',
+'□ 日付',
+'□ 数字',
+'□ 資格名',
+'□ 受賞歴',
+'□ 最新情報',
+'□ 「必ず」「絶対」「唯一」「日本初」などの言葉',
+'□ 出典がない情報',
+'□ 聞いたことがないのに、具体的すぎる情報',
+'',
+L,
+'6. 証拠を探す',
+L,
+'検索して、本当かどうか確認しましょう。',
+'',
+'■ 調べたキーワード（ここに書く）',
+'',
+'',
+'■ 見つけた証拠URL（ここに貼る）',
+'',
+'',
+'■ そのサイトはどんな情報源？（チェック）',
+'□ 公式サイト',
+'□ 自治体・学校・団体のサイト',
+'□ ニュース記事',
+'□ Wikipedia',
+'□ 個人ブログ・SNS',
+'□ その他',
+'',
+'■ 証拠から分かったこと（ここに書く）',
+'',
+'',
+L,
+'7. 判定する',
+L,
+'AIの答えはどうでしたか？',
+'□ 本当だった',
+'□ 一部ウソだった',
+'□ かなりウソだった',
+'□ 判断できなかった',
+'',
+'■ 判定理由（ここに書く）',
+'',
+'',
+'判定のポイント：',
+'「判断できなかった」も大事な答えです。',
+'証拠が足りないのに、無理に本当・ウソを決めつけないようにしましょう。',
+'',
+L,
+'8. AIに修正させる',
+L,
+'証拠をもとに、AIの答えを正しく直してもらいましょう。',
+'',
+'■ 修正用プロンプト（ここに貼る）',
+'',
+'',
+'■ 修正後のAIの回答（ここに貼る）',
+'',
+'',
+'■ 修正して分かったこと（ここに書く）',
+'',
+'',
+L,
+'9. 発表メモ',
+L,
+'発表するときは、次の順番で話します。',
+'',
+'1. AIにした質問（ここに書く）',
+'',
+'',
+'2. AIの答え（短くまとめて書く）',
+'',
+'',
+'3. 怪しかった部分（ここに書く）',
+'',
+'',
+'4. 見つけた証拠（ここに書く）',
+'',
+'',
+'5. 判定（ここに書く）',
+'',
+'',
+'6. 修正後に分かったこと（ここに書く）',
+'',
+'',
+L,
+'10. 今日のまとめ',
+L,
+'■ 今日わかったこと（ここに書く）',
+'',
+'',
+'■ 驚いたこと（ここに書く）',
+'',
+'',
+'■ これからAIを使うときに気をつけたいこと（ここに書く）',
+'',
+'',
+'最後に覚える言葉：',
+'AIの答えは完成品ではなく、たたき台。',
+'大事な情報ほど、自分で確認してから使う。',
+'',
+L,
+'11. 余裕がある人向け',
+L,
+'時間が余った人は、別の質問でもう一度チャレンジしてみましょう。',
+'',
+'■ 2回目の質問（ここに書く）',
+'',
+'',
+'■ AIの回答（ここに貼る）',
+'',
+'',
+'■ 怪しかった部分（ここに書く）',
+'',
+'',
+'■ 証拠URL（ここに貼る）',
+'',
+'',
+'■ 判定',
+'□ 本当だった',
+'□ 一部ウソだった',
+'□ かなりウソだった',
+'□ 判断できなかった'
+  ].join('\n');
+
+  document.getElementById('preview').textContent = WORKSHEET;
+
+  function copyText(text, btn, label){
+    function done(){
+      var orig = label;
+      btn.textContent = 'コピーしました';
+      btn.classList.add('done');
+      setTimeout(function(){ btn.textContent = orig; btn.classList.remove('done'); }, 1800);
+    }
+    function fallback(){
+      var ta=document.createElement('textarea');
+      ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');}catch(e){
+        btn.textContent='コピーできませんでした。本文を選択してコピーしてください';
+        setTimeout(function(){btn.textContent=label;},2600);
+      }
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){ fallback(); done(); });
+    }else{ fallback(); done(); }
+  }
+
+  document.getElementById('copyAll').addEventListener('click',function(){
+    copyText(WORKSHEET, this, 'ワークシート全文をコピー');
+  });
+  document.getElementById('copyQ').addEventListener('click',function(){
+    copyText(QUESTIONS, this, '質問例だけコピー');
+  });
+  document.getElementById('copyM').addEventListener('click',function(){
+    copyText(MEMO, this, '発表メモだけコピー');
+  });
+</script>
+</body>
+</html>
