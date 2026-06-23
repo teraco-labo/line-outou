@@ -55,6 +55,25 @@
     margin:0 0 14px;
   }
 
+  /* ===== 講座グループ（AIクリエイティブ・ラボ） ===== */
+  .group{
+    background:linear-gradient(180deg,#fff6ea,#fffaf3);
+    border:1px solid #f3e3cd;
+    border-radius:20px;
+    padding:15px 12px 4px;
+    margin-bottom:14px;
+  }
+  .group-head{padding:6px 6px 13px;}
+  .group-name{
+    font-size:13.5px;font-weight:800;letter-spacing:.04em;
+    color:var(--accent-dark);display:flex;align-items:center;gap:9px;
+  }
+  .group-name::before{
+    content:"";width:18px;height:3px;border-radius:2px;
+    background:var(--accent);display:inline-block;flex:none;
+  }
+  .group-sub{font-size:12px;color:var(--sub);margin-top:5px;padding-left:27px;}
+
   /* ===== アコーディオン ===== */
   .acc{margin-bottom:12px;}
   .acc>summary{
@@ -202,6 +221,13 @@
 
   <p class="hint">▸ 講座名をタップすると教材が開きます</p>
 
+  <!-- ===== AIクリエイティブ・ラボ（AI講座グループ） ===== -->
+  <section class="group">
+    <div class="group-head">
+      <div class="group-name">AIクリエイティブ・ラボ</div>
+      <div class="group-sub">生成AIで「考える・伝える・つくる」力を身につける</div>
+    </div>
+
   <!-- 小学生 -->
   <details class="acc">
     <summary>
@@ -309,6 +335,8 @@
       </a>
     </div>
   </details>
+  </section>
+  <!-- ===== /AIクリエイティブ・ラボ ===== -->
 
   <!-- プロンプトテンプレート（直接リンク） -->
   <a class="linkbar" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
