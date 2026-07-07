@@ -183,6 +183,30 @@
     padding:14px 8px 16px;
   }
 
+  /* 準備中のみのセクション（控えめな予告） */
+  .teaser{
+    display:flex;align-items:center;gap:10px;
+    background:#faf6ef;border:1px dashed #e3dccf;
+    border-radius:15px;padding:14px 17px;margin-bottom:12px;
+    color:var(--sub);font-size:13.5px;
+  }
+  .teaser .dot{width:8px;height:8px;border-radius:50%;background:#d8cdbb;flex:none;}
+  .teaser .stitle{flex:1;font-weight:700;}
+  .teaser .badge{flex:none;}
+
+  /* 年代内のツール案内 */
+  .tool-note{
+    display:flex;align-items:center;gap:10px;
+    background:var(--soft);border:1px solid #f4e2cd;
+    border-radius:12px;padding:11px 14px;margin:2px 0 10px;
+    text-decoration:none;color:var(--ink);font-size:13px;font-weight:700;
+  }
+  .tool-note:active{background:#ffe9d2;}
+  .tool-note .arrow{margin-left:auto;color:var(--accent);}
+
+  /* ツールセクション見出し（講座グループと同格） */
+  .tools-head{padding:6px 6px 13px;}
+
   /* ===== リンクボタン ===== */
   .btn{
     display:flex;align-items:center;justify-content:center;gap:8px;
@@ -264,6 +288,9 @@
       <div class="card soon"><div class="num">④</div><div class="card-body"><div class="t">動画生成AIでショート動画を試そう</div><div class="s">主役・動き・背景・カメラ・長さを言葉にしよう</div></div><div class="badge">近日公開</div></div>
       <div class="card soon"><div class="num">⑤</div><div class="card-body"><div class="t">AIでミニゲームを作ろう</div><div class="s">ルール・ボタン・得点を決めてミニゲームをつくろう</div></div><div class="badge">近日公開</div></div>
       <div class="card soon"><div class="num">⑥</div><div class="card-body"><div class="t">AIで人の役に立つアプリを作ろう</div><div class="s">身近な困りごとを解決するお助けアプリをつくろう</div></div><div class="badge">近日公開</div></div>
+      <a class="tool-note" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
+        <span>🔧 中学生向けプロンプトテンプレートもあるよ</span><span class="arrow">→</span>
+      </a>
     </div>
   </details>
 
@@ -293,27 +320,18 @@
         <div class="num">⑥</div><div class="card-body"><div class="t">未来の仕事とAI</div><div class="s">使う側から創る側へ。AIで困りごとを解決する企画を考えよう</div></div><div class="arrow">→</div>
       </a>
       <div class="card soon"><div class="num">⑦</div><div class="card-body"><div class="t">準備中</div></div><div class="badge">近日公開</div></div>
+      <a class="tool-note" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
+        <span>🔧 高校生向けプロンプトテンプレートもあるよ</span><span class="arrow">→</span>
+      </a>
     </div>
   </details>
 
-  <!-- 社会人 -->
-  <details class="acc">
-    <summary>
-      <span class="dot"></span>
-      <span class="stitle">社会人のための「仕事に活かす」AI講座</span>
-      <span class="count">全7回</span>
-      <span class="chev">▶</span>
-    </summary>
-    <div class="acc-body">
-      <div class="card soon"><div class="num">①</div><div class="card-body"><div class="t">準備中</div></div><div class="badge">近日公開</div></div>
-      <div class="card soon"><div class="num">②</div><div class="card-body"><div class="t">準備中</div></div><div class="badge">近日公開</div></div>
-      <div class="card soon"><div class="num">③</div><div class="card-body"><div class="t">準備中</div></div><div class="badge">近日公開</div></div>
-      <div class="card soon"><div class="num">④</div><div class="card-body"><div class="t">準備中</div></div><div class="badge">近日公開</div></div>
-      <div class="card soon"><div class="num">⑤</div><div class="card-body"><div class="t">準備中</div></div><div class="badge">近日公開</div></div>
-      <div class="card soon"><div class="num">⑥</div><div class="card-body"><div class="t">準備中</div></div><div class="badge">近日公開</div></div>
-      <div class="card soon"><div class="num">⑦</div><div class="card-body"><div class="t">準備中</div></div><div class="badge">近日公開</div></div>
-    </div>
-  </details>
+  <!-- 社会人（全件準備中のため予告のみ表示） -->
+  <div class="teaser">
+    <span class="dot"></span>
+    <span class="stitle">社会人のための「仕事に活かす」AI講座</span>
+    <span class="badge">近日公開（全7回予定）</span>
+  </div>
 
   <!-- 初心者・やさしいAI -->
   <details class="acc">
@@ -362,29 +380,38 @@
   </section>
   <!-- ===== /AIクリエイティブ・ラボ ===== -->
 
-  <!-- プロンプトテンプレート（直接リンク） -->
-  <a class="linkbar" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
-    <span class="dot"></span>
-    <span class="stitle">プロンプトテンプレート</span>
-    <span class="count">全18種類</span>
-    <span class="go">▶</span>
-  </a>
-
-  <!-- 設計シート -->
-  <details class="acc">
-    <summary>
-      <span class="dot"></span>
-      <span class="stitle">設計シート</span>
-      <span class="count">1件</span>
-      <span class="chev">▶</span>
-    </summary>
-    <div class="acc-body">
-      <a class="card live" href="./character-sheet.html">
-        <div class="card-body"><div class="t">キャラクター設計シート</div><div class="s">穴埋めで書いて、AIにわたす文章をコピー</div></div>
-        <div class="arrow">→</div>
-      </a>
+  <!-- ===== ツール（すぐ使える教材） ===== -->
+  <section class="group">
+    <div class="group-head tools-head">
+      <div class="group-name">🔧 ツール</div>
+      <div class="group-sub">講座と一緒に使える、すぐ使える教材</div>
     </div>
-  </details>
+
+    <!-- プロンプトテンプレート（直接リンク） -->
+    <a class="linkbar" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
+      <span class="dot"></span>
+      <span class="stitle">プロンプトテンプレート</span>
+      <span class="count">全18種類</span>
+      <span class="go">▶</span>
+    </a>
+
+    <!-- 設計シート -->
+    <details class="acc">
+      <summary>
+        <span class="dot"></span>
+        <span class="stitle">設計シート</span>
+        <span class="count">1件</span>
+        <span class="chev">▶</span>
+      </summary>
+      <div class="acc-body">
+        <a class="card live" href="./character-sheet.html">
+          <div class="card-body"><div class="t">キャラクター設計シート</div><div class="s">穴埋めで書いて、AIにわたす文章をコピー</div></div>
+          <div class="arrow">→</div>
+        </a>
+      </div>
+    </details>
+  </section>
+  <!-- ===== /ツール ===== -->
 
   <footer>
     <a href="https://anomalocaress.github.io/teraco-labo-website-v2/" target="_blank" rel="noopener">© TERACO.LABO</a>
