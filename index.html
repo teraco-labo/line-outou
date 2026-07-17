@@ -8,264 +8,252 @@
 <meta name="description" content="TERACO.LABOの教材置き場「てらこ図書館」">
 <style>
   :root{
-    --bg:#fffaf2;
+    --bg:#faf8f4;
     --card:#ffffff;
-    --ink:#33312e;
-    --sub:#7a756d;
-    --accent:#ff8a3d;
-    --accent-dark:#e96f1f;
-    --line:#efe7da;
-    --soft:#fff3e6;
+    --ink:#2b2823;
+    --sub:#8d867b;
+    --accent:#b0561f;
+    --accent-soft:#f4e9dd;
+    --line:#e7e0d4;
+    --hairline:#eee8dd;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   body{
     font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     background:var(--bg);
     color:var(--ink);
-    line-height:1.7;
+    line-height:1.75;
     -webkit-font-smoothing:antialiased;
+    font-feature-settings:"palt";
   }
-  .wrap{max-width:600px;margin:0 auto;padding:0 18px 64px;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 22px 88px;}
 
   header{
     text-align:center;
-    padding:38px 18px 26px;
+    padding:64px 18px 44px;
   }
   .brand{
-    font-size:13px;
-    letter-spacing:.18em;
-    color:var(--accent-dark);
-    font-weight:700;
+    font-size:11px;
+    letter-spacing:.34em;
+    color:var(--sub);
+    font-weight:600;
+    text-indent:.34em;
   }
   header h1{
-    font-size:26px;
-    margin-top:10px;
-    line-height:1.45;
+    font-size:30px;
+    margin-top:14px;
+    line-height:1.4;
+    font-weight:700;
+    letter-spacing:.08em;
   }
-  header h1 .em{color:var(--accent-dark);}
+  header .rule{
+    width:36px;height:2px;background:var(--accent);
+    margin:20px auto 0;
+  }
   header p.lead{
-    margin-top:12px;
+    margin-top:18px;
     color:var(--sub);
-    font-size:14px;
+    font-size:13.5px;
+    letter-spacing:.05em;
   }
-  .hint{
-    text-align:center;
-    color:var(--sub);
-    font-size:12.5px;
-    margin:0 0 14px;
-  }
-
-  /* ===== 講座グループ（AIクリエイティブ・ラボ） ===== */
-  .group{
-    background:linear-gradient(180deg,#fff6ea,#fffaf3);
-    border:1px solid #f3e3cd;
-    border-radius:20px;
-    padding:15px 12px 4px;
-    margin-bottom:14px;
-  }
-  .group-head{padding:6px 6px 13px;}
-  .group-name{
-    font-size:13.5px;font-weight:800;letter-spacing:.04em;
-    color:var(--accent-dark);
-  }
-  .group-sub{font-size:12px;color:var(--sub);margin-top:5px;}
 
   /* ===== 年代グループ（アコーディオン） ===== */
-  .group-acc{margin-bottom:14px;}
+  .group-acc{
+    border-top:1px solid var(--line);
+  }
+  .group-acc:last-of-type{
+    border-bottom:1px solid var(--line);
+  }
   .group-acc>summary{
     list-style:none;
     cursor:pointer;
     display:flex;
-    align-items:center;
-    gap:10px;
-    background:linear-gradient(180deg,#fff6ea,#fffaf3);
-    border:1px solid #f3e3cd;
-    border-radius:20px;
-    padding:16px 18px;
+    align-items:baseline;
+    gap:14px;
+    padding:26px 6px;
     user-select:none;
-    transition:background .15s ease;
+    transition:background .2s ease;
   }
   .group-acc>summary::-webkit-details-marker{display:none;}
-  .group-acc>summary:active{background:#ffefda;}
-  .group-acc>summary .group-name{flex:1;min-width:0;}
+  @media(hover:hover){.group-acc>summary:hover{background:rgba(176,86,31,.03);}}
+  .group-acc>summary .group-no{
+    font-size:12px;
+    font-weight:600;
+    color:var(--accent);
+    letter-spacing:.1em;
+    font-variant-numeric:tabular-nums;
+    flex:none;
+  }
+  .group-acc>summary .group-name{
+    flex:1;min-width:0;
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:.06em;
+  }
   .group-acc>summary .group-count{
-    font-size:11.5px;font-weight:700;color:var(--accent-dark);
-    background:var(--soft);padding:3px 9px;border-radius:999px;flex:none;
+    font-size:11.5px;
+    color:var(--sub);
+    letter-spacing:.06em;
+    flex:none;
   }
   .group-acc>summary .group-chev{
-    flex:none;color:var(--accent-dark);font-size:14px;
-    transition:transform .2s ease;
-  }
-  .group-acc[open]>summary{
-    border-bottom-left-radius:0;border-bottom-right-radius:0;
+    flex:none;
+    color:var(--sub);
+    font-size:11px;
+    transition:transform .25s ease;
+    align-self:center;
   }
   .group-acc[open]>summary .group-chev{transform:rotate(90deg);}
   .group-acc .group-body{
-    background:linear-gradient(180deg,#fff6ea,#fffaf3);
-    border:1px solid #f3e3cd;
-    border-top:none;
-    border-radius:0 0 20px 20px;
-    padding:15px 12px 4px;
+    padding:2px 6px 30px;
   }
 
-  /* ===== アコーディオン ===== */
-  .acc{margin-bottom:12px;}
+  /* ===== 講座アコーディオン ===== */
+  .acc{
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--card);
+    margin-bottom:12px;
+    overflow:hidden;
+  }
   .acc>summary{
     list-style:none;
     cursor:pointer;
     display:flex;
     align-items:center;
-    gap:11px;
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:15px;
-    padding:16px 17px;
-    font-size:16.5px;
+    gap:12px;
+    padding:17px 18px;
+    font-size:15px;
     font-weight:700;
-    box-shadow:0 2px 10px rgba(120,90,40,.05);
+    letter-spacing:.03em;
     user-select:none;
-    transition:background .15s ease;
+    transition:background .2s ease;
   }
   .acc>summary::-webkit-details-marker{display:none;}
-  .acc>summary:active{background:var(--soft);}
-  .acc>summary .dot{
-    width:10px;height:10px;border-radius:50%;
-    background:var(--accent);flex:none;
-  }
+  @media(hover:hover){.acc>summary:hover{background:#fcfaf6;}}
   .acc>summary .stitle{flex:1;min-width:0;}
   .acc>summary .count{
-    font-size:11.5px;font-weight:700;color:var(--accent-dark);
-    background:var(--soft);padding:3px 9px;border-radius:999px;flex:none;
+    font-size:11px;
+    font-weight:600;
+    color:var(--sub);
+    letter-spacing:.06em;
+    flex:none;
   }
   .acc>summary .chev{
-    flex:none;color:var(--accent);font-size:13px;
-    transition:transform .2s ease;
+    flex:none;color:var(--accent);font-size:10px;
+    transition:transform .25s ease;
   }
   .acc[open]>summary{
-    border-bottom-left-radius:0;border-bottom-right-radius:0;
-    background:var(--soft);border-color:#f4e2cd;
+    border-bottom:1px solid var(--hairline);
+    background:#fcfaf6;
   }
   .acc[open]>summary .chev{transform:rotate(90deg);}
   .acc-body{
-    border:1px solid var(--line);
-    border-top:none;
-    border-radius:0 0 15px 15px;
-    padding:12px 12px 6px;
-    background:#fffdfa;
+    padding:6px 18px 14px;
   }
 
-  /* 直接リンクするバー（開閉なし） */
-  .linkbar{
-    display:flex;align-items:center;gap:11px;
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:15px;
-    padding:16px 17px;
-    margin-bottom:12px;
-    font-size:16.5px;font-weight:700;
-    text-decoration:none;color:inherit;
-    box-shadow:0 2px 10px rgba(120,90,40,.05);
-    transition:background .15s ease, transform .12s ease;
-  }
-  .linkbar:active{transform:scale(.99);background:var(--soft);}
-  @media(hover:hover){.linkbar:hover{background:var(--soft);}}
-  .linkbar .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex:none;}
-  .linkbar .stitle{flex:1;min-width:0;}
-  .linkbar .count{
-    font-size:11.5px;font-weight:700;color:var(--accent-dark);
-    background:var(--soft);padding:3px 9px;border-radius:999px;flex:none;
-  }
-  .linkbar .go{flex:none;color:var(--accent);font-size:13px;}
-
-  /* ===== 教材カード ===== */
+  /* ===== 教材リンク（行スタイル） ===== */
   .card{
     display:flex;
-    align-items:center;
+    align-items:baseline;
     gap:14px;
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:13px;
-    padding:13px 15px;
-    margin-bottom:10px;
+    padding:13px 2px;
     text-decoration:none;
     color:inherit;
-    transition:transform .12s ease, box-shadow .12s ease;
+    border-bottom:1px solid var(--hairline);
+    transition:opacity .15s ease;
   }
-  .card:active{transform:scale(.985);}
-  @media(hover:hover){
-    .card.live:hover{box-shadow:0 6px 16px rgba(233,111,31,.15);transform:translateY(-2px);}
-  }
+  .acc-body .card:last-of-type,
+  .acc-body .card:last-child{border-bottom:none;}
+  @media(hover:hover){.card.live:hover .t{color:var(--accent);}}
   .num{
-    width:40px;height:40px;flex:none;
-    border-radius:11px;
-    background:var(--soft);
-    color:var(--accent-dark);
-    display:flex;align-items:center;justify-content:center;
-    font-size:19px;font-weight:800;
+    flex:none;
+    font-size:12px;
+    font-weight:600;
+    color:var(--accent);
+    letter-spacing:.05em;
+    font-variant-numeric:tabular-nums;
+    width:22px;
   }
-  .card.live .num{background:linear-gradient(135deg,#ff9a4d,#f97316);color:#fff;}
   .card-body{flex:1;min-width:0;}
-  .card-body .t{font-size:15.5px;font-weight:700;}
-  .card-body .s{font-size:12.5px;color:var(--sub);margin-top:2px;}
-  .arrow{color:var(--accent);font-size:19px;flex:none;}
+  .card-body .t{
+    font-size:14.5px;font-weight:700;letter-spacing:.02em;
+    transition:color .15s ease;
+  }
+  .card-body .s{font-size:12px;color:var(--sub);margin-top:3px;letter-spacing:.02em;}
+  .arrow{color:var(--accent);font-size:13px;flex:none;align-self:center;}
 
-  .card.soon{opacity:.6;}
-  .card.soon .num{background:#f1ece4;color:#b3a89a;}
+  .card.soon{opacity:.45;}
+  .card.soon .num{color:var(--sub);}
   .badge{
-    font-size:11px;font-weight:700;
-    color:#b3a89a;border:1px solid #e3dccf;
-    padding:2px 9px;border-radius:999px;flex:none;
-  }
-  .prep{
-    text-align:center;color:var(--sub);font-size:13.5px;
-    padding:14px 8px 16px;
+    font-size:10.5px;font-weight:600;
+    color:var(--sub);border:1px solid var(--line);
+    padding:2px 10px;border-radius:999px;flex:none;
+    letter-spacing:.05em;
+    align-self:center;
   }
 
-  /* 準備中のみのセクション（控えめな予告） */
+  /* 準備中の予告行 */
   .teaser{
-    display:flex;align-items:center;gap:10px;
-    background:#faf6ef;border:1px dashed #e3dccf;
-    border-radius:15px;padding:14px 17px;margin-bottom:12px;
+    display:flex;align-items:center;gap:12px;
+    border:1px dashed var(--line);
+    border-radius:12px;
+    padding:17px 18px;
     color:var(--sub);font-size:13.5px;
+    letter-spacing:.03em;
   }
-  .teaser .dot{width:8px;height:8px;border-radius:50%;background:#d8cdbb;flex:none;}
   .teaser .stitle{flex:1;font-weight:700;}
   .teaser .badge{flex:none;}
 
-  /* 年代内のツール案内 */
+  /* 講座内のテンプレート案内 */
   .tool-note{
     display:flex;align-items:center;gap:10px;
-    background:var(--soft);border:1px solid #f4e2cd;
-    border-radius:12px;padding:11px 14px;margin:2px 0 10px;
-    text-decoration:none;color:var(--ink);font-size:13px;font-weight:700;
+    margin:10px 0 4px;
+    padding:12px 14px;
+    background:var(--accent-soft);
+    border-radius:9px;
+    text-decoration:none;color:var(--accent);
+    font-size:12.5px;font-weight:700;
+    letter-spacing:.03em;
   }
-  .tool-note:active{background:#ffe9d2;}
   .tool-note .arrow{margin-left:auto;color:var(--accent);}
 
-  /* ツールセクション見出し（講座グループと同格） */
-  .tools-head{padding:6px 6px 13px;}
-
-  /* ===== リンクボタン ===== */
-  .btn{
-    display:flex;align-items:center;justify-content:center;gap:8px;
-    background:linear-gradient(135deg,#ff9a4d,#f97316);
-    color:#fff;text-decoration:none;font-weight:700;font-size:15.5px;
-    padding:15px;border-radius:12px;margin-bottom:4px;
-    box-shadow:0 4px 12px rgba(233,111,31,.25);
-    transition:transform .12s ease;
+  /* プロンプト直接リンク */
+  .linkbar{
+    display:flex;align-items:center;gap:12px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--card);
+    padding:17px 18px;
+    margin-bottom:12px;
+    font-size:15px;font-weight:700;
+    letter-spacing:.03em;
+    text-decoration:none;color:inherit;
+    transition:background .2s ease;
   }
-  .btn:active{transform:scale(.985);}
-  .btn .s{font-weight:500;font-size:12px;opacity:.92;}
+  @media(hover:hover){.linkbar:hover{background:#fcfaf6;}
+    .linkbar:hover .stitle{color:var(--accent);}}
+  .linkbar .stitle{flex:1;min-width:0;transition:color .15s ease;}
+  .linkbar .note{
+    font-size:11px;color:var(--sub);flex:none;letter-spacing:.05em;
+  }
+  .linkbar .go{flex:none;color:var(--accent);font-size:13px;}
+  @media(max-width:520px){
+    .linkbar{flex-wrap:wrap;}
+    .linkbar .stitle{flex:1 1 auto;}
+    .linkbar .go{order:2;}
+    .linkbar .note{flex-basis:100%;order:3;margin-top:2px;}
+  }
 
   footer{
     text-align:center;
-    margin-top:38px;
-    padding-top:22px;
-    border-top:1px solid var(--line);
+    margin-top:72px;
+    padding-top:28px;
     color:var(--sub);
-    font-size:12px;
+    font-size:11px;
+    letter-spacing:.2em;
   }
-  footer a{color:var(--accent-dark);text-decoration:none;}
+  footer a{color:var(--sub);text-decoration:none;}
 </style>
 </head>
 <body>
@@ -273,16 +261,16 @@
 
   <header>
     <div class="brand">TERACO.LABO</div>
-    <h1><span class="em">てらこ図書館</span></h1>
-    <p class="lead">各講座のボタンから教材にアクセスできます。</p>
+    <h1>てらこ図書館</h1>
+    <div class="rule"></div>
+    <p class="lead">講座で使う教材を、いつでも読み返せます</p>
   </header>
 
-  <p class="hint">▸ 講座名をタップすると教材が開きます</p>
-
-  <!-- ===== 初心者向け ===== -->
+  <!-- ===== はじめての方 ===== -->
   <details class="group-acc">
     <summary>
-      <span class="group-name">初心者向け</span>
+      <span class="group-no">01</span>
+      <span class="group-name">はじめての方</span>
       <span class="group-count">4講座</span>
       <span class="group-chev">▶</span>
     </summary>
@@ -291,47 +279,45 @@
   <!-- スマホ講座 -->
   <details class="acc">
     <summary>
-      <span class="dot"></span>
-      <span class="stitle">初心者のための「ずっと使える」スマホ講座</span>
+      <span class="stitle">「ずっと使える」スマホ講座</span>
       <span class="count">全3回</span>
       <span class="chev">▶</span>
     </summary>
     <div class="acc-body">
       <a class="card live" href="https://drive.google.com/file/d/1diymfDJSsSHK487KM8ZdGoe67oo1vLjP/view" target="_blank" rel="noopener">
-        <div class="num">①</div><div class="card-body"><div class="t">スマホの仕組みと道具の増やし方</div><div class="s">アイコン（標識）の意味とアプリの入れ方</div></div><div class="arrow">→</div>
+        <span class="num">01</span><span class="card-body"><span class="t">スマホの仕組みと道具の増やし方</span><br class="sr"><span class="s">アイコン（標識）の意味とアプリの入れ方</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1_VtO-SVM1bh0mvkrv79xwJ6417twt8Rw/view" target="_blank" rel="noopener">
-        <div class="num">②</div><div class="card-body"><div class="t">LINE交流とカメラ・写真</div><div class="s">LINEのやりとり、写真の撮り方・送り方</div></div><div class="arrow">→</div>
+        <span class="num">02</span><span class="card-body"><span class="t">LINE交流とカメラ・写真</span><br class="sr"><span class="s">LINEのやりとり、写真の撮り方・送り方</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1V8_j4On-t6JozxxE3IGJXKAiJYLGW_PV/view" target="_blank" rel="noopener">
-        <div class="num">③</div><div class="card-body"><div class="t">検索・地図・セキュリティ</div><div class="s">調べ物・道案内・安全に使うコツ</div></div><div class="arrow">→</div>
+        <span class="num">03</span><span class="card-body"><span class="t">検索・地図・セキュリティ</span><br class="sr"><span class="s">調べ物・道案内・安全に使うコツ</span></span><span class="arrow">→</span>
       </a>
       <a class="tool-note" href="https://teraco-labo.github.io/teraco-prompt-engineering/#senior" target="_blank" rel="noopener">
-        <span>初心者向けプロンプトテンプレート</span><span class="arrow">→</span>
+        <span>プロンプトテンプレートを使う</span><span class="arrow">→</span>
       </a>
     </div>
   </details>
 
-  <!-- 初心者・やさしいAI -->
+  <!-- やさしいAI -->
   <details class="acc">
     <summary>
-      <span class="dot"></span>
-      <span class="stitle">初心者のための「やさしい」AI講座</span>
+      <span class="stitle">「やさしい」AI講座</span>
       <span class="count">全4回</span>
       <span class="chev">▶</span>
     </summary>
     <div class="acc-body">
       <a class="card live" href="https://drive.google.com/file/d/1skMjFYVVdt0K53SHkwDhr8O-CtpTUsnj/view" target="_blank" rel="noopener">
-        <div class="num">①</div><div class="card-body"><div class="t">スマホAIと話してみよう</div><div class="s">スマホのAIに話しかけてみよう（聞く・くらべる・たしかめる）</div></div><div class="arrow">→</div>
+        <span class="num">01</span><span class="card-body"><span class="t">スマホAIと話してみよう</span><br class="sr"><span class="s">スマホのAIに話しかけてみよう（聞く・くらべる・たしかめる）</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1CLqQ35o33BH7QVekCICqVaZAnse9Xqmg/view" target="_blank" rel="noopener">
-        <div class="num">②</div><div class="card-body"><div class="t">言葉で画像を作ってみよう</div><div class="s">「こんな絵がほしい」と言葉で伝えて画像を作ろう</div></div><div class="arrow">→</div>
+        <span class="num">02</span><span class="card-body"><span class="t">言葉で画像を作ってみよう</span><br class="sr"><span class="s">「こんな絵がほしい」と言葉で伝えて画像を作ろう</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1fd18-aKHhTSJI2RcGhNmz52p8obY55wD/view" target="_blank" rel="noopener">
-        <div class="num">③</div><div class="card-body"><div class="t">音と動画もAIにお願いしてみよう</div><div class="s">AIに音楽や短い動画も作ってもらってみよう</div></div><div class="arrow">→</div>
+        <span class="num">03</span><span class="card-body"><span class="t">音と動画もAIにお願いしてみよう</span><br class="sr"><span class="s">AIに音楽や短い動画も作ってもらってみよう</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1LUCAcGjqIcQhPRPUNiOa5NHyJHfDrfGR/view" target="_blank" rel="noopener">
-        <div class="num">④</div><div class="card-body"><div class="t">健康メモと暮らし支援アプリ</div><div class="s">毎日の健康や暮らしを助けるアプリを使ってみよう</div></div><div class="arrow">→</div>
+        <span class="num">04</span><span class="card-body"><span class="t">健康メモと暮らし支援アプリ</span><br class="sr"><span class="s">毎日の健康や暮らしを助けるアプリを使ってみよう</span></span><span class="arrow">→</span>
       </a>
     </div>
   </details>
@@ -339,17 +325,16 @@
   <!-- パソコンAI実用講座 -->
   <details class="acc">
     <summary>
-      <span class="dot"></span>
-      <span class="stitle">初心者のためのパソコンAI実用講座</span>
+      <span class="stitle">パソコンAI実用講座</span>
       <span class="count">全2回</span>
       <span class="chev">▶</span>
     </summary>
     <div class="acc-body">
       <a class="card live" href="https://drive.google.com/file/d/135d2gOc62SCftuJbttg3nhSKmDNWfqyq/view" target="_blank" rel="noopener">
-        <div class="num">①</div><div class="card-body"><div class="t">画面構成とタイピングの基本</div><div class="s">画面の名前を知り、文字を入力して、直して保存する</div></div><div class="arrow">→</div>
+        <span class="num">01</span><span class="card-body"><span class="t">画面構成とタイピングの基本</span><br class="sr"><span class="s">画面の名前を知り、文字を入力して、直して保存する</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1eXprsJoB9FrXVqDVQVzmbcmgtNWVguDx/view" target="_blank" rel="noopener">
-        <div class="num">②</div><div class="card-body"><div class="t">キーボードとショートカット</div><div class="s">コピー・貼り付け・元に戻す・画面の切り替えを覚える</div></div><div class="arrow">→</div>
+        <span class="num">02</span><span class="card-body"><span class="t">キーボードとショートカット</span><br class="sr"><span class="s">コピー・貼り付け・元に戻す・画面の切り替えを覚える</span></span><span class="arrow">→</span>
       </a>
     </div>
   </details>
@@ -357,35 +342,35 @@
   <!-- Windowsレッスン -->
   <details class="acc">
     <summary>
-      <span class="dot"></span>
       <span class="stitle">Windows安心操作レッスン</span>
       <span class="count">全4回</span>
       <span class="chev">▶</span>
     </summary>
     <div class="acc-body">
       <a class="card live" href="https://drive.google.com/file/d/1bNcKANYyeJrMOcilvkw420fHpIPLwFXy/view" target="_blank" rel="noopener">
-        <div class="num">①</div><div class="card-body"><div class="t">画面構成を確認する</div><div class="s">スタート・タスクバー・設定・エクスプローラーを知る</div></div><div class="arrow">→</div>
+        <span class="num">01</span><span class="card-body"><span class="t">画面構成を確認する</span><br class="sr"><span class="s">スタート・タスクバー・設定・エクスプローラーを知る</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1yoXzbRgMsSisnZ3b9Piey0xpPvAlREgp/view" target="_blank" rel="noopener">
-        <div class="num">②</div><div class="card-body"><div class="t">文字操作と保存</div><div class="s">入力・コピー貼り付け・保存までを一通り練習する</div></div><div class="arrow">→</div>
+        <span class="num">02</span><span class="card-body"><span class="t">文字操作と保存</span><br class="sr"><span class="s">入力・コピー貼り付け・保存までを一通り練習する</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1reqS_zbXJjb0ABH6TEzKas1PQ-mE6B01/view" target="_blank" rel="noopener">
-        <div class="num">③</div><div class="card-body"><div class="t">セキュリティ確認</div><div class="s">更新・保護状態・警告表示・ネット利用を確認する</div></div><div class="arrow">→</div>
+        <span class="num">03</span><span class="card-body"><span class="t">セキュリティ確認</span><br class="sr"><span class="s">更新・保護状態・警告表示・ネット利用を確認する</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1B66YV755VePvj204P2bDgzJRFWoJr3RQ/view" target="_blank" rel="noopener">
-        <div class="num">④</div><div class="card-body"><div class="t">AI利用</div><div class="s">ChatGPTとローカルAIを使い分ける</div></div><div class="arrow">→</div>
+        <span class="num">04</span><span class="card-body"><span class="t">AI利用</span><br class="sr"><span class="s">ChatGPTとローカルAIを使い分ける</span></span><span class="arrow">→</span>
       </a>
     </div>
   </details>
 
     </div>
   </details>
-  <!-- ===== /初心者向け ===== -->
+  <!-- ===== /はじめての方 ===== -->
 
-  <!-- ===== 学生向け ===== -->
+  <!-- ===== 小学生・中学生・高校生 ===== -->
   <details class="group-acc">
     <summary>
-      <span class="group-name">学生向け</span>
+      <span class="group-no">02</span>
+      <span class="group-name">小学生・中学生・高校生</span>
       <span class="group-count">3講座</span>
       <span class="group-chev">▶</span>
     </summary>
@@ -394,23 +379,22 @@
   <!-- 小学生 -->
   <details class="acc">
     <summary>
-      <span class="dot"></span>
-      <span class="stitle">小学生のための「遊んで学ぶ」AI講座</span>
+      <span class="stitle">小学生「遊んで学ぶ」AI講座</span>
       <span class="count">全3回</span>
       <span class="chev">▶</span>
     </summary>
     <div class="acc-body">
       <a class="card live" href="https://drive.google.com/file/d/1MM89fpUj1p_DY1rSBCafivLEEB9HJkAW/view" target="_blank" rel="noopener">
-        <div class="num">①</div><div class="card-body"><div class="t">AIは「まほうのパートナー」</div><div class="s">AIとおしゃべりして自分だけのヒーローをつくろう</div></div><div class="arrow">→</div>
+        <span class="num">01</span><span class="card-body"><span class="t">AIは「まほうのパートナー」</span><br class="sr"><span class="s">AIとおしゃべりして自分だけのヒーローをつくろう</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/15HZCCSiM861Oe1vtpbVtzBGj7f592pve/view" target="_blank" rel="noopener">
-        <div class="num">②</div><div class="card-body"><div class="t">AIは「まほうの設計図」</div><div class="s">言葉だけで自分だけのゲームをつくろう</div></div><div class="arrow">→</div>
+        <span class="num">02</span><span class="card-body"><span class="t">AIは「まほうの設計図」</span><br class="sr"><span class="s">言葉だけで自分だけのゲームをつくろう</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1voDOiA2Asz5B6HGqCv7i20QZ6CE1dVHI/view" target="_blank" rel="noopener">
-        <div class="num">③</div><div class="card-body"><div class="t">オリジナルアプリをつくろう</div><div class="s">家族を助けるアプリを作ってスマホに入れよう</div></div><div class="arrow">→</div>
+        <span class="num">03</span><span class="card-body"><span class="t">オリジナルアプリをつくろう</span><br class="sr"><span class="s">家族を助けるアプリを作ってスマホに入れよう</span></span><span class="arrow">→</span>
       </a>
       <a class="tool-note" href="https://teraco-labo.github.io/teraco-prompt-engineering/#elementary" target="_blank" rel="noopener">
-        <span>小学生向けプロンプトテンプレート</span><span class="arrow">→</span>
+        <span>プロンプトテンプレートを使う</span><span class="arrow">→</span>
       </a>
     </div>
   </details>
@@ -418,32 +402,31 @@
   <!-- 中学生 -->
   <details class="acc">
     <summary>
-      <span class="dot"></span>
-      <span class="stitle">中学生のための「創って学ぶ」AI講座</span>
+      <span class="stitle">中学生「創って学ぶ」AI講座</span>
       <span class="count">全6回</span>
       <span class="chev">▶</span>
     </summary>
     <div class="acc-body">
       <a class="card live" href="https://drive.google.com/file/d/1rUwqvhs51C7gHbL7o1u1QsBVqp3sbFFo/view" target="_blank" rel="noopener">
-        <div class="num">①</div><div class="card-body"><div class="t">AIとの上手な話し方を知ろう</div><div class="s">AIへの伝え方で、答えや動きが変わることを体験しよう</div></div><div class="arrow">→</div>
+        <span class="num">01</span><span class="card-body"><span class="t">AIとの上手な話し方を知ろう</span><br class="sr"><span class="s">AIへの伝え方で、答えや動きが変わることを体験しよう</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1yW4cADymbL6xQ_0P-TTJN-LktPM83wsb/view" target="_blank" rel="noopener">
-        <div class="num">②</div><div class="card-body"><div class="t">画像生成AIでキャラクターをつくろう</div><div class="s">頭の中のイメージを言葉にしてAIに伝えよう</div></div><div class="arrow">→</div>
+        <span class="num">02</span><span class="card-body"><span class="t">画像生成AIでキャラクターをつくろう</span><br class="sr"><span class="s">頭の中のイメージを言葉にしてAIに伝えよう</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1RzmlWYmirR_qk1FSbgGh5BBrvLEbTKga/view" target="_blank" rel="noopener">
-        <div class="num">③</div><div class="card-body"><div class="t">音楽生成AIでオリジナルソングをつくろう</div><div class="s">気分やメッセージを、言葉から音楽にする</div></div><div class="arrow">→</div>
+        <span class="num">03</span><span class="card-body"><span class="t">音楽生成AIでオリジナルソングをつくろう</span><br class="sr"><span class="s">気分やメッセージを、言葉から音楽にする</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/15ltk7S76Snotq_IRjOBf9_NPFN_ynxX8/view" target="_blank" rel="noopener">
-        <div class="num">④</div><div class="card-body"><div class="t">動画生成AIでショートムービーをつくろう</div><div class="s">動き・時間・カメラを言葉で設計する</div></div><div class="arrow">→</div>
+        <span class="num">04</span><span class="card-body"><span class="t">動画生成AIでショートムービーをつくろう</span><br class="sr"><span class="s">動き・時間・カメラを言葉で設計する</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1ZARkH_moZKeWw_4J19445XhYg9f3bCqy/view" target="_blank" rel="noopener">
-        <div class="num">⑤</div><div class="card-body"><div class="t">AIでオリジナルゲームをつくろう</div><div class="s">ルールを言葉にして、遊べる形にする</div></div><div class="arrow">→</div>
+        <span class="num">05</span><span class="card-body"><span class="t">AIでオリジナルゲームをつくろう</span><br class="sr"><span class="s">ルールを言葉にして、遊べる形にする</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/14VeanUwg4yA6zAjArx8QZWdyWW-LEvLq/view" target="_blank" rel="noopener">
-        <div class="num">⑥</div><div class="card-body"><div class="t">AIで役立つアプリをつくろう</div><div class="s">誰かの困りごとを、動く仕組みに変える</div></div><div class="arrow">→</div>
+        <span class="num">06</span><span class="card-body"><span class="t">AIで役立つアプリをつくろう</span><br class="sr"><span class="s">誰かの困りごとを、動く仕組みに変える</span></span><span class="arrow">→</span>
       </a>
       <a class="tool-note" href="https://teraco-labo.github.io/teraco-prompt-engineering/#middle" target="_blank" rel="noopener">
-        <span>中学生向けプロンプトテンプレート</span><span class="arrow">→</span>
+        <span>プロンプトテンプレートを使う</span><span class="arrow">→</span>
       </a>
     </div>
   </details>
@@ -451,64 +434,63 @@
   <!-- 高校生 -->
   <details class="acc">
     <summary>
-      <span class="dot"></span>
-      <span class="stitle">高校生のための「未来を描く」AI講座</span>
+      <span class="stitle">高校生「未来を描く」AI講座</span>
       <span class="count">全7回</span>
       <span class="chev">▶</span>
     </summary>
     <div class="acc-body">
       <a class="card live" href="https://drive.google.com/file/d/10o7P3oDGKoDcjbLBKYewb54xcmxoMrqq/view?usp=share_link" target="_blank" rel="noopener">
-        <div class="num">①</div><div class="card-body"><div class="t">AIの正体を知ろう</div><div class="s">そもそもAIって何？をやさしく解説</div></div><div class="arrow">→</div>
+        <span class="num">01</span><span class="card-body"><span class="t">AIの正体を知ろう</span><br class="sr"><span class="s">そもそもAIって何？をやさしく解説</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1VFWq3XnVMaSLrDJDBtvTAU2AMgQgEWom/view?usp=sharing" target="_blank" rel="noopener">
-        <div class="num">②</div><div class="card-body"><div class="t">言葉の魔法「プロンプト」入門</div><div class="s">AIへのお願いのしかたを学ぼう</div></div><div class="arrow">→</div>
+        <span class="num">02</span><span class="card-body"><span class="t">言葉の魔法「プロンプト」入門</span><br class="sr"><span class="s">AIへのお願いのしかたを学ぼう</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1u8hfZjZnSyIDFhJsf9iCVJ-nEe7Eg1RI/view?usp=drive_link" target="_blank" rel="noopener">
-        <div class="num">③</div><div class="card-body"><div class="t">デジタル絵師に挑戦！</div><div class="s">AIで絵を描いてみよう</div></div><div class="arrow">→</div>
+        <span class="num">03</span><span class="card-body"><span class="t">デジタル絵師に挑戦</span><br class="sr"><span class="s">AIで絵を描いてみよう</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/19d9-sX_oVUpHZeirVfTioHNgOoltGdvs/view" target="_blank" rel="noopener">
-        <div class="num">④</div><div class="card-body"><div class="t">勉強スタイルに革命を</div><div class="s">NotebookLMで自分専用の教材をつくろう</div></div><div class="arrow">→</div>
+        <span class="num">04</span><span class="card-body"><span class="t">勉強スタイルに革命を</span><br class="sr"><span class="s">NotebookLMで自分専用の教材をつくろう</span></span><span class="arrow">→</span>
       </a>
-      <div class="card soon"><div class="num">⑤</div><div class="card-body"><div class="t">準備中</div></div><div class="badge">近日公開</div></div>
+      <div class="card soon"><span class="num">05</span><span class="card-body"><span class="t">準備中</span></span><span class="badge">近日公開</span></div>
       <a class="card live" href="https://drive.google.com/file/d/1DnxfgneVJhDpv5gNxvUdHkRoOVHL1XyF/view" target="_blank" rel="noopener">
-        <div class="num">⑥</div><div class="card-body"><div class="t">未来の仕事とAI</div><div class="s">使う側から創る側へ。AIで困りごとを解決する企画を考えよう</div></div><div class="arrow">→</div>
+        <span class="num">06</span><span class="card-body"><span class="t">未来の仕事とAI</span><br class="sr"><span class="s">使う側から創る側へ。AIで困りごとを解決する企画を考えよう</span></span><span class="arrow">→</span>
       </a>
       <a class="card live" href="https://drive.google.com/file/d/1nSFmyZZFJlexzHd-GHzt6gHLtZZRW2I6/view" target="_blank" rel="noopener">
-        <div class="num">⑦</div><div class="card-body"><div class="t">15秒ショート制作</div><div class="s">企画カードを、作品に変える</div></div><div class="arrow">→</div>
+        <span class="num">07</span><span class="card-body"><span class="t">15秒ショート制作</span><br class="sr"><span class="s">企画カードを、作品に変える</span></span><span class="arrow">→</span>
       </a>
       <a class="tool-note" href="https://teraco-labo.github.io/teraco-prompt-engineering/#high" target="_blank" rel="noopener">
-        <span>高校生向けプロンプトテンプレート</span><span class="arrow">→</span>
+        <span>プロンプトテンプレートを使う</span><span class="arrow">→</span>
       </a>
     </div>
   </details>
 
     </div>
   </details>
-  <!-- ===== /学生向け ===== -->
+  <!-- ===== /小学生・中学生・高校生 ===== -->
 
-  <!-- ===== 社会人向け ===== -->
+  <!-- ===== 大学生・社会人 ===== -->
   <details class="group-acc">
     <summary>
-      <span class="group-name">社会人向け</span>
+      <span class="group-no">03</span>
+      <span class="group-name">大学生・社会人</span>
       <span class="group-count">準備中</span>
       <span class="group-chev">▶</span>
     </summary>
     <div class="group-body">
 
-  <!-- 社会人（全件準備中のため予告のみ表示） -->
   <div class="teaser">
-    <span class="dot"></span>
     <span class="stitle">「仕事に活かす」AI講座</span>
-    <span class="badge">近日公開（全7回予定）</span>
+    <span class="badge">近日公開・全7回予定</span>
   </div>
 
     </div>
   </details>
-  <!-- ===== /社会人向け ===== -->
+  <!-- ===== /大学生・社会人 ===== -->
 
   <!-- ===== プロンプト ===== -->
   <details class="group-acc">
     <summary>
+      <span class="group-no">04</span>
       <span class="group-name">プロンプト</span>
       <span class="group-count">2種類</span>
       <span class="group-chev">▶</span>
@@ -516,13 +498,13 @@
     <div class="group-body">
 
     <a class="linkbar" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
-      <span class="dot"></span>
       <span class="stitle">業界標準</span>
+      <span class="note">基本・推論・構造・エージェント・画像生成</span>
       <span class="go">→</span>
     </a>
     <a class="linkbar" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
-      <span class="dot"></span>
       <span class="stitle">てらこ式</span>
+      <span class="note">各講座で使う穴あきテンプレート</span>
       <span class="go">→</span>
     </a>
 
@@ -531,7 +513,7 @@
   <!-- ===== /プロンプト ===== -->
 
   <footer>
-    <a href="https://anomalocaress.github.io/teraco-labo-website-v2/" target="_blank" rel="noopener">© TERACO.LABO</a>
+    <a href="https://anomalocaress.github.io/teraco-labo-website-v2/" target="_blank" rel="noopener">TERACO.LABO</a>
   </footer>
 
 </div>
