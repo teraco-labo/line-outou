@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:,">
+<title>動画生成AI ワークテンプレート | TERACO.LABO</title>
+<meta name="description" content="TERACO.LABO中学生AI講座 第4回の動画生成AIワークテンプレート">
+<style>
+  :root{
+    --bg:#f6f7f5;--paper:#fff;--ink:#14243d;--sub:#667085;
+    --line:#d9e0e7;--orange:#ef6945;--teal:#168f96;--soft:#edf6f5;
+    --warn:#8a3c27;--focus:#0b7285;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  button,input,select,textarea{font:inherit;color:inherit;}
+  button,a{touch-action:manipulation;}
+  .shell{max-width:860px;margin:0 auto;padding:0 22px 72px;}
+  .topbar{display:flex;justify-content:space-between;gap:16px;padding:18px 0;}
+  .topbar a{font-size:12px;font-weight:700;color:var(--teal);text-decoration:none;}
+  header{padding:18px 0 28px;border-bottom:1px solid var(--line);}
+  .brand{font-size:11px;letter-spacing:.22em;color:var(--teal);font-weight:800;}
+  h1{font-size:30px;line-height:1.35;margin-top:8px;}
+  .lead{margin-top:8px;color:var(--sub);font-size:14px;}
+  .tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line);margin-top:22px;}
+  .tab{border:0;border-bottom:3px solid transparent;background:transparent;padding:14px 10px;cursor:pointer;font-weight:800;font-size:13px;}
+  .tab[aria-selected="true"]{color:var(--teal);border-bottom-color:var(--teal);background:var(--soft);}
+  .tab span{display:block;font-size:10px;letter-spacing:.08em;color:var(--sub);}
+  .panel{display:none;padding-top:28px;}
+  .panel.active{display:block;}
+  .work-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--line);}
+  .work-no{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--orange);}
+  h2{font-size:25px;line-height:1.4;margin-top:4px;}
+  .goal{font-size:13px;color:var(--sub);margin-top:6px;}
+  .time{flex:none;border:1px solid var(--teal);color:var(--teal);padding:5px 10px;font-size:12px;font-weight:800;border-radius:999px;}
+  .progress{margin:18px 0;padding:12px 14px;background:var(--soft);border-left:4px solid var(--teal);font-size:13px;font-weight:700;}
+  fieldset{border:0;border-bottom:1px solid var(--line);padding:0 0 24px;margin:0 0 24px;}
+  legend{font-size:16px;font-weight:800;margin-bottom:14px;}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 18px;}
+  .field.full{grid-column:1/-1;}
+  label{display:block;font-size:13px;font-weight:800;margin-bottom:6px;}
+  .hint{display:block;color:var(--sub);font-size:11.5px;font-weight:500;margin-top:3px;}
+  input[type="text"],input[type="number"],select,textarea{
+    width:100%;border:1px solid #b9c4cf;background:#fff;border-radius:6px;padding:11px 12px;outline:none;
+  }
+  textarea{min-height:94px;resize:vertical;}
+  textarea.tall{min-height:126px;}
+  #shareSentence{min-height:150px;}
+  input:focus,select:focus,textarea:focus{border-color:var(--focus);box-shadow:0 0 0 3px rgba(11,114,133,.12);}
+  .output{background:#f9fbfc;border:1px solid var(--line);border-left:4px solid var(--orange);}
+  .checks{display:grid;gap:10px;}
+  .check{display:flex;gap:10px;align-items:flex-start;font-size:13px;font-weight:700;}
+  .check input{width:18px;height:18px;margin-top:2px;accent-color:var(--teal);flex:none;}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+  .step{border-top:3px solid var(--orange);background:#fff;padding:12px;border-bottom:1px solid var(--line);font-size:12.5px;font-weight:800;}
+  .step b{display:block;color:var(--orange);font-size:11px;margin-bottom:3px;}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+  .button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--line);background:#fff;border-radius:6px;padding:10px 14px;font-weight:800;font-size:13px;text-decoration:none;color:var(--ink);cursor:pointer;}
+  .button.primary{background:var(--ink);border-color:var(--ink);color:#fff;}
+  .button.teal{background:var(--teal);border-color:var(--teal);color:#fff;}
+  .button.danger{color:var(--warn);}
+  .message{min-height:22px;margin-top:8px;color:var(--teal);font-size:12px;font-weight:700;}
+  .warning{color:var(--warn);}
+  .completion{margin-top:24px;padding:15px 16px;border:1px solid var(--line);background:#fff;font-size:13px;}
+  .completion strong{display:block;margin-bottom:4px;}
+  .teacher-note{margin-top:22px;color:var(--sub);font-size:12px;}
+  footer{margin-top:48px;text-align:center;color:var(--sub);font-size:11px;letter-spacing:.15em;}
+  @media(max-width:640px){
+    .shell{padding:0 18px 56px;}
+    h1{font-size:24px;}
+    .topbar{flex-direction:column;gap:4px;}
+    .tab{font-size:11.5px;padding:12px 5px;}
+    .grid,.steps{grid-template-columns:1fr;}
+    .work-head{display:block;}
+    .time{display:inline-block;margin-top:10px;}
+    .button{flex:1 1 140px;}
+  }
+  @media print{
+    @page{size:A4 portrait;margin:9mm;}
+    body{background:#fff;font-size:9.5pt;line-height:1.45;}
+    .shell{max-width:none;padding:0;}
+    .topbar,header,.tabs,.actions,.teacher-note,.progress,footer{display:none!important;}
+    .panel{display:none!important;padding-top:0;}
+    .panel.active{display:block!important;}
+    .panel.active::before{content:"TERACO.LABO  |  動画生成AI ワークテンプレート";display:block;color:var(--teal);font-size:8pt;font-weight:800;letter-spacing:.08em;margin-bottom:3mm;}
+    .work-head{padding-bottom:3mm;margin-bottom:4mm;}
+    h2{font-size:17pt;}
+    .goal{font-size:9pt;margin-top:1mm;}
+    .time{padding:1mm 2.5mm;font-size:8.5pt;}
+    fieldset{break-inside:avoid;padding-bottom:3mm;margin-bottom:3mm;}
+    legend{font-size:12pt;margin-bottom:2mm;}
+    .grid{gap:2.5mm 4mm;}
+    label{font-size:9pt;margin-bottom:1mm;}
+    .hint{font-size:7.5pt;margin-top:0;}
+    input[type="text"],input[type="number"],select,textarea{box-shadow:none!important;background:#fff!important;padding:2mm 2.5mm;border-radius:3px;}
+    textarea{min-height:15mm;}
+    textarea.tall,#shareSentence{min-height:20mm;}
+    .steps{gap:2mm;margin-bottom:3mm;}
+    .step{padding:2mm;font-size:8.5pt;}
+    .checks{gap:1.5mm;}
+    .check{font-size:9pt;}
+    .completion{break-inside:avoid;margin-top:3mm;padding:2.5mm 3mm;font-size:8.5pt;}
+    .message{min-height:4mm;margin-top:1mm;font-size:8pt;}
+  }
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="topbar">
+    <a href="./">← てらこ図書館にもどる</a>
+    <a href="ai-video-tools.html">動画生成AI 公式リンク集</a>
+  </div>
+
+  <header>
+    <div class="brand">TERACO.LABO</div>
+    <h1>動画生成AI<br>ワークテンプレート</h1>
+    <p class="lead">中学生AI講座 第4回「ショートムービーをつくろう」</p>
+  </header>
+
+  <nav class="tabs" aria-label="ワークを選ぶ">
+    <button class="tab" type="button" data-work="1" aria-selected="true"><span>WORK 1</span>1カット設計</button>
+    <button class="tab" type="button" data-work="2" aria-selected="false"><span>WORK 2</span>最初の生成</button>
+    <button class="tab" type="button" data-work="3" aria-selected="false"><span>WORK 3</span>変更・比較</button>
+  </nav>
+
+  <section class="panel active" data-panel="1">
+    <div class="work-head">
+      <div><div class="work-no">WORK 1</div><h2>1カットを設計しよう</h2><p class="goal">主役と動きを一つずつ選び、AIへ渡す1文を作る。</p></div>
+      <span class="time">7分</span>
+    </div>
+    <div class="progress" id="progress1">完成 0 / 5項目</div>
+
+    <fieldset>
+      <legend>5つの設計</legend>
+      <div class="grid">
+        <div class="field"><label for="subject">主役<span class="hint">例：紙のロケット</span></label><input id="subject" data-save type="text" autocomplete="off"></div>
+        <div class="field"><label for="action">動き<span class="hint">例：ゆっくり浮かぶ</span></label><input id="action" data-save type="text" autocomplete="off"></div>
+        <div class="field"><label for="place">場所<span class="hint">例：明るい体育館</span></label><input id="place" data-save type="text" autocomplete="off"></div>
+        <div class="field"><label for="camera">カメラ</label><select id="camera" data-save><option value="">選ぶ</option><option>固定する</option><option>少し近づく</option><option>横へ動く</option><option>上から見る</option></select></div>
+        <div class="field"><label for="seconds">時間</label><select id="seconds" data-save><option value="">選ぶ</option><option value="3">3秒くらい</option><option value="5">5秒くらい</option><option value="8">8秒くらい</option></select></div>
+        <div class="field"><label for="title">作品タイトル<span class="hint">早く終わった人だけ</span></label><input id="title" data-save type="text" autocomplete="off"></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>AIへ渡す1文</legend>
+      <textarea id="prompt1Generated" class="output tall" readonly aria-label="生成されたプロンプト"></textarea>
+      <div class="actions">
+        <button class="button" type="button" id="fillExample">例を入れる</button>
+        <button class="button primary" type="button" data-copy="prompt1Generated">1文をコピー</button>
+        <button class="button teal" type="button" data-next="2">ワーク2へ進む</button>
+        <button class="button" type="button" data-print>印刷</button>
+      </div>
+      <p class="message" aria-live="polite"></p>
+    </fieldset>
+
+    <div class="completion"><strong>完成条件</strong>5項目が埋まり、AIへ入力する1文が表示されている。</div>
+    <p class="teacher-note">実在人物、学校名、住所などの個人情報は入力しません。</p>
+  </section>
+
+  <section class="panel" data-panel="2">
+    <div class="work-head">
+      <div><div class="work-no">WORK 2</div><h2>最初の動画をつくろう</h2><p class="goal">設計文をDreaminaへ入力し、1本目を最後まで観察する。</p></div>
+      <span class="time">10分</span>
+    </div>
+    <div class="progress" id="progress2">準備中</div>
+
+    <div class="steps" aria-label="生成手順">
+      <div class="step"><b>STEP 1</b>設計文を入力</div>
+      <div class="step"><b>STEP 2</b>残量を確認して1回生成</div>
+      <div class="step"><b>STEP 3</b>最初から最後まで見る</div>
+    </div>
+
+    <fieldset>
+      <legend>入力するプロンプト</legend>
+      <textarea id="prompt2" class="tall" data-save></textarea>
+      <div class="actions">
+        <button class="button primary" type="button" data-copy="prompt2">プロンプトをコピー</button>
+        <a class="button teal" href="https://dreamina.capcut.com/ja-jp/" target="_blank" rel="noopener">Dreaminaを開く</a>
+        <button class="button" type="button" data-print>印刷</button>
+      </div>
+      <p class="message" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset>
+      <legend>生成前の確認</legend>
+      <div class="checks">
+        <label class="check"><input id="safePersonal" data-save type="checkbox">人物写真や個人情報を入れていない</label>
+        <label class="check"><input id="safeCredit" data-save type="checkbox">必要クレジットと残量を確認した</label>
+        <label class="check"><input id="safePurchase" data-save type="checkbox">購入画面では先生に確認する</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>1本目の観察</legend>
+      <div class="grid">
+        <div class="field full"><label for="resultMode">今日確認したもの</label><select id="resultMode" data-save><option value="">選ぶ</option><option>自分で生成した1本目</option><option>講師の完成例A</option></select></div>
+        <div class="field"><label for="liked">気に入った動き</label><textarea id="liked" data-save></textarea></div>
+        <div class="field"><label for="improve">直したい動き</label><textarea id="improve" data-save></textarea></div>
+      </div>
+    </fieldset>
+
+    <div class="actions">
+      <button class="button teal" type="button" data-next="3">ワーク3へ進む</button>
+    </div>
+    <div class="completion"><strong>完成条件</strong>動画を1本最後まで見て、気に入った動きと直したい動きを記録している。</div>
+    <p class="teacher-note">生成できない場合は講師の完成例Aを観察すれば完成です。新しい生成を繰り返しません。</p>
+  </section>
+
+  <section class="panel" data-panel="3">
+    <div class="work-head">
+      <div><div class="work-no">WORK 3</div><h2>条件を1つだけ変えて比べよう</h2><p class="goal">一つの言葉だけを書き換え、結果との関係を説明する。</p></div>
+      <span class="time">8分＋共有4分</span>
+    </div>
+    <div class="progress" id="progress3">変更する条件を選ぶ</div>
+
+    <fieldset>
+      <legend>変更前のプロンプト</legend>
+      <textarea id="prompt3Original" class="tall" data-save></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>変えるのは一つだけ</legend>
+      <div class="grid">
+        <div class="field"><label for="changeType">変える条件</label><select id="changeType" data-save><option value="">選ぶ</option><option>動き</option><option>カメラ</option><option>時間</option><option>雰囲気</option></select></div>
+        <div class="field"><label for="beforeWord">変更前の言葉<span class="hint">元の文にある言葉</span></label><input id="beforeWord" data-save type="text" autocomplete="off"></div>
+        <div class="field full"><label for="afterWord">変更後の言葉</label><input id="afterWord" data-save type="text" autocomplete="off"></div>
+      </div>
+      <p class="message warning" id="replaceMessage" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset>
+      <legend>変更後のプロンプト</legend>
+      <textarea id="prompt3Revised" class="output tall" readonly></textarea>
+      <div class="actions">
+        <button class="button primary" type="button" data-copy="prompt3Revised">変更後をコピー</button>
+        <a class="button teal" href="https://dreamina.capcut.com/ja-jp/" target="_blank" rel="noopener">Dreaminaを開く</a>
+        <button class="button" type="button" data-print>印刷</button>
+      </div>
+      <p class="message" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset>
+      <legend>比べて説明する</legend>
+      <div class="grid">
+        <div class="field full"><label for="comparison">変わったこと<span class="hint">生成できない場合は、変わると予想したこと</span></label><textarea id="comparison" data-save></textarea></div>
+        <div class="field full"><label for="nextTry">次に試したいこと</label><textarea id="nextTry" data-save></textarea></div>
+        <div class="field full"><label for="shareSentence">共有する一文</label><textarea id="shareSentence" class="output" readonly></textarea></div>
+      </div>
+    </fieldset>
+
+    <div class="actions">
+      <button class="button danger" type="button" id="resetWorkbook">入力を消す</button>
+    </div>
+    <div class="completion"><strong>完成条件</strong>変更後のプロンプトがあり、「変えた言葉」と「変わったこと」を一文で説明できる。</div>
+    <p class="teacher-note">2本目を生成できなくても、変更後の文章と変化の予想があれば完成です。</p>
+  </section>
+
+  <footer>TERACO.LABO</footer>
+</main>
+
+<script>
+(() => {
+  const storageKey = "teraco-video-workbook-v1";
+  const tabs = [...document.querySelectorAll(".tab")];
+  const panels = [...document.querySelectorAll(".panel")];
+  const fields = [...document.querySelectorAll("[data-save]")];
+  const initialState = readState();
+  let prompt2Manual = Boolean(initialState.__prompt2Manual);
+  let prompt3Manual = Boolean(initialState.__prompt3Manual);
+
+  function readState() {
+    try { return JSON.parse(localStorage.getItem(storageKey) || "{}"); }
+    catch { return {}; }
+  }
+
+  function saveState() {
+    const state = {};
+    for (const field of fields) state[field.id] = field.type === "checkbox" ? field.checked : field.value;
+    state.__prompt2Manual = prompt2Manual;
+    state.__prompt3Manual = prompt3Manual;
+    localStorage.setItem(storageKey, JSON.stringify(state));
+  }
+
+  function loadState() {
+    const state = readState();
+    for (const field of fields) {
+      if (!(field.id in state)) continue;
+      if (field.type === "checkbox") field.checked = Boolean(state[field.id]);
+      else field.value = state[field.id];
+    }
+  }
+
+  function generatedPrompt() {
+    const subject = document.querySelector("#subject").value.trim() || "［主役］";
+    const action = document.querySelector("#action").value.trim() || "［動き］";
+    const place = document.querySelector("#place").value.trim() || "［場所］";
+    const camera = document.querySelector("#camera").value || "［カメラ］";
+    const seconds = document.querySelector("#seconds").value ? `${document.querySelector("#seconds").value}秒くらい` : "［時間］";
+    return `${place}で、${subject}が${action}。カメラは${camera}。${seconds}の短い動画。`;
+  }
+
+  function update() {
+    const required1 = ["subject", "action", "place", "camera", "seconds"];
+    const count1 = required1.filter((id) => document.querySelector(`#${id}`).value.trim()).length;
+    document.querySelector("#prompt1Generated").value = generatedPrompt();
+    document.querySelector("#progress1").textContent = count1 === 5 ? "完成：5項目と1文がそろいました" : `完成 ${count1} / 5項目`;
+
+    const prompt2 = document.querySelector("#prompt2");
+    if (!prompt2Manual) prompt2.value = generatedPrompt();
+    const checksDone = ["safePersonal", "safeCredit", "safePurchase"].filter((id) => document.querySelector(`#${id}`).checked).length;
+    const observed = document.querySelector("#resultMode").value && document.querySelector("#liked").value.trim() && document.querySelector("#improve").value.trim();
+    document.querySelector("#progress2").textContent = observed && checksDone === 3 ? "完成：1本目の観察を記録しました" : `安全確認 ${checksDone} / 3`;
+
+    const original = document.querySelector("#prompt3Original");
+    if (!prompt3Manual) original.value = prompt2.value || generatedPrompt();
+    const before = document.querySelector("#beforeWord").value.trim();
+    const after = document.querySelector("#afterWord").value.trim();
+    const replaceMessage = document.querySelector("#replaceMessage");
+    let revised = original.value;
+    if (before && after && original.value.includes(before)) {
+      revised = original.value.replace(before, after);
+      replaceMessage.textContent = "一つの言葉だけを変更しました。";
+      replaceMessage.classList.remove("warning");
+    } else if (before && after) {
+      replaceMessage.textContent = "変更前の言葉が元の文に見つかりません。文と同じ言葉を入力してください。";
+      replaceMessage.classList.add("warning");
+    } else {
+      replaceMessage.textContent = "";
+    }
+    document.querySelector("#prompt3Revised").value = revised;
+
+    const comparison = document.querySelector("#comparison").value.trim() || "［変わったこと］";
+    const nextTry = document.querySelector("#nextTry").value.trim() || "［次に試したいこと］";
+    const beforeForShare = before || "［変更前］";
+    const afterForShare = after || "［変更後］";
+    document.querySelector("#shareSentence").value = `「${beforeForShare}」を「${afterForShare}」に変えたら、「${comparison}」になった。次は「${nextTry}」を試したい。`;
+    const work3Done = document.querySelector("#changeType").value && before && after && original.value.includes(before) && document.querySelector("#comparison").value.trim();
+    document.querySelector("#progress3").textContent = work3Done ? "完成：変更と結果を説明できます" : "変更する条件を一つ選びます";
+    saveState();
+  }
+
+  function activate(work) {
+    tabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.work === String(work))));
+    panels.forEach((panel) => panel.classList.toggle("active", panel.dataset.panel === String(work)));
+    history.replaceState(null, "", `?work=${work}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    update();
+  }
+
+  async function copyText(id, trigger) {
+    const value = document.querySelector(`#${id}`).value;
+    const message = trigger.closest("fieldset")?.querySelector(".message");
+    try {
+      await navigator.clipboard.writeText(value);
+      if (message) message.textContent = "コピーしました。";
+    } catch {
+      const field = document.querySelector(`#${id}`);
+      const wasReadonly = field.hasAttribute("readonly");
+      field.removeAttribute("readonly"); field.select(); document.execCommand("copy");
+      if (wasReadonly) field.setAttribute("readonly", "");
+      if (message) message.textContent = "コピーしました。";
+    }
+  }
+
+  loadState();
+  fields.forEach((field) => {
+    field.addEventListener("input", () => {
+      if (field.id === "prompt2") prompt2Manual = true;
+      if (field.id === "prompt3Original") prompt3Manual = true;
+      update();
+    });
+    field.addEventListener("change", () => { saveState(); update(); });
+  });
+  tabs.forEach((tab) => tab.addEventListener("click", () => activate(tab.dataset.work)));
+  document.querySelectorAll("[data-next]").forEach((button) => button.addEventListener("click", () => activate(button.dataset.next)));
+  document.querySelectorAll("[data-copy]").forEach((button) => button.addEventListener("click", () => copyText(button.dataset.copy, button)));
+  document.querySelectorAll("[data-print]").forEach((button) => button.addEventListener("click", () => window.print()));
+  document.querySelector("#fillExample").addEventListener("click", () => {
+    document.querySelector("#subject").value = "紙のロケット";
+    document.querySelector("#action").value = "ゆっくり浮かぶ";
+    document.querySelector("#place").value = "明るい体育館";
+    document.querySelector("#camera").value = "少し近づく";
+    document.querySelector("#seconds").value = "5";
+    saveState(); update();
+  });
+  document.querySelector("#resetWorkbook").addEventListener("click", () => {
+    if (!confirm("3つのワークの入力をすべて消しますか？")) return;
+    localStorage.removeItem(storageKey);
+    prompt2Manual = false; prompt3Manual = false;
+    fields.forEach((field) => { if (field.type === "checkbox") field.checked = false; else field.value = ""; });
+    update(); activate(1);
+  });
+
+  const requestedWork = new URLSearchParams(location.search).get("work");
+  update(); activate(["1", "2", "3"].includes(requestedWork) ? requestedWork : "1");
+})();
+</script>
+</body>
+</html>

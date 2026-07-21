@@ -24,6 +24,9 @@
   h1{font-size:28px;line-height:1.35;margin-top:8px;}
   .lead{font-size:14px;color:var(--sub);margin-top:10px;}
   .notice{margin:20px 0;padding:14px 16px;background:var(--soft);border-left:4px solid var(--teal);font-size:13px;}
+  .workbook{margin:18px 0 24px;padding:18px 20px;background:var(--paper);border:1px solid var(--line);border-radius:8px;}
+  .workbook h2{font-size:18px;}
+  .workbook p{font-size:13px;color:var(--sub);margin-top:6px;}
   .service{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:20px;margin:14px 0;}
   .service-head{display:flex;align-items:flex-start;gap:12px;}
   .rank{color:var(--orange);font-weight:800;font-size:12px;letter-spacing:.08em;padding-top:4px;}
@@ -56,6 +59,16 @@
   </header>
 
   <p class="notice">授業では先生が指定したサービスを使います。無料クレジットや画面は変わるため、生成前に残量を確認してください。</p>
+
+  <section class="workbook">
+    <h2>授業で使うワークテンプレート</h2>
+    <p>ワーク1の設計から、ワーク3の変更・比較までを記録します。</p>
+    <div class="actions">
+      <a class="button primary" href="ai-video-workbook.html?work=1">ワーク1 設計 <span>→</span></a>
+      <a class="button secondary" href="ai-video-workbook.html?work=2">ワーク2 生成 <span>→</span></a>
+      <a class="button secondary" href="ai-video-workbook.html?work=3">ワーク3 比較 <span>→</span></a>
+    </div>
+  </section>
 
   <section class="service">
     <div class="service-head"><span class="rank">01</span><div><h2>Google Flow</h2><p class="provider">提供元：Google Labs / Google LLC</p></div></div>
