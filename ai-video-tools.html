@@ -9,43 +9,113 @@
 <meta name="description" content="TERACO.LABO中学生AI講座で紹介する動画生成AIの公式リンク集">
 <style>
   :root{
-    --bg:#f7f7f3;--paper:#fff;--ink:#17253c;--sub:#667085;
-    --line:#dfe4ea;--orange:#ef6945;--teal:#168f96;--soft:#eef6f5;
+    --bg:#faf8f4;
+    --card:#ffffff;
+    --ink:#2b2823;
+    --sub:#8d867b;
+    --accent:#b0561f;
+    --accent-soft:#f4e9dd;
+    --line:#e7e0d4;
+    --hairline:#eee8dd;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   body{
     font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    font-feature-settings:"palt";
   }
-  .wrap{max-width:680px;margin:0 auto;padding:0 20px 64px;}
-  .back{display:inline-flex;margin:18px 0;color:var(--teal);font-size:13px;font-weight:700;text-decoration:none;}
-  header{padding:14px 2px 28px;border-bottom:1px solid var(--line);}
-  .brand{font-size:11px;letter-spacing:.22em;color:var(--teal);font-weight:800;}
-  h1{font-size:28px;line-height:1.35;margin-top:8px;}
-  .lead{font-size:14px;color:var(--sub);margin-top:10px;}
-  .notice{margin:20px 0;padding:14px 16px;background:var(--soft);border-left:4px solid var(--teal);font-size:13px;}
-  .workbook{margin:18px 0 24px;padding:18px 20px;background:var(--paper);border:1px solid var(--line);border-radius:8px;}
-  .workbook h2{font-size:18px;}
-  .workbook p{font-size:13px;color:var(--sub);margin-top:6px;}
-  .service{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:20px;margin:14px 0;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 22px 88px;}
+  .back{
+    display:inline-flex;
+    align-items:center;
+    margin:22px 0 0;
+    color:var(--sub);
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.03em;
+    text-decoration:none;
+  }
+  @media(hover:hover){.back:hover{color:var(--accent);}}
+  header{text-align:center;padding:46px 18px 38px;}
+  .brand{
+    font-size:11px;
+    letter-spacing:.34em;
+    color:var(--sub);
+    font-weight:600;
+    text-indent:.34em;
+  }
+  h1{
+    font-size:28px;
+    line-height:1.45;
+    margin-top:14px;
+    font-weight:700;
+    letter-spacing:.07em;
+  }
+  header .rule{width:36px;height:2px;background:var(--accent);margin:20px auto 0;}
+  .lead{font-size:13.5px;color:var(--sub);margin-top:18px;letter-spacing:.04em;}
+  .notice{
+    margin:0 0 26px;
+    padding:15px 17px;
+    background:var(--accent-soft);
+    border-radius:10px;
+    color:#6f4b32;
+    font-size:12.5px;
+    letter-spacing:.02em;
+  }
+  .service{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:20px 18px 18px;
+    margin:0 0 12px;
+  }
   .service-head{display:flex;align-items:flex-start;gap:12px;}
-  .rank{color:var(--orange);font-weight:800;font-size:12px;letter-spacing:.08em;padding-top:4px;}
-  .service h2{font-size:21px;line-height:1.35;}
+  .rank{color:var(--accent);font-weight:600;font-size:12px;letter-spacing:.1em;padding-top:4px;}
+  .service h2{font-size:19px;line-height:1.4;letter-spacing:.04em;}
   .provider{font-size:12px;color:var(--sub);margin-top:3px;}
-  .status{display:inline-block;margin-top:10px;padding:4px 9px;border:1px solid var(--teal);color:var(--teal);font-size:11px;font-weight:800;border-radius:999px;}
+  .status{
+    display:inline-block;
+    margin-top:11px;
+    padding:4px 10px;
+    background:var(--accent-soft);
+    color:var(--accent);
+    font-size:10.5px;
+    font-weight:700;
+    border-radius:999px;
+    letter-spacing:.04em;
+  }
   .desc{font-size:13.5px;margin-top:12px;}
-  .age{font-size:12.5px;color:#8a3c27;margin-top:10px;font-weight:700;}
+  .age{font-size:12.5px;color:#76533b;margin-top:10px;font-weight:700;}
   .actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:16px;}
-  .button{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:11px 14px;border-radius:8px;text-decoration:none;font-weight:800;font-size:14px;}
-  .button.primary{background:var(--ink);color:#fff;}
+  .button{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    min-height:48px;
+    padding:11px 14px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:700;
+    font-size:13.5px;
+    letter-spacing:.02em;
+  }
+  .button.primary{background:var(--accent);color:#fff;}
   .button.secondary{border:1px solid var(--line);color:var(--ink);background:#fff;}
+  @media(hover:hover){
+    .button.primary:hover{background:#974817;}
+    .button.secondary:hover{background:#fcfaf6;}
+  }
   .links{margin-top:10px;font-size:12px;color:var(--sub);}
-  .links a{color:var(--teal);}
-  .safety{margin-top:28px;padding-top:22px;border-top:1px solid var(--line);}
+  .links a{color:var(--accent);text-underline-offset:3px;}
+  .links .sep{padding:0 .35em;color:var(--line);}
+  .safety{margin-top:32px;padding:24px 6px 0;border-top:1px solid var(--line);}
   .safety h2{font-size:18px;}
   .safety ul{margin:10px 0 0 1.2em;color:var(--sub);font-size:13px;}
   .updated{margin-top:22px;font-size:11px;color:var(--sub);text-align:center;}
-  footer{text-align:center;margin-top:34px;color:var(--sub);font-size:11px;letter-spacing:.12em;}
+  footer{text-align:center;margin-top:34px;color:var(--sub);font-size:11px;letter-spacing:.2em;}
   @media(min-width:560px){.actions.two{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
@@ -55,18 +125,11 @@
   <header>
     <div class="brand">TERACO.LABO</div>
     <h1>動画生成AI<br>公式リンク集</h1>
-    <p class="lead">講座で紹介する3サービスへ、公式ページからアクセスできます。</p>
+    <div class="rule"></div>
+    <p class="lead">講座で紹介する5サービスへ、公式ページからアクセスできます。</p>
   </header>
 
   <p class="notice">授業では先生が指定したサービスを使います。無料クレジットや画面は変わるため、生成前に残量を確認してください。</p>
-
-  <section class="workbook">
-    <h2>授業で使うプロンプトテンプレート</h2>
-    <p>ワーク1・2・3を、既存のてらこ式テンプレートと同じ形式で使えます。</p>
-    <div class="actions">
-      <a class="button primary" href="https://teraco-labo.github.io/teraco-prompt-engineering/#middle-video" target="_blank" rel="noopener">第4回の3テンプレートを開く <span>→</span></a>
-    </div>
-  </section>
 
   <section class="service">
     <div class="service-head"><span class="rank">01</span><div><h2>Google Flow</h2><p class="provider">提供元：Google Labs / Google LLC</p></div></div>
@@ -100,6 +163,32 @@
       <a class="button secondary" href="https://play.google.com/store/apps/details?id=com.vidu.oversea&amp;hl=ja&amp;gl=JP" target="_blank" rel="noopener">Android <span>→</span></a>
     </div>
     <p class="links">iPhone・iPadはブラウザ版を使用。<a href="https://www.vidu.com/help-center" target="_blank" rel="noopener">公式ヘルプ</a></p>
+  </section>
+
+  <section class="service">
+    <div class="service-head"><span class="rank">04</span><div><h2>CapCut</h2><p class="provider">提供元：BYTEDANCE PTE. LTD.</p></div></div>
+    <span class="status">予備候補①｜生成から編集まで</span>
+    <p class="desc">日本語の文章や画像から短い動画を作り、そのまま字幕・音・長さを編集できます。</p>
+    <p class="age">13歳以上。18歳未満は保護者または法定代理人の同意が必要です。</p>
+    <div class="actions two">
+      <a class="button primary" href="https://www.capcut.com/ja-jp/tools/ai-video" target="_blank" rel="noopener">公式ブラウザ版 <span>→</span></a>
+      <a class="button secondary" href="https://apps.apple.com/jp/app/capcut-%E5%86%99%E7%9C%9F-%E5%8B%95%E7%94%BB%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%83%BC/id1500855883" target="_blank" rel="noopener">iPhone・iPad <span>→</span></a>
+      <a class="button secondary" href="https://play.google.com/store/apps/details?gl=jp&amp;hl=ja&amp;id=com.lemon.lvoverseas" target="_blank" rel="noopener">Android <span>→</span></a>
+    </div>
+    <p class="links"><a href="https://www.capcut.com/ja-jp/tools/text-to-video-ai" target="_blank" rel="noopener">テキストから動画</a><span class="sep">／</span><a href="https://www.capcut.com/ja-jp/tools/image-to-video-ai" target="_blank" rel="noopener">画像から動画</a><span class="sep">／</span><a href="https://www.capcut.com/clause/terms-of-service" target="_blank" rel="noopener">公式利用規約</a></p>
+  </section>
+
+  <section class="service">
+    <div class="service-head"><span class="rank">05</span><div><h2>Canva for Education</h2><p class="provider">提供元：Canva Pty Ltd</p></div></div>
+    <span class="status">予備候補②｜学校で管理しやすい</span>
+    <p class="desc">文章からのAI動画生成に加え、写真・文字・音楽を組み合わせた動画編集まで行えます。</p>
+    <p class="age">生徒は、学校または先生が招待・管理するCanva教育版アカウントで使用します。AI機能は学校の設定により表示されない場合があります。</p>
+    <div class="actions two">
+      <a class="button primary" href="https://www.canva.com/ja_jp/create/animated-videos/" target="_blank" rel="noopener">公式ブラウザ版 <span>→</span></a>
+      <a class="button secondary" href="https://apps.apple.com/jp/app/id897446215" target="_blank" rel="noopener">iPhone・iPad <span>→</span></a>
+      <a class="button secondary" href="https://play.google.com/store/apps/details?id=com.canva.editor&amp;hl=ja&amp;gl=JP" target="_blank" rel="noopener">Android <span>→</span></a>
+    </div>
+    <p class="links"><a href="https://www.canva.com/education/" target="_blank" rel="noopener">Canva教育版</a><span class="sep">／</span><a href="https://www.canva.com/policies/ai-safety/" target="_blank" rel="noopener">AIの安全性</a></p>
   </section>
 
   <section class="safety">
