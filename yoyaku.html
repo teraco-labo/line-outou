@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<meta name="robots" content="noindex">
+<title>講座のご予約 | TERACO.LABO</title>
+<meta name="description" content="TERACO.LABO・スマホ教室TERACO 講座予約の入口">
+<style>
+  :root{
+    --bg:#faf8f4;
+    --card:#ffffff;
+    --ink:#2b2823;
+    --sub:#8d867b;
+    --green:#06C755;
+    --green-deep:#039744;
+    --accent:#b0561f;
+    --line:#e7e0d4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:0 20px 72px;}
+  header{text-align:center;padding:48px 12px 30px;}
+  .brand{font-size:12px;letter-spacing:.3em;color:var(--sub);font-weight:600;text-indent:.3em;}
+  header h1{font-size:28px;margin-top:12px;font-weight:700;letter-spacing:.06em;}
+  header .rule{width:36px;height:2px;background:var(--accent);margin:18px auto 0;}
+  header p.lead{margin-top:16px;color:var(--sub);font-size:15px;}
+
+  .section{margin-top:34px;}
+  .section h2{font-size:17px;color:var(--sub);font-weight:700;letter-spacing:.08em;margin-bottom:14px;padding-left:2px;}
+
+  a.btn{
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    background:var(--card);
+    border:3px solid var(--green);
+    color:var(--green-deep);
+    font-size:21px;
+    font-weight:700;
+    padding:24px 16px;
+    border-radius:16px;
+    margin-bottom:14px;
+    box-shadow:0 4px 10px rgba(0,0,0,.05);
+  }
+  a.btn:active{transform:translateY(2px);box-shadow:none;}
+  a.btn .sub{display:block;font-size:14px;font-weight:600;color:var(--sub);margin-top:6px;}
+
+  a.btn.form{border-color:var(--accent);color:var(--accent);}
+
+  .empty{
+    text-align:center;color:var(--sub);font-size:16px;
+    background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 16px;
+  }
+  footer{text-align:center;margin-top:48px;color:var(--sub);font-size:12px;letter-spacing:.06em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">TERACO.LABO</div>
+    <h1>講座のご予約</h1>
+    <div class="rule"></div>
+    <p class="lead">ご希望の予約方法をお選びください</p>
+  </header>
+
+  <div class="section">
+    <h2>教室のレッスン</h2>
+    <a class="btn" href="https://teraco-labo.com/pwa-reserve/">
+      教室の予約アプリをひらく
+      <span class="sub">スマホ教室・パソコンAI講座・個人レッスン</span>
+    </a>
+  </div>
+
+  <div class="section">
+    <h2>公民館講座</h2>
+    <div id="formList"></div>
+  </div>
+
+  <footer>TERACO.LABO ／ スマホ教室TERACO</footer>
+</div>
+
+<script>
+// ============================================================
+// 公民館講座の募集フォーム一覧
+// 募集が増えたら下のリストに1行追加、終わったら行を削除するだけ。
+// 例: { label: '○○公民館 スマホ講座（10月開講）', url: 'https://docs.google.com/forms/...' },
+// ============================================================
+var KOMINKAN_FORMS = [
+  { label: '公民館講座の申込みフォーム', url: 'https://docs.google.com/forms/d/e/1FAIpQLSeby0MPc-OUo0hYt2mXSKBrNN9jRlim9REOTBgg9Tnev_teig/viewform' }
+];
+
+(function () {
+  var box = document.getElementById('formList');
+  if (!KOMINKAN_FORMS.length) {
+    box.innerHTML = '<div class="empty">現在、募集中の公民館講座はありません。</div>';
+    return;
+  }
+  KOMINKAN_FORMS.forEach(function (f) {
+    var a = document.createElement('a');
+    a.className = 'btn form';
+    a.href = f.url;
+    a.innerHTML = f.label + '<span class="sub">申込みフォームがひらきます</span>';
+    box.appendChild(a);
+  });
+})();
+</script>
+</body>
+</html>
