@@ -1,1 +1,7 @@
 .claude/
+
+# 環境変数・シークレット
+.env
+.env.*
+*.env
+.DS_Store
