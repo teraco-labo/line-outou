@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<meta name="robots" content="noindex, nofollow">
+<title>講師用 | てらこ図書館</title>
+<!--
+  講師用ページ。投影用スライド（スピーカーノート入り）は、鍵をかけた .lock ファイルで置いてある。
+  パスワードを入れたときだけ、このブラウザの中で元に戻して新しいタブで開く（パスワードはどこにも送らない・残さない）。
+  鍵のかけ方：~/.claude/skills/teraco-slide/templates/lock_for_teacher.mjs
+  講座を足すときは、下の LECTURES に1行足す。
+-->
+<style>
+  :root{ --bg:#faf8f4; --card:#fff; --ink:#2b2823; --sub:#8d867b; --accent:#b0561f; --accent-soft:#f4e9dd; --line:#e7e0d4; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;font-feature-settings:"palt";}
+  .wrap{max-width:640px;margin:0 auto;padding:0 22px 88px;}
+  header{text-align:center;padding:56px 18px 32px;}
+  .brand{font-size:11px;letter-spacing:.34em;color:var(--sub);font-weight:600;}
+  h1{font-size:24px;margin-top:10px;}
+  .lead{font-size:14px;color:var(--sub);margin-top:6px;}
+  .pass{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:22px;}
+  .pass label{font-size:13px;color:var(--sub);display:block;margin-bottom:8px;}
+  .pass input{width:100%;font-size:18px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;}
+  .msg{font-size:13px;margin-top:8px;min-height:20px;color:var(--accent);}
+  .sec{font-size:13px;color:var(--sub);margin:22px 0 8px;letter-spacing:.08em;}
+  .card{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:10px;font:inherit;color:inherit;cursor:pointer;}
+  .card:hover{border-color:var(--accent);}
+  .card .num{font-size:13px;color:var(--accent);font-weight:700;width:26px;flex:none;}
+  .card .t{font-weight:700;}
+  .card .s{display:block;font-size:12.5px;color:var(--sub);}
+  .card .arrow{margin-left:auto;color:var(--accent);}
+  .note{font-size:12.5px;color:var(--sub);margin-top:22px;line-height:1.8;}
+  a.back{font-size:13px;color:var(--sub);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">TERACO.LABO</div>
+    <h1>講師用</h1>
+    <p class="lead">投影用スライド（スピーカーノートつき）</p>
+  </header>
+
+  <div class="pass">
+    <label for="pw">パスワード</label>
+    <input id="pw" type="password" autocomplete="current-password" inputmode="text">
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div id="list"></div>
+
+  <p class="note">押すと、新しいタブでスライドが開きます。このページは開いたままにしてください（閉じるとスライドも使えなくなります）。<br>
+  発表者ビュー：スライドを開いて S キー（全画面にする前に）。ネットのない会場では、手元のファイルを使ってください。</p>
+  <p class="note"><a class="back" href="../">← てらこ図書館にもどる</a></p>
+</div>
+
+<script>
+// 講座の一覧。file は同じフォルダの .lock ファイル
+const LECTURES = [
+  { sec: 'おとなのAI講座', num: '04', title: 'AIで、音楽と短い動画をつくる', sub: '全45枚・90分', file: 'otona-ai-04.lock' },
+];
+
+const list = document.getElementById('list');
+let last = '';
+LECTURES.forEach(function (l) {
+  if (l.sec !== last) { const h = document.createElement('div'); h.className = 'sec'; h.textContent = l.sec; list.appendChild(h); last = l.sec; }
+  const b = document.createElement('button');
+  b.className = 'card';
+  b.innerHTML = '<span class="num"></span><span><span class="t"></span><span class="s"></span></span><span class="arrow">→</span>';
+  b.querySelector('.num').textContent = l.num; b.querySelector('.t').textContent = l.title; b.querySelector('.s').textContent = l.sub;
+  b.onclick = function () { openLecture(l, b); };
+  list.appendChild(b);
+});
+
+const msg = document.getElementById('msg');
+const b64 = function (s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); };
+
+async function openLecture(l, btn) {
+  const pass = document.getElementById('pw').value;
+  if (!pass) { msg.textContent = 'パスワードを入れてください'; return; }
+  // タブは先に開いておく（あとで開くとポップアップとして止められることがあるため）
+  const tab = window.open('', '_blank');
+  msg.textContent = 'ひらいています…';
+  try {
+    const box = await (await fetch(l.file, { cache: 'no-store' })).json();
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64(box.salt), iterations: box.iter, hash: 'SHA-256' },
+      base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(box.iv) }, key, b64(box.data));
+    const url = URL.createObjectURL(new Blob([plain], { type: 'text/html;charset=utf-8' }));
+    if (tab) tab.location.href = url; else window.open(url, '_blank');
+    msg.textContent = '';
+  } catch (e) {
+    if (tab) tab.close();
+    msg.textContent = 'パスワードがちがうか、ファイルを読めませんでした';
+  }
+}
+</script>
+</body>
+</html>
