@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>ラジオを聴く | てらこ先生</title>
+<meta name="description" content="てらこ先生の「世界一わかりやすい」シリーズ。スマホニュースとAIニュース">
+<style>
+  :root{
+    --bg:#faf8f4; --card:#ffffff; --ink:#2b2823; --sub:#8d867b; --line:#e7e0d4;
+    --sumaho:#1E4D3B; --sumaho-btn:#E8792B; --ai:#0f172a; --ai-btn:#0e7490;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:560px;margin:0 auto;padding:0 20px 72px;}
+  header{text-align:center;padding:44px 12px 22px;}
+  .brand{font-size:12px;letter-spacing:.3em;color:var(--sub);font-weight:600;text-indent:.3em;}
+  header h1{font-size:28px;margin-top:10px;font-weight:700;letter-spacing:.06em;}
+  .show{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:20px;
+        box-shadow:0 4px 10px rgba(0,0,0,.05);}
+  .show .top{display:flex;gap:14px;align-items:center;padding:16px;color:#fff;}
+  .show.sumaho .top{background:var(--sumaho);} .show.ai .top{background:var(--ai);}
+  .show img{width:72px;height:72px;border-radius:10px;flex:none;}
+  .show .name{font-size:13px;opacity:.85;} .show .name b{display:block;font-size:21px;opacity:1;line-height:1.35;}
+  .show .when{font-size:13px;opacity:.85;margin-top:2px;}
+  .show .body{padding:16px;}
+  .latest{font-size:17px;font-weight:700;line-height:1.5;min-height:1.5em;}
+  .date{font-size:14px;color:var(--sub);margin-top:2px;}
+  a.listen{display:block;text-align:center;text-decoration:none;color:#fff;font-size:22px;font-weight:700;
+           padding:16px;border-radius:14px;margin-top:12px;}
+  .sumaho a.listen{background:var(--sumaho-btn);} .ai a.listen{background:var(--ai-btn);}
+  a.listen:active{transform:translateY(2px);}
+  a.spotify{display:block;text-align:center;font-size:15px;color:var(--sub);margin-top:10px;}
+  .foot{margin-top:34px;text-align:center;font-size:14px;}
+  .foot a{color:var(--sub);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">TERACO</div>
+    <h1>ラジオを聴く</h1>
+  </header>
+
+  <section class="show sumaho">
+    <div class="top">
+      <img src="https://teraco-labo.github.io/teraco-sumaho-news/cover.jpg" alt="">
+      <div><div class="name">世界一わかりやすい<b>スマホニュース</b></div><div class="when">毎週 火曜・金曜の朝</div></div>
+    </div>
+    <div class="body">
+      <div class="latest" id="s-title"></div>
+      <div class="date" id="s-date"></div>
+      <a class="listen" id="s-link" href="https://teraco-labo.github.io/teraco-sumaho-news/">聴く</a>
+      <a class="spotify" href="https://open.spotify.com/show/3jx1jEp9mOCeTlMFiGSuad">Spotify でフォロー</a>
+    </div>
+  </section>
+
+  <section class="show ai">
+    <div class="top">
+      <img src="https://teraco-labo.github.io/ai-news-digest/podcast/cover.jpg" alt="">
+      <div><div class="name">世界一わかりやすい<b>AIニュース</b></div><div class="when">毎朝</div></div>
+    </div>
+    <div class="body">
+      <div class="latest" id="a-title"></div>
+      <div class="date" id="a-date"></div>
+      <a class="listen" href="https://teraco-labo.github.io/ai-news-digest/podcast/player.html">聴く</a>
+      <a class="spotify" href="https://open.spotify.com/show/0kuCanHapeNX2ALHYvzbf3">Spotify でフォロー</a>
+    </div>
+  </section>
+
+  <div class="foot"><a href="./">てらこ図書館へ</a></div>
+</div>
+<script>
+const W = '日月火水木金土';
+function jp(d){ const t = new Date(d + 'T00:00:00+09:00'); return (t.getMonth()+1) + '月' + t.getDate() + '日（' + W[t.getDay()] + '）'; }
+fetch('/teraco-sumaho-news/episodes.json?v=' + Date.now()).then(r => r.json()).then(e => {
+  if (!e.length) return;
+  document.getElementById('s-title').textContent = e[0].title.replace(/^第\d+回\s*/, '');
+  document.getElementById('s-date').textContent = jp(e[0].date);
+  document.getElementById('s-link').href = e[0].page;
+}).catch(() => {});
+fetch('/ai-news-digest/podcast/episodes.json?v=' + Date.now()).then(r => r.json()).then(e => {
+  if (!e.length) return;
+  const x = e.slice().sort((a, b) => b.date.localeCompare(a.date))[0];
+  document.getElementById('a-title').textContent = x.title;
+  document.getElementById('a-date').textContent = jp(x.date);
+}).catch(() => {});
+</script>
+</body>
+</html>
