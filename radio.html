@@ -28,8 +28,12 @@
   .show .body{padding:16px;}
   .latest{font-size:17px;font-weight:700;line-height:1.5;min-height:1.5em;}
   .date{font-size:14px;color:var(--sub);margin-top:2px;}
-  a.listen{display:block;text-align:center;text-decoration:none;color:#fff;font-size:22px;font-weight:700;
-           padding:16px;border-radius:14px;margin-top:12px;}
+  .btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+  a.listen,a.read{display:block;text-align:center;text-decoration:none;font-size:20px;font-weight:700;
+           padding:15px 6px;border-radius:14px;}
+  a.listen{color:#fff;}
+  a.read{background:#fff;border:3px solid;}
+  .sumaho a.read{color:var(--sumaho);border-color:var(--sumaho);} .ai a.read{color:var(--ai-btn);border-color:var(--ai-btn);}
   .sumaho a.listen{background:var(--sumaho-btn);} .ai a.listen{background:var(--ai-btn);}
   a.listen:active{transform:translateY(2px);}
   a.spotify{display:block;text-align:center;font-size:15px;color:var(--sub);margin-top:10px;}
@@ -52,7 +56,10 @@
     <div class="body">
       <div class="latest" id="s-title"></div>
       <div class="date" id="s-date"></div>
-      <a class="listen" id="s-link" href="https://teraco-labo.github.io/teraco-sumaho-news/">聴く</a>
+      <div class="btns">
+        <a class="listen" id="s-link" href="https://teraco-labo.github.io/teraco-sumaho-news/">音声で聴く</a>
+        <a class="read" id="s-read" href="https://teraco-labo.github.io/teraco-sumaho-news/#yomu">文字で読む</a>
+      </div>
       <a class="spotify" href="https://open.spotify.com/show/3jx1jEp9mOCeTlMFiGSuad">Spotify でフォロー</a>
     </div>
   </section>
@@ -65,7 +72,10 @@
     <div class="body">
       <div class="latest" id="a-title"></div>
       <div class="date" id="a-date"></div>
-      <a class="listen" href="https://teraco-labo.github.io/ai-news-digest/podcast/player.html">聴く</a>
+      <div class="btns">
+        <a class="listen" href="https://teraco-labo.github.io/ai-news-digest/podcast/player.html">音声で聴く</a>
+        <a class="read" href="https://teraco-labo.github.io/ai-news-digest/">文字で読む</a>
+      </div>
       <a class="spotify" href="https://open.spotify.com/show/0kuCanHapeNX2ALHYvzbf3">Spotify でフォロー</a>
     </div>
   </section>
@@ -80,6 +90,7 @@ fetch('/teraco-sumaho-news/episodes.json?v=' + Date.now()).then(r => r.json()).t
   document.getElementById('s-title').textContent = e[0].title.replace(/^第\d+回\s*/, '');
   document.getElementById('s-date').textContent = jp(e[0].date);
   document.getElementById('s-link').href = e[0].page;
+  document.getElementById('s-read').href = e[0].page + '#yomu';
 }).catch(() => {});
 fetch('/ai-news-digest/podcast/episodes.json?v=' + Date.now()).then(r => r.json()).then(e => {
   if (!e.length) return;
