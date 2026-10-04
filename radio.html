@@ -58,7 +58,7 @@
       <div class="date" id="s-date"></div>
       <div class="btns">
         <a class="listen" id="s-link" href="https://teraco-labo.github.io/teraco-sumaho-news/">音声で聴く</a>
-        <a class="read" id="s-read" href="https://teraco-labo.github.io/teraco-sumaho-news/#yomu">文字で読む</a>
+        <a class="read" id="s-read" href="https://teraco-labo.github.io/teraco-sumaho-news/episodes/2026-10-04/yomu.html">文字で読む</a>
       </div>
       <a class="spotify" href="https://open.spotify.com/show/3jx1jEp9mOCeTlMFiGSuad">Spotify でフォロー</a>
     </div>
@@ -90,7 +90,7 @@ fetch('/teraco-sumaho-news/episodes.json?v=' + Date.now()).then(r => r.json()).t
   document.getElementById('s-title').textContent = e[0].title.replace(/^第\d+回\s*/, '');
   document.getElementById('s-date').textContent = jp(e[0].date);
   document.getElementById('s-link').href = e[0].page;
-  document.getElementById('s-read').href = e[0].page + '#yomu';
+  document.getElementById('s-read').href = e[0].page + 'yomu.html';
 }).catch(() => {});
 fetch('/ai-news-digest/podcast/episodes.json?v=' + Date.now()).then(r => r.json()).then(e => {
   if (!e.length) return;
