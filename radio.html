@@ -9,7 +9,7 @@
 <style>
   :root{
     --bg:#faf8f4; --card:#ffffff; --ink:#2b2823; --sub:#8d867b; --line:#e7e0d4;
-    --sumaho:#1E4D3B; --sumaho-btn:#E8792B; --ai:#0f172a; --ai-btn:#0e7490;
+    --sumaho:#F9B050; --sumaho-btn:#E8720C; --ai:#0f172a; --ai-btn:#0e7490;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,BlinkMacSystemFont,sans-serif;
@@ -21,7 +21,7 @@
   .show{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:20px;
         box-shadow:0 4px 10px rgba(0,0,0,.05);}
   .show .top{display:flex;gap:14px;align-items:center;padding:16px;color:#fff;}
-  .show.sumaho .top{background:var(--sumaho);} .show.ai .top{background:var(--ai);}
+  .show.sumaho .top{background:linear-gradient(180deg,#FFFDF6,#FFE8C2);color:#3D261D;} .show.ai .top{background:var(--ai);}
   .show img{width:72px;height:72px;border-radius:10px;flex:none;}
   .show .name{font-size:13px;opacity:.85;} .show .name b{display:block;font-size:21px;opacity:1;line-height:1.35;}
   .show .when{font-size:13px;opacity:.85;margin-top:2px;}
@@ -33,7 +33,8 @@
            padding:15px 6px;border-radius:14px;}
   a.listen{color:#fff;}
   a.read{background:#fff;border:3px solid;}
-  .sumaho a.read{color:var(--sumaho);border-color:var(--sumaho);} .ai a.read{color:var(--ai-btn);border-color:var(--ai-btn);}
+  .sumaho a.read{color:var(--sumaho);border-color:var(--sumaho);}
+  a.listen.one{margin-top:12px;font-size:21px;padding:16px;} .ai a.read{color:var(--ai-btn);border-color:var(--ai-btn);}
   .sumaho a.listen{background:var(--sumaho-btn);} .ai a.listen{background:var(--ai-btn);}
   a.listen:active{transform:translateY(2px);}
   a.spotify{display:block;text-align:center;font-size:15px;color:var(--sub);margin-top:10px;}
@@ -56,10 +57,7 @@
     <div class="body">
       <div class="latest" id="s-title"></div>
       <div class="date" id="s-date"></div>
-      <div class="btns">
-        <a class="listen" id="s-link" href="https://teraco-labo.github.io/teraco-sumaho-news/">音声で聴く</a>
-        <a class="read" id="s-read" href="https://teraco-labo.github.io/teraco-sumaho-news/episodes/2026-10-04/yomu.html">文字で読む</a>
-      </div>
+      <a class="listen one" id="s-link" href="https://teraco-labo.github.io/teraco-sumaho-news/">聴く・読む</a>
       <a class="spotify" href="https://open.spotify.com/show/3jx1jEp9mOCeTlMFiGSuad">Spotify でフォロー</a>
     </div>
   </section>
@@ -90,7 +88,6 @@ fetch('/teraco-sumaho-news/episodes.json?v=' + Date.now()).then(r => r.json()).t
   document.getElementById('s-title').textContent = e[0].title.replace(/^第\d+回\s*/, '');
   document.getElementById('s-date').textContent = jp(e[0].date);
   document.getElementById('s-link').href = e[0].page;
-  document.getElementById('s-read').href = e[0].page + 'yomu.html';
 }).catch(() => {});
 fetch('/ai-news-digest/podcast/episodes.json?v=' + Date.now()).then(r => r.json()).then(e => {
   if (!e.length) return;
