@@ -191,6 +191,8 @@
   .arrow{color:var(--accent);font-size:13px;flex:none;align-self:center;}
 
   .card.soon{opacity:.45;}
+  /* 新作の目印 */
+  .badge.new{color:#fff;background:var(--accent);border-color:var(--accent);margin-left:8px;}
   .card.soon .num{color:var(--sub);}
   .badge{
     font-size:10.5px;font-weight:600;
@@ -545,10 +547,28 @@
     <summary>
       <span class="group-no">04</span>
       <span class="group-name">会員の方へ<svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-      <span class="group-count">2講座</span>
+      <span class="group-count">3講座</span>
       <span class="group-chev">▶</span>
     </summary>
     <div class="group-body">
+
+  <!-- パソコンの基礎とAI活用（2026-10 新シリーズ。Teraco Slide の HTML 版） -->
+  <details class="acc">
+    <summary>
+      <span class="stitle">パソコンの基礎とAI活用<span class="badge new">新作</span></span>
+      <span class="count">全4回</span>
+      <span class="chev">▶</span>
+    </summary>
+    <div class="acc-body">
+      <a class="card live" href="materials/pc-basics-ai-session01-slides.pdf" target="_blank" rel="noopener">
+        <span class="num">01</span><span class="card-body"><span class="t">マウスでパソコンを動かす</span><br class="sr"><span class="s">電源・マウス・ウィンドウの基本から、Chrome を開いて Gemini に声で話しかけるまで</span></span><span class="arrow">→</span>
+      </a>
+      <a class="home-text" href="materials/pc-basics-ai-session01-text.pdf" target="_blank" rel="noopener">おうちで復習テキスト →</a>
+      <div class="card soon"><span class="num">02</span><span class="card-body"><span class="t">文字を打って、調べる</span></span><span class="badge">近日公開</span></div>
+      <div class="card soon"><span class="num">03</span><span class="card-body"><span class="t">文章を書いて、しまっておく</span></span><span class="badge">近日公開</span></div>
+      <div class="card soon"><span class="num">04</span><span class="card-body"><span class="t">表とスライドにさわる・人と分ける</span></span><span class="badge">近日公開</span></div>
+    </div>
+  </details>
 
   <!-- パソコンAI実用講座 -->
   <details class="acc">
