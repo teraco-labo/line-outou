@@ -285,7 +285,9 @@
        background:#fff;color:var(--ink);font-size:13px;font-weight:700;text-decoration:none;letter-spacing:.04em;}
   .btn.main{background:var(--accent);border-color:var(--accent);color:#fff;}
   @media(hover:hover){.btn:hover{border-color:var(--accent);color:var(--accent);} .btn.main:hover{color:#fff;opacity:.9;}}
-  .group-acc.links{margin-top:28px;}
+  
+  @media(max-width:430px){.group-acc .group-body{padding:2px 0 24px;} .acc-body{padding:4px 12px 12px;} .acc>summary{padding:16px 14px;}
+    .ep{gap:8px;} .ep .num{width:20px;} .btn{padding:0 11px;font-size:12.5px;}}
   .gate{border:1px dashed var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;background:var(--card);}
   .gate-t{font-size:14px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
   .gate .row{display:flex;gap:10px;margin-top:12px;}
@@ -305,14 +307,14 @@
   </header>
 
   <!-- 講座の一覧は tools/build_library.py が library.json から作る。ここを手で直さない -->
-  <p class="list-title">講座</p>
   {{COURSES}}
   {{GATE}}
 
   <!-- ===== リンク集 ===== -->
   <details class="group-acc links">
     <summary>
-            <span class="group-name">リンク集</span>
+            <span class="group-no">{{LINKS_NO}}</span>
+      <span class="group-name">リンク集</span>
       <span class="group-count">4種類</span>
       <span class="group-chev">▶</span>
     </summary>

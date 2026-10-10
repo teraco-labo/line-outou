@@ -19,5 +19,5 @@ https://claude.ai/artifact/CPqCmNs5LpGkX8iaKLTZVL — 「てらこ図書館 プ�
 
 ## 図書館のページの作り方（2026-10-10〜）
 - index.html は手で直さない。`library.json` を直して `python3 tools/build_library.py` で作り直す（型は tools/library_template.html）
-- 並べ方は「講座 → 回 × 種類」。ボタンは スライド → 復習テキスト → 動画。生徒さんに見せてよい種類だけ（メモリ project_library_shelf_policy）
+- 並べ方は「対象の大きな段（はじめての方へ／学生の方へ／一般の方へ／教室の生徒さんへ）→ 講座 → 回 × 種類」（大きな段は 2026-10-10 藤崎さん「お客さんが見るから」）。ボタンは スライド → 復習テキスト → 動画。生徒さんに見せてよい種類だけ（メモリ project_library_shelf_policy）
 - 「教室の生徒さんへ」の鍵：番号を `~/.config/teraco/student_pass`（1行）に置き、library.json の `lock_students` を true にして作り直す。中身は students.lock に暗号化され、番号を入れたときだけ開く。**2026-10-10 時点では鍵はかけていない**（藤崎さん「生徒さんに言ってから」）。鍵をかけても materials/ の PDF 自体は住所を知っていれば開けるので、気になるなら PDF も .lock にする
