@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<meta name="robots" content="noindex">
+<title>てらこ図書館 | TERACO.LABO</title>
+<meta name="description" content="TERACO.LABOの教材置き場「てらこ図書館」">
+<style>
+  :root{
+    --bg:#faf8f4;
+    --card:#ffffff;
+    --ink:#2b2823;
+    --sub:#8d867b;
+    --accent:#b0561f;
+    --accent-soft:#f4e9dd;
+    --line:#e7e0d4;
+    --hairline:#eee8dd;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    font-feature-settings:"palt";
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 22px 88px;}
+
+  header{
+    text-align:center;
+    padding:64px 18px 44px;
+  }
+  .brand{
+    font-size:11px;
+    letter-spacing:.34em;
+    color:var(--sub);
+    font-weight:600;
+    text-indent:.34em;
+  }
+  header h1{
+    font-size:30px;
+    margin-top:14px;
+    line-height:1.4;
+    font-weight:700;
+    letter-spacing:.08em;
+  }
+  header .rule{
+    width:36px;height:2px;background:var(--accent);
+    margin:20px auto 0;
+  }
+  header p.lead{
+    margin-top:18px;
+    color:var(--sub);
+    font-size:13.5px;
+    letter-spacing:.05em;
+  }
+
+  /* ===== 年代グループ（アコーディオン） ===== */
+  .group-acc{
+    border-top:1px solid var(--line);
+  }
+  .group-acc:last-of-type{
+    border-bottom:1px solid var(--line);
+  }
+  .group-acc>summary{
+    list-style:none;
+    cursor:pointer;
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    padding:26px 6px;
+    user-select:none;
+    transition:background .2s ease;
+  }
+  .group-acc>summary::-webkit-details-marker{display:none;}
+  @media(hover:hover){.group-acc>summary:hover{background:rgba(176,86,31,.03);}}
+  .group-acc>summary .group-no{
+    font-size:12px;
+    font-weight:600;
+    color:var(--accent);
+    letter-spacing:.1em;
+    font-variant-numeric:tabular-nums;
+    flex:none;
+  }
+  .group-acc>summary .group-name{
+    flex:1;min-width:0;
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:.06em;
+  }
+  .group-acc>summary .group-name .lock{
+    width:13px;height:13px;
+    margin-left:8px;
+    color:#b9b2a6;
+    vertical-align:-1px;
+  }
+  .group-acc>summary .group-count{
+    font-size:11.5px;
+    color:var(--sub);
+    letter-spacing:.06em;
+    flex:none;
+  }
+  .group-acc>summary .group-chev{
+    flex:none;
+    color:var(--sub);
+    font-size:11px;
+    transition:transform .25s ease;
+    align-self:center;
+  }
+  .group-acc[open]>summary .group-chev{transform:rotate(90deg);}
+  .group-acc .group-body{
+    padding:2px 6px 30px;
+  }
+
+  /* ===== 講座アコーディオン ===== */
+  .acc{
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--card);
+    margin-bottom:12px;
+    overflow:hidden;
+  }
+  .acc>summary{
+    list-style:none;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:17px 18px;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:.03em;
+    user-select:none;
+    transition:background .2s ease;
+  }
+  .acc>summary::-webkit-details-marker{display:none;}
+  @media(hover:hover){.acc>summary:hover{background:#fcfaf6;}}
+  .acc>summary .stitle{flex:1;min-width:0;}
+  .acc>summary .count{
+    font-size:11px;
+    font-weight:600;
+    color:var(--sub);
+    letter-spacing:.06em;
+    flex:none;
+  }
+  .acc>summary .chev{
+    flex:none;color:var(--accent);font-size:10px;
+    transition:transform .25s ease;
+  }
+  .acc[open]>summary{
+    border-bottom:1px solid var(--hairline);
+    background:#fcfaf6;
+  }
+  .acc[open]>summary .chev{transform:rotate(90deg);}
+  .acc-body{
+    padding:6px 18px 14px;
+  }
+
+  /* ===== 教材リンク（行スタイル） ===== */
+  .card{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    padding:13px 2px;
+    text-decoration:none;
+    color:inherit;
+    border-bottom:1px solid var(--hairline);
+    transition:opacity .15s ease;
+  }
+  .acc-body .card:last-of-type,
+  .acc-body .card:last-child{border-bottom:none;}
+  @media(hover:hover){.card.live:hover .t{color:var(--accent);}}
+  .num{
+    flex:none;
+    font-size:12px;
+    font-weight:600;
+    color:var(--accent);
+    letter-spacing:.05em;
+    font-variant-numeric:tabular-nums;
+    width:22px;
+  }
+  .card-body{flex:1;min-width:0;}
+  .card-body .t{
+    font-size:14.5px;font-weight:700;letter-spacing:.02em;
+    transition:color .15s ease;
+  }
+  .card-body .s{font-size:12px;color:var(--sub);margin-top:3px;letter-spacing:.02em;}
+  .arrow{color:var(--accent);font-size:13px;flex:none;align-self:center;}
+
+  .card.soon{opacity:.45;}
+  /* 新作の目印 */
+  .badge.new{color:#fff;background:var(--accent);border-color:var(--accent);margin-left:8px;}
+  .card .badge.new{margin:0 4px 0 6px;}
+  .card.soon .num{color:var(--sub);}
+  .badge{
+    font-size:10.5px;font-weight:600;
+    color:var(--sub);border:1px solid var(--line);
+    padding:2px 10px;border-radius:999px;flex:none;
+    letter-spacing:.05em;
+    align-self:center;
+  }
+
+  /* 準備中の予告行 */
+  .teaser{
+    display:flex;align-items:center;gap:12px;
+    border:1px dashed var(--line);
+    border-radius:12px;
+    padding:17px 18px;
+    color:var(--sub);font-size:13.5px;
+    letter-spacing:.03em;
+  }
+  .teaser .stitle{flex:1;font-weight:700;}
+  .teaser .badge{flex:none;}
+
+  /* 講座内のテンプレート案内 */
+  .tool-note{
+    display:flex;align-items:center;gap:10px;
+    margin:10px 0 4px;
+    padding:12px 14px;
+    background:var(--accent-soft);
+    border-radius:9px;
+    text-decoration:none;color:var(--accent);
+    font-size:12.5px;font-weight:700;
+    letter-spacing:.03em;
+  }
+  .tool-note .arrow{margin-left:auto;color:var(--accent);}
+
+  /* プロンプト直接リンク */
+  .linkbar{
+    display:flex;align-items:center;gap:12px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--card);
+    padding:17px 18px;
+    margin-bottom:12px;
+    font-size:15px;font-weight:700;
+    letter-spacing:.03em;
+    text-decoration:none;color:inherit;
+    transition:background .2s ease;
+  }
+  @media(hover:hover){.linkbar:hover{background:#fcfaf6;}
+    .linkbar:hover .stitle{color:var(--accent);}}
+  .linkbar .stitle{flex:1;min-width:0;transition:color .15s ease;}
+  .linkbar .note{
+    font-size:11px;color:var(--sub);flex:none;letter-spacing:.05em;
+  }
+  .linkbar .go{flex:none;color:var(--accent);font-size:13px;}
+  @media(max-width:520px){
+    .linkbar{flex-wrap:wrap;}
+    .linkbar .stitle{flex:1 1 auto;}
+    .linkbar .go{order:2;}
+    .linkbar .note{flex-basis:100%;order:3;margin-top:2px;}
+  }
+
+  .home-text{display:block;text-align:right;font-size:12.5px;color:var(--accent);text-decoration:none;margin:-4px 6px 12px 0;}
+  .home-text:hover{text-decoration:underline;}
+  footer{
+    text-align:center;
+    margin-top:72px;
+    padding-top:28px;
+    color:var(--sub);
+    font-size:11px;
+    letter-spacing:.2em;
+  }
+  footer a{color:var(--sub);text-decoration:none;}
+
+  /* ===== 2026-10-10 講座ごと・回 × 種類（スライド → 復習テキスト → 動画） ===== */
+  .list-title{font-size:12px;color:var(--sub);letter-spacing:.14em;margin:0 4px 12px;}
+  .acc>summary{display:grid;grid-template-columns:1fr auto auto;column-gap:12px;row-gap:6px;}
+  .aud{display:inline-block;font-size:10.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);
+       border-radius:999px;padding:2px 10px;letter-spacing:.06em;justify-self:start;}
+  .acc>summary .aud{grid-column:1/-1;}
+  .ep{display:flex;gap:10px;padding:14px 2px;border-bottom:1px solid var(--hairline);}
+  .acc-body .ep:last-of-type{border-bottom:none;}
+  .ep .num{padding-top:2px;}
+  .ep-main{flex:1;min-width:0;}
+  .ep-main .t{font-size:14.5px;font-weight:700;letter-spacing:.02em;}
+  .ep-main .badge.new{margin-left:6px;vertical-align:1px;}
+  .ep-main .s{display:block;font-size:12px;color:var(--sub);margin-top:3px;letter-spacing:.02em;}
+  .btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  .btn{display:inline-flex;align-items:center;min-height:38px;padding:0 13px;border-radius:999px;border:1px solid var(--line);
+       background:#fff;color:var(--ink);font-size:13px;font-weight:700;text-decoration:none;letter-spacing:.04em;}
+  .btn.main{background:var(--accent);border-color:var(--accent);color:#fff;}
+  @media(hover:hover){.btn:hover{border-color:var(--accent);color:var(--accent);} .btn.main:hover{color:#fff;opacity:.9;}}
+  .group-acc.links{margin-top:28px;}
+  .gate{border:1px dashed var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;background:var(--card);}
+  .gate-t{font-size:14px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .gate .row{display:flex;gap:10px;margin-top:12px;}
+  .gate input{flex:1;min-width:0;font-size:18px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;}
+  .gate button{font:inherit;font-weight:700;color:#fff;background:var(--accent);border:0;border-radius:10px;padding:0 20px;cursor:pointer;}
+  .gate .msg{font-size:13px;color:var(--accent);margin-top:8px;min-height:18px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">TERACO.LABO</div>
+    <h1>てらこ図書館</h1>
+    <div class="rule"></div>
+    <p class="lead">講座で使う教材を、いつでも読み返せます</p>
+  </header>
+
+  <!-- 講座の一覧は tools/build_library.py が library.json から作る。ここを手で直さない -->
+  <p class="list-title">講座</p>
+  {{COURSES}}
+  {{GATE}}
+
+  <!-- ===== リンク集 ===== -->
+  <details class="group-acc links">
+    <summary>
+            <span class="group-name">リンク集</span>
+      <span class="group-count">4種類</span>
+      <span class="group-chev">▶</span>
+    </summary>
+    <div class="group-body">
+
+    <a class="linkbar" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
+      <span class="stitle">業界標準</span>
+      <span class="note">基本・推論・構造・エージェント・画像生成</span>
+      <span class="go">→</span>
+    </a>
+    <a class="linkbar" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
+      <span class="stitle">てらこ式</span>
+      <span class="note">各講座で使う穴埋めテンプレート</span>
+      <span class="go">→</span>
+    </a>
+    <a class="linkbar" href="ai-video-tools.html">
+      <span class="stitle">動画生成AI</span>
+      <span class="note">Google Flow・Dreamina・Vidu・CapCut・Canva</span>
+      <span class="go">→</span>
+    </a>
+    <a class="linkbar" href="https://gemini.google.com/" target="_blank" rel="noopener">
+      <span class="stitle">ゲーム・アプリ制作</span>
+      <span class="note">Gemini Canvas（開催前にアカウント確認）</span>
+      <span class="go">→</span>
+    </a>
+
+    </div>
+  </details>
+  <!-- ===== /リンク集 ===== -->
+  <footer>
+    <a href="https://teraco-labo.com/" target="_blank" rel="noopener">TERACO.LABO</a>
+  </footer>
+</div>
+<script>
+// 「教室の生徒さんへ」の鍵（lock_students が true のときだけ働く）。番号はこのページの中だけで使い、どこにも送らない・残さない
+if ({{LOCK_SCRIPT}}) {
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  async function unlock(file, pass) {
+    const box = await (await fetch(file, { cache: 'no-store' })).json();
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64(box.salt), iterations: box.iter, hash: 'SHA-256' },
+      base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    return new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(box.iv) }, key, b64(box.data)));
+  }
+  document.getElementById('gate').addEventListener('submit', async ev => {
+    ev.preventDefault();
+    const pass = document.getElementById('pw').value.trim(), msg = document.getElementById('msg');
+    if (!pass) { msg.textContent = '番号を入れてください'; return; }
+    msg.textContent = 'たしかめています…';
+    try {
+      if (await unlock('students-check.lock', pass) !== 'teraco-students-ok') throw 0;
+      document.getElementById('locked').innerHTML = await unlock('students.lock', pass);
+      document.getElementById('gate').hidden = true;
+    } catch (_) { msg.textContent = '番号がちがいます'; }
+  });
+}
+</script>
+</body>
+</html>

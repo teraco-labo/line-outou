@@ -1,0 +1,520 @@
+{
+ "_note": "てらこ図書館のデータ。講座を足すときはここに書いて python3 tools/build_library.py で index.html を作り直す（2026-10-10）。audience は「はじめての方へ／学生の方へ／一般の方へ／教室の生徒さんへ」。まだ授業でやっていない回は書かない（図書館には見せない）",
+ "lock_students": false,
+ "courses": [
+  {
+   "title": "「ずっと使える」スマホ講座",
+   "audience": "はじめての方へ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "LINEをもっと便利に使う",
+     "sub": "初心者向け・90分のLINE活用講座",
+     "slides": "https://drive.google.com/file/d/16vm-ajeF4LC7ITmpOnIKIWi7EzX5UTcP/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "02",
+     "title": "Googleマップで行き先と時間を調べる",
+     "sub": "初心者向け・90分のGoogleマップ活用講座",
+     "slides": "https://drive.google.com/file/d/1bvHVXQWuR88vArAJeZtxl4ASPAdcvXdH/view",
+     "new": false,
+     "text": "",
+     "videos": [
+      {
+       "url": "https://youtu.be/-4WZ8mZt9X8",
+       "label": "Googleマップで評判のいいお店を探す方法"
+      }
+     ]
+    },
+    {
+     "num": "03",
+     "title": "インターネットで安全に調べる",
+     "sub": "初心者向け・90分の調べもの講座",
+     "slides": "https://drive.google.com/file/d/1iqWuNHrkkVdXWtHzpfI5GYSaGbSzSikN/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    }
+   ],
+   "tools": [
+    {
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#senior",
+     "label": "プロンプトテンプレートを使う"
+    }
+   ]
+  },
+  {
+   "title": "「やさしい」AI講座",
+   "audience": "はじめての方へ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "スマホAIと話してみよう",
+     "sub": "スマホのAIに話しかけてみよう（聞く・くらべる・たしかめる）",
+     "slides": "https://drive.google.com/file/d/1skMjFYVVdt0K53SHkwDhr8O-CtpTUsnj/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "02",
+     "title": "言葉で画像を作ってみよう",
+     "sub": "「こんな絵がほしい」と言葉で伝えて画像を作ろう",
+     "slides": "https://drive.google.com/file/d/1CLqQ35o33BH7QVekCICqVaZAnse9Xqmg/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "03",
+     "title": "音と動画もAIにお願いしてみよう",
+     "sub": "AIに音楽や短い動画も作ってもらってみよう",
+     "slides": "https://drive.google.com/file/d/1fd18-aKHhTSJI2RcGhNmz52p8obY55wD/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "04",
+     "title": "健康メモと暮らし支援アプリ",
+     "sub": "毎日の健康や暮らしを助けるアプリを使ってみよう",
+     "slides": "https://drive.google.com/file/d/1LUCAcGjqIcQhPRPUNiOa5NHyJHfDrfGR/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    }
+   ],
+   "tools": []
+  },
+  {
+   "title": "公民館スマホ講座",
+   "audience": "はじめての方へ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "覚えなくていいスマホ",
+     "sub": "指の動き・困ったらホームへ・アイコンは絵の言葉",
+     "slides": "materials/kominkan-sumaho-session01-slides.pdf",
+     "new": true,
+     "text": "materials/kominkan-sumaho-session01-text.pdf",
+     "videos": [
+      {
+       "url": "https://youtu.be/MQXgAS2jxaM",
+       "label": "第1回「覚えなくていいスマホ」（6分）"
+      }
+     ]
+    },
+    {
+     "num": "02",
+     "title": "写真は、LINEで送ろう",
+     "sub": "撮って送る・選んで送る・保存する・そのまま渡す",
+     "slides": "materials/kominkan-sumaho-session02-slides.pdf",
+     "new": true,
+     "text": "materials/kominkan-sumaho-session02-text.pdf",
+     "videos": [
+      {
+       "url": "https://youtu.be/J0_P-hL0How",
+       "label": "第2回「写真は、LINEで送ろう」（5分）"
+      }
+     ]
+    },
+    {
+     "num": "03",
+     "title": "スタンプを、無料で使おう",
+     "sub": "スタンプの送り方・無料スタンプ・スマホの安全",
+     "slides": "materials/kominkan-sumaho-session03-slides.pdf",
+     "new": true,
+     "text": "materials/kominkan-sumaho-session03-text.pdf",
+     "videos": [
+      {
+       "url": "https://youtu.be/7fdhopdnS3k",
+       "label": "第3回「スタンプを、無料で使おう」（5分）"
+      },
+      {
+       "url": "https://youtu.be/O584wJWs9Bo",
+       "label": "LINEスタンプを無料でもらう方法"
+      }
+     ]
+    }
+   ],
+   "tools": []
+  },
+  {
+   "title": "はじめてのAI",
+   "audience": "はじめての方へ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "AI にプロンプトを送ってみよう",
+     "sub": "短い一文を送る・ひと言たして送り直す・ハルシネーション",
+     "slides": "materials/hajimete-ai-session01-slides.pdf",
+     "new": true,
+     "text": "materials/hajimete-ai-session01-text.pdf",
+     "videos": []
+    }
+   ],
+   "tools": []
+  },
+  {
+   "title": "小学生「遊んで学ぶ」AI講座",
+   "audience": "学生の方へ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "AIは「まほうのパートナー」",
+     "sub": "AIとおしゃべりして自分だけのヒーローをつくろう",
+     "slides": "https://drive.google.com/file/d/1MM89fpUj1p_DY1rSBCafivLEEB9HJkAW/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "02",
+     "title": "AIは「まほうの設計図」",
+     "sub": "言葉だけで自分だけのゲームをつくろう",
+     "slides": "https://drive.google.com/file/d/15HZCCSiM861Oe1vtpbVtzBGj7f592pve/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "03",
+     "title": "オリジナルアプリをつくろう",
+     "sub": "家族を助けるアプリを作ってスマホに入れよう",
+     "slides": "https://drive.google.com/file/d/1voDOiA2Asz5B6HGqCv7i20QZ6CE1dVHI/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    }
+   ],
+   "tools": [
+    {
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#elementary",
+     "label": "プロンプトテンプレートを使う"
+    }
+   ]
+  },
+  {
+   "title": "夏休みチャレンジ教室",
+   "audience": "学生の方へ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "親子で学ぶ♪こどもAIプログラミング教室",
+     "sub": "言葉でゲームとお助けアプリをつくろう",
+     "slides": "https://drive.google.com/file/d/1nK69qROmhr3qAqGDF9Z7d3Lf8RlA9csr/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    }
+   ],
+   "tools": [
+    {
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#summer",
+     "label": "プロンプトテンプレートを使う"
+    }
+   ]
+  },
+  {
+   "title": "中学生「創って学ぶ」AI講座",
+   "audience": "学生の方へ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "AIとの上手な話し方を知ろう",
+     "sub": "AIへの伝え方で、答えや動きが変わることを体験しよう",
+     "slides": "https://drive.google.com/file/d/1rUwqvhs51C7gHbL7o1u1QsBVqp3sbFFo/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "02",
+     "title": "画像生成AIでキャラクターをつくろう",
+     "sub": "頭の中のイメージを言葉にしてAIに伝えよう",
+     "slides": "https://drive.google.com/file/d/1yW4cADymbL6xQ_0P-TTJN-LktPM83wsb/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "03",
+     "title": "音楽生成AIでオリジナルソングをつくろう",
+     "sub": "気分やメッセージを、言葉から音楽にする",
+     "slides": "https://drive.google.com/file/d/1RzmlWYmirR_qk1FSbgGh5BBrvLEbTKga/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "04",
+     "title": "動画生成AIでショートムービーをつくろう",
+     "sub": "動き・時間・カメラを言葉で設計する",
+     "slides": "https://drive.google.com/file/d/1KZXV6giquRC3pIScfLu4bGp_a5YRfnv6/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "05",
+     "title": "AIでオリジナルゲームをつくろう",
+     "sub": "ルールを言葉にして、遊べる形にする",
+     "slides": "https://drive.google.com/file/d/1urcnZa0UIzJaZN1cDAGQIxvJh5JZvAaZ/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "06",
+     "title": "AIで役立つアプリをつくろう",
+     "sub": "誰かの困りごとを、動く仕組みに変える",
+     "slides": "https://docs.google.com/presentation/d/1ex6XP-kRp_eE-geyd4RchEk5HE4iN7HGdhpo3VpOPRY/edit?usp=drivesdk",
+     "new": false,
+     "text": "",
+     "videos": []
+    }
+   ],
+   "tools": [
+    {
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#middle-game",
+     "label": "第5回のゲーム用テンプレートを使う"
+    },
+    {
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#middle-app",
+     "label": "第6回のアプリ用テンプレートを使う"
+    }
+   ]
+  },
+  {
+   "title": "高校生「未来を描く」AI講座",
+   "audience": "学生の方へ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "AIの正体を知ろう",
+     "sub": "そもそもAIって何？をやさしく解説",
+     "slides": "https://drive.google.com/file/d/10o7P3oDGKoDcjbLBKYewb54xcmxoMrqq/view?usp=share_link",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "02",
+     "title": "言葉の魔法「プロンプト」入門",
+     "sub": "AIへのお願いのしかたを学ぼう",
+     "slides": "https://drive.google.com/file/d/1VFWq3XnVMaSLrDJDBtvTAU2AMgQgEWom/view?usp=sharing",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "03",
+     "title": "デジタル絵師に挑戦",
+     "sub": "AIで絵を描いてみよう",
+     "slides": "https://drive.google.com/file/d/1u8hfZjZnSyIDFhJsf9iCVJ-nEe7Eg1RI/view?usp=drive_link",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "04",
+     "title": "勉強スタイルに革命を",
+     "sub": "NotebookLMで自分専用の教材をつくろう",
+     "slides": "https://drive.google.com/file/d/19d9-sX_oVUpHZeirVfTioHNgOoltGdvs/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "06",
+     "title": "未来の仕事とAI",
+     "sub": "使う側から創る側へ。AIで困りごとを解決する企画を考えよう",
+     "slides": "https://drive.google.com/file/d/1DnxfgneVJhDpv5gNxvUdHkRoOVHL1XyF/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "07",
+     "title": "15秒ショート制作",
+     "sub": "企画カードを、作品に変える",
+     "slides": "https://drive.google.com/file/d/1nSFmyZZFJlexzHd-GHzt6gHLtZZRW2I6/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    }
+   ],
+   "tools": [
+    {
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#high",
+     "label": "プロンプトテンプレートを使う"
+    }
+   ]
+  },
+  {
+   "title": "おとなのAI講座",
+   "audience": "一般の方へ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "AIの選び方と、答えを引き出すコツ",
+     "sub": "Gemini と ChatGPT を開き、条件・逆質問・比べて確かめる、の3つのコツを自分の相談で試す",
+     "slides": "materials/otonano-ai-course-session01-slides.pdf",
+     "new": true,
+     "text": "materials/otonano-ai-course-session01-text.pdf",
+     "videos": []
+    },
+    {
+     "num": "02",
+     "title": "Gemini Notebookで、調べて5つの成果物をつくる",
+     "sub": "情報源を探し、音声・レポート・スライド・クイズ・マインドマップに変える",
+     "slides": "materials/otonano-ai-course-session02-slides.pdf",
+     "new": true,
+     "text": "materials/otonano-ai-course-session02-text.pdf",
+     "videos": []
+    },
+    {
+     "num": "03",
+     "title": "AI画像で、伝わる一枚をつくる",
+     "sub": "3つのAIを比べ、文章・参考画像・部分修正から実用画像を仕上げる",
+     "slides": "materials/otonano-ai-course-session03-image-generation.pdf",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "04",
+     "title": "AIで、音楽と短い動画をつくる",
+     "sub": "Suno（スノ）で曲、PixVerse（ピクスバース）で5秒の動画をつくる",
+     "slides": "materials/otonano-ai-course-session04-slides.pdf",
+     "new": true,
+     "text": "materials/otonano-ai-course-session04-music-video.pdf",
+     "videos": []
+    },
+    {
+     "num": "05",
+     "title": "Gemini Canvasで、お役立ちアプリをつくる",
+     "sub": "困りごとを日本語で頼んで、押すと動く1画面のアプリにする",
+     "slides": "materials/otonano-ai-course-session05-slides.pdf",
+     "new": true,
+     "text": "materials/otonano-ai-course-session05-text.pdf",
+     "videos": []
+    }
+   ],
+   "tools": [
+    {
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#adult-basics",
+     "label": "第1回の頼み方テンプレートを作る"
+    },
+    {
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#adult-notebook",
+     "label": "第2回の頼み方テンプレートを作る"
+    },
+    {
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#adult-image",
+     "label": "第3回の画像生成プロンプトを作る"
+    },
+    {
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#adult-music-video",
+     "label": "第4回の音楽・動画プロンプトを作る"
+    },
+    {
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#adult-app",
+     "label": "第5回の頼み方テンプレートを作る"
+    }
+   ]
+  },
+  {
+   "title": "パソコンの基礎とAI活用",
+   "audience": "教室の生徒さんへ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "マウスでパソコンを動かす",
+     "sub": "電源・マウス・ウィンドウの基本から、Chrome を開いて Gemini に声で話しかけるまで",
+     "slides": "materials/pc-basics-ai-session01-slides.pdf",
+     "new": true,
+     "text": "materials/pc-basics-ai-session01-text.pdf",
+     "videos": []
+    }
+   ],
+   "tools": []
+  },
+  {
+   "title": "パソコンAI実用講座",
+   "audience": "教室の生徒さんへ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "画面構成とタイピングの基本",
+     "sub": "画面の名前を知り、文字を入力して、直して保存する",
+     "slides": "https://drive.google.com/file/d/135d2gOc62SCftuJbttg3nhSKmDNWfqyq/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "02",
+     "title": "キーボードとショートカット",
+     "sub": "コピー・貼り付け・元に戻す・画面の切り替えを覚える",
+     "slides": "https://drive.google.com/file/d/1eXprsJoB9FrXVqDVQVzmbcmgtNWVguDx/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    }
+   ],
+   "tools": []
+  },
+  {
+   "title": "Windows安心操作レッスン",
+   "audience": "教室の生徒さんへ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "画面構成を確認する",
+     "sub": "スタート・タスクバー・設定・エクスプローラーを知る",
+     "slides": "https://drive.google.com/file/d/1bNcKANYyeJrMOcilvkw420fHpIPLwFXy/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "02",
+     "title": "文字操作と保存",
+     "sub": "入力・コピー貼り付け・保存までを一通り練習する",
+     "slides": "https://drive.google.com/file/d/1yoXzbRgMsSisnZ3b9Piey0xpPvAlREgp/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "03",
+     "title": "セキュリティ確認",
+     "sub": "更新・保護状態・警告表示・ネット利用を確認する",
+     "slides": "https://drive.google.com/file/d/1reqS_zbXJjb0ABH6TEzKas1PQ-mE6B01/view",
+     "new": false,
+     "text": "",
+     "videos": []
+    },
+    {
+     "num": "04",
+     "title": "AI利用",
+     "sub": "ChatGPTとローカルAIを使い分ける",
+     "slides": "https://drive.google.com/file/d/1B66YV755VePvj204P2bDgzJRFWoJr3RQ/view",
+     "new": false,
+     "text": "",
+     "videos": [
+      {
+       "url": "https://youtu.be/Z_rKBCMBvbY",
+       "label": "よく使うページをデスクトップのアイコンにする方法（Windows・Chrome）"
+      }
+     ]
+    }
+   ],
+   "tools": []
+  }
+ ]
+}
