@@ -153,7 +153,12 @@
      "slides": "materials/hajimete-ai-session01-slides.pdf",
      "new": true,
      "text": "materials/hajimete-ai-session01-text.pdf",
-     "videos": []
+     "videos": [
+      {
+       "url": "https://youtu.be/RTRBlxoCDkM",
+       "label": "はじめてのAI 第1回「AIに頼んでみよう」（5分）"
+      }
+     ]
     }
    ],
    "tools": []
@@ -365,7 +370,12 @@
      "slides": "materials/otonano-ai-course-session01-slides.pdf",
      "new": true,
      "text": "materials/otonano-ai-course-session01-text.pdf",
-     "videos": []
+     "videos": [
+      {
+       "url": "https://youtu.be/3WT2mdzeHSA",
+       "label": "第1回「いい答えを引き出す3つのコツ」（4分）"
+      }
+     ]
     },
     {
      "num": "02",
@@ -374,7 +384,12 @@
      "slides": "materials/otonano-ai-course-session02-slides.pdf",
      "new": true,
      "text": "materials/otonano-ai-course-session02-text.pdf",
-     "videos": []
+     "videos": [
+      {
+       "url": "https://youtu.be/aeG_MHgPNnQ",
+       "label": "第2回「Gemini Notebook で調べて、5つの形にまとめる」（4分）"
+      }
+     ]
     },
     {
      "num": "03",
@@ -392,7 +407,12 @@
      "slides": "materials/otonano-ai-course-session04-slides.pdf",
      "new": true,
      "text": "materials/otonano-ai-course-session04-music-video.pdf",
-     "videos": []
+     "videos": [
+      {
+       "url": "https://youtu.be/tbJbqKtNek0",
+       "label": "第4回「言葉で頼んで、音楽と短い動画をつくる」（4分）"
+      }
+     ]
     },
     {
      "num": "05",
@@ -401,7 +421,12 @@
      "slides": "materials/otonano-ai-course-session05-slides.pdf",
      "new": true,
      "text": "materials/otonano-ai-course-session05-text.pdf",
-     "videos": []
+     "videos": [
+      {
+       "url": "https://youtu.be/PI0ntCUci5g",
+       "label": "第5回「話しかけるだけでアプリができる」（4分）"
+      }
+     ]
     }
    ],
    "tools": [
@@ -438,7 +463,12 @@
      "slides": "materials/pc-basics-ai-session01-slides.pdf",
      "new": true,
      "text": "materials/pc-basics-ai-session01-text.pdf",
-     "videos": []
+     "videos": [
+      {
+       "url": "https://youtu.be/Xd1ibUADk9U",
+       "label": "第1回「マウスでパソコンを動かす」（4分）"
+      }
+     ]
     }
    ],
    "tools": []
