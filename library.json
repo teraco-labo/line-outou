@@ -394,10 +394,10 @@
     {
      "num": "03",
      "title": "AI画像で、伝わる一枚をつくる",
-     "sub": "3つのAIを比べ、文章・参考画像・部分修正から実用画像を仕上げる",
-     "slides": "materials/otonano-ai-course-session03-image-generation.pdf",
-     "new": false,
-     "text": "",
+     "sub": "ChatGPT で文章から案内の画像を作り、画風を比べて、1か所だけ直す",
+     "slides": "materials/otonano-ai-course-session03-slides.pdf",
+     "new": true,
+     "text": "materials/otonano-ai-course-session03-text.pdf",
      "videos": []
     },
     {
