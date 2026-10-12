@@ -13,7 +13,7 @@
   番号を入れたときだけブラウザの中で開く。番号は ~/.config/teraco/student_pass（1行）にだけ置く。
   鍵の方式は講師用（teacher/）と同じ PBKDF2 + AES-GCM。暗号化は tools/lock.mjs
 """
-import html, json, os, subprocess, sys, tempfile
+import html, json, os, re, subprocess, sys, tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -63,6 +63,36 @@ def lock_text(text):
         return out.read_text()
 
 
+def short_label(label):
+    """「第5回のゲーム用テンプレートを使う」→「第5回 ゲーム」。回の無いものは「テンプレート」。"""
+    s = re.sub(r"(の頼み方)?(テンプレート|プロンプト)を(使う|作る)$", "", label)
+    s = re.sub(r"(プロンプト)?(テンプレート)?$", "", s).rstrip("用の")
+    s = s.replace("回の", "回 ").strip()
+    return s or "テンプレート"
+
+
+def links_html(no):
+    """いちばん下の「プロンプト/リンク集」（2026-10-13 藤崎さん「中にプロンプトテンプレートがある感じに、中も見やすく」）。"""
+    rows, n = [], 0
+    for c in DATA["courses"]:
+        tools = c.get("tools", [])
+        if not tools:
+            continue
+        n += len(tools)
+        btns = "".join(f'<a class="btn" href="{e(t["url"])}"{ext(t["url"])}>{e(short_label(t["label"]))}</a>' for t in tools)
+        rows.append(f'<div class="tpl"><div class="name">{e(c["title"])}</div><div class="btns">{btns}</div></div>')
+    body = f'<p class="sub-h">講座のプロンプトテンプレート</p><div class="panel">{"".join(rows)}</div>' if rows else ""
+    for g in DATA.get("links", []):
+        body += f'<p class="sub-h">{e(g["group"])}</p>'
+        for it in g["items"]:
+            n += 1
+            body += (f'<a class="linkbar" href="{e(it["url"])}"{ext(it["url"]) if it["url"].startswith("http") else ""}>'
+                     f'<span class="stitle">{e(it["title"])}</span><span class="note">{e(it.get("note"))}</span><span class="go">→</span></a>')
+    return (f'<details class="group-acc"><summary><span class="group-no">{no:02d}</span>'
+            f'<span class="group-name">プロンプト/リンク集</span><span class="group-count">{n}件</span>'
+            f'<span class="group-chev">▶</span></summary><div class="group-body">{body}</div></details>')
+
+
 LOCK_ICON = ('<svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
              'stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>')
 
@@ -93,6 +123,6 @@ open_part = "".join(parts)
 n_links = len(parts) + 1
 
 page = (ROOT / "tools/library_template.html").read_text(encoding="utf-8")
-page = page.replace("{{COURSES}}", open_part).replace("{{GATE}}", gate).replace("{{LINKS_NO}}", f"{n_links:02d}").replace("{{LOCK_SCRIPT}}", "true" if LOCK else "false")
+page = page.replace("{{COURSES}}", open_part).replace("{{GATE}}", gate).replace("{{LINKS}}", links_html(n_links)).replace("{{LOCK_SCRIPT}}", "true" if LOCK else "false")
 (ROOT / "index.html").write_text(page, encoding="utf-8")
 print(f"index.html を作り直しました（講座 {len(courses)}・鍵 {'あり' if LOCK else 'なし'}）")

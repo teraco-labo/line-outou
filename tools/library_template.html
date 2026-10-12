@@ -288,6 +288,14 @@
   
   @media(max-width:430px){.group-acc .group-body{padding:2px 0 24px;} .acc-body{padding:4px 12px 12px;} .acc>summary{padding:16px 14px;}
     .ep{gap:8px;} .ep .num{width:20px;} .btn{padding:0 11px;font-size:12.5px;}}
+  /* ===== プロンプト/リンク集（2026-10-13） ===== */
+  .sub-h{font-size:12px;font-weight:700;color:var(--sub);letter-spacing:.12em;margin:18px 4px 8px;}
+  .sub-h:first-child{margin-top:4px;}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:2px 16px;margin-bottom:6px;}
+  .tpl{padding:12px 0;border-bottom:1px solid var(--hairline);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;}
+  .tpl:last-child{border-bottom:none;}
+  .tpl .name{font-size:14px;font-weight:700;letter-spacing:.02em;}
+  .tpl .btns{margin-top:0;}
   .gate{border:1px dashed var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;background:var(--card);}
   .gate-t{font-size:14px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
   .gate .row{display:flex;gap:10px;margin-top:12px;}
@@ -310,40 +318,9 @@
   {{COURSES}}
   {{GATE}}
 
-  <!-- ===== リンク集 ===== -->
-  <details class="group-acc links">
-    <summary>
-            <span class="group-no">{{LINKS_NO}}</span>
-      <span class="group-name">リンク集</span>
-      <span class="group-count">4種類</span>
-      <span class="group-chev">▶</span>
-    </summary>
-    <div class="group-body">
+  <!-- ===== プロンプト/リンク集（tools/build_library.py が library.json の links と講座のテンプレートから作る） ===== -->
+  {{LINKS}}
 
-    <a class="linkbar" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
-      <span class="stitle">業界標準</span>
-      <span class="note">基本・推論・構造・エージェント・画像生成</span>
-      <span class="go">→</span>
-    </a>
-    <a class="linkbar" href="https://teraco-labo.github.io/teraco-prompt-engineering/" target="_blank" rel="noopener">
-      <span class="stitle">てらこ式</span>
-      <span class="note">各講座で使う穴埋めテンプレート</span>
-      <span class="go">→</span>
-    </a>
-    <a class="linkbar" href="ai-video-tools.html">
-      <span class="stitle">動画生成AI</span>
-      <span class="note">Google Flow・Dreamina・Vidu・CapCut・Canva</span>
-      <span class="go">→</span>
-    </a>
-    <a class="linkbar" href="https://gemini.google.com/" target="_blank" rel="noopener">
-      <span class="stitle">ゲーム・アプリ制作</span>
-      <span class="note">Gemini Canvas（開催前にアカウント確認）</span>
-      <span class="go">→</span>
-    </a>
-
-    </div>
-  </details>
-  <!-- ===== /リンク集 ===== -->
   <footer>
     <a href="https://teraco-labo.com/" target="_blank" rel="noopener">TERACO.LABO</a>
   </footer>

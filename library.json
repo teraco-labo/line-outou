@@ -546,5 +546,37 @@
    ],
    "tools": []
   }
+ ],
+ "links": [
+  {
+   "group": "プロンプトの基本",
+   "items": [
+    {
+     "title": "業界標準",
+     "note": "基本・推論・構造・エージェント・画像生成",
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/"
+    },
+    {
+     "title": "てらこ式",
+     "note": "各講座で使う穴埋めテンプレート",
+     "url": "https://teraco-labo.github.io/teraco-prompt-engineering/"
+    }
+   ]
+  },
+  {
+   "group": "AIの道具",
+   "items": [
+    {
+     "title": "動画生成AI",
+     "note": "Google Flow・Dreamina・Vidu・CapCut・Canva",
+     "url": "ai-video-tools.html"
+    },
+    {
+     "title": "ゲーム・アプリ制作",
+     "note": "Gemini Canvas（開催前にアカウント確認）",
+     "url": "https://gemini.google.com/"
+    }
+   ]
+  }
  ]
 }
