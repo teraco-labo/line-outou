@@ -159,6 +159,14 @@
        "label": "はじめてのAI 第1回「AIに頼んでみよう」（5分）"
       }
      ]
+    },
+    {
+     "num": "02",
+     "title": "声で AI と話そう",
+     "sub": "音声入力（いわゆる文字起こし）で送る・ちがう文字を直す・声で相談する",
+     "slides": "materials/hajimete-ai-session02-slides.pdf",
+     "new": true,
+     "text": "materials/hajimete-ai-session02-text.pdf"
     }
    ],
    "tools": []
