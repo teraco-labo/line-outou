@@ -461,13 +461,13 @@
    ]
   },
   {
-   "title": "パソコンの基礎とAI活用",
+   "title": "パソコンの基礎",
    "audience": "教室の生徒さんへ",
    "episodes": [
     {
      "num": "01",
      "title": "マウスでパソコンを動かす",
-     "sub": "電源・マウス・ウィンドウの基本から、Chrome を開いて Gemini に声で話しかけるまで",
+     "sub": "電源・マウス・ウィンドウの基本と、困ったときの戻り方",
      "slides": "materials/pc-basics-ai-session01-slides.pdf",
      "new": true,
      "text": "materials/pc-basics-ai-session01-text.pdf",
