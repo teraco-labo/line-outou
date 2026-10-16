@@ -495,6 +495,15 @@
      "new": true,
      "text": "materials/pc-basics-ai-session03-text.pdf",
      "videos": []
+    },
+    {
+     "num": "04",
+     "title": "写真とファイルを整理して、安心して使う",
+     "sub": "ダウンロード・写真・ごみ箱・文字を大きくする設定・更新と再起動。4回のしめくくり",
+     "slides": "materials/pc-basics-ai-session04-slides.pdf",
+     "new": true,
+     "text": "materials/pc-basics-ai-session04-text.pdf",
+     "videos": []
     }
    ],
    "tools": []
