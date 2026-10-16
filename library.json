@@ -477,6 +477,24 @@
        "label": "第1回「マウスでパソコンを動かす」（4分）"
       }
      ]
+    },
+    {
+     "num": "02",
+     "title": "文字を打って、調べる",
+     "sub": "キーボードで、ひらがな・漢字・カタカナ。打てたら Chrome で調べる",
+     "slides": "materials/pc-basics-ai-session02-slides.pdf",
+     "new": true,
+     "text": "materials/pc-basics-ai-session02-text.pdf",
+     "videos": []
+    },
+    {
+     "num": "03",
+     "title": "文章を書いて、しまっておく",
+     "sub": "メモ帳で書いて、名前を付けて保存。エクスプローラーで探してフォルダーに整理",
+     "slides": "materials/pc-basics-ai-session03-slides.pdf",
+     "new": true,
+     "text": "materials/pc-basics-ai-session03-text.pdf",
+     "videos": []
     }
    ],
    "tools": []
