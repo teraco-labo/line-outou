@@ -509,6 +509,22 @@
    "tools": []
   },
   {
+   "title": "パソコンをもっと便利に",
+   "audience": "教室の生徒さんへ",
+   "episodes": [
+    {
+     "num": "01",
+     "title": "キーボードで近道",
+     "sub": "Ctrl を押しながら、キーをひとつ。コピー・貼り付け・元に戻す・Chrome の文字の大きさ",
+     "slides": "materials/pc-benri-session01-slides.pdf",
+     "new": true,
+     "text": "materials/pc-benri-session01-text.pdf",
+     "videos": []
+    }
+   ],
+   "tools": []
+  },
+  {
    "title": "パソコンAI実用講座",
    "audience": "教室の生徒さんへ",
    "episodes": [
