@@ -53,11 +53,12 @@
       androidPkg: 'com.google.android.youtube'
     },
     ai: {
-      title: 'てらこ先生AI', color: '#EF6C00', label: 'Geminiでひらく',
+      title: 'てらこ先生AI', color: '#EF6C00', label: 'てらこ先生AIをひらく',
+      external: true,                              // 2026-10-20 iPhone では Gem はアプリに渡らずウェブになる → LINEの中ではなく Safari などでひらく（ログインが残る）
       web: 'https://gemini.google.com/gem/446a8d7df5f2?usp=sharing',
       ios: null,                                   // iPhone で Gem をアプリでひらく書き方は未確認 → ウェブ（ユニバーサルリンク）
       androidPkg: 'com.google.android.apps.bard',
-      howto: '<h2>はじめての方へ</h2><ol><li>スマホに「Gemini」のアプリを入れておくと、すぐ使えます</li><li>Googleのアカウントでログインしてください</li><li>聞きたいことを、ふつうの言葉で書いて送ります</li></ol>'
+      howto: '<h2>はじめての方へ</h2><ol><li>はじめの1回だけ、Googleのログインが出ます</li><li>ログインすると、次からはそのまま使えます</li><li>聞きたいことを、ふつうの言葉で書いて送ります</li></ol>'
     }
   };
   var key = (location.search.match(/[?&]app=([a-z]+)/) || [])[1] || 'youtube';
@@ -71,7 +72,8 @@
     return 'intent://' + u + '#Intent;scheme=https;package=' + pkg + ';S.browser_fallback_url=' + enc(web) + ';end';
   }
   var USE_INTENT = false;   // Android で intent:// がうまくいくと分かったら true に
-  var appUrl = (isAndroid && USE_INTENT) ? intentUrl(a.web, a.androidPkg) : a.web;
+  var ext = function (u) { return u + (u.indexOf('?') < 0 ? '?' : '&') + 'openExternalBrowser=1'; };
+  var appUrl = (isAndroid && USE_INTENT) ? intentUrl(a.web, a.androidPkg) : a.external ? ext(a.web) : a.web;
 
   document.title = a.title + ' | TERACO.LABO';
   document.getElementById('title').textContent = a.title;
@@ -82,7 +84,8 @@
   web.href = a.web + (a.web.indexOf('?') < 0 ? '?' : '&') + 'openExternalBrowser=1';
   if (a.howto) { var h = document.getElementById('howto'); h.innerHTML = a.howto; h.hidden = false; }
 
-  document.getElementById('lead').textContent = '下のボタンを押すと、アプリがひらきます';
+  document.getElementById('lead').textContent = a.external ? '下のボタンを押してください' : '下のボタンを押すと、アプリがひらきます';
+  if (a.external) web.hidden = true;
 })();
 </script>
 </body>
