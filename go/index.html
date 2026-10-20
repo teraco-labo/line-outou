@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<meta name="robots" content="noindex">
+<title>アプリでひらく | TERACO.LABO</title>
+<!--
+  LINEのリッチメニューから、スマホに入っているアプリ（YouTube・Gemini）を直接ひらくための中継ページ（2026-10-20）
+  使い方: go/?app=youtube ／ go/?app=ai
+  ・Android … intent:// で、アプリを指定してひらく（アプリが無ければ browser_fallback_url のウェブへ）
+  ・iPhone  … アプリ用の住所（youtube:// など）でひらく。ひらけなければ、ボタンからウェブへ
+  藤崎さん「アプリでログインしているのにブラウザを呼び出されて、ログインがスムーズにできない」への対応
+  どの書き方でアプリがひらくかは実機で確かめる → go/test.html
+-->
+<style>
+  :root{--bg:#faf8f4;--card:#fff;--ink:#2b2823;--sub:#8d867b;--red:#e62117;--ai:#EF6C00;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;}
+  .wrap{max-width:520px;margin:0 auto;padding:56px 20px 64px;text-align:center;}
+  h1{font-size:26px;font-weight:700;letter-spacing:.04em;}
+  p.lead{margin-top:10px;color:var(--sub);font-size:16px;}
+  a.btn{display:block;text-decoration:none;margin-top:28px;background:var(--main);color:#fff;font-size:22px;font-weight:700;padding:22px 16px;border-radius:16px;box-shadow:0 4px 10px rgba(0,0,0,.08);}
+  a.btn:active{transform:translateY(2px);box-shadow:none;}
+  a.web{display:inline-block;margin-top:26px;color:var(--sub);font-size:15px;text-decoration:underline;text-underline-offset:4px;}
+  .howto{margin-top:40px;text-align:left;background:var(--card);border:1px solid #e7e0d4;border-radius:14px;padding:18px 18px 16px;font-size:15px;}
+  .howto h2{font-size:16px;margin-bottom:6px;}
+  .howto ol{padding-left:1.3em;}
+  [hidden]{display:none!important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 id="title">アプリでひらきます</h1>
+  <p class="lead" id="lead">少しお待ちください</p>
+  <a class="btn" id="open" href="#">アプリでひらく</a>
+  <a class="web" id="web" href="#">うまくひらかないときは、こちら</a>
+  <div class="howto" id="howto" hidden></div>
+</div>
+<script>
+(function () {
+  var enc = encodeURIComponent;
+  var APPS = {
+    youtube: {
+      title: 'てらこ先生の動画', color: '#e62117', label: 'YouTubeでひらく',
+      web: 'https://www.youtube.com/@teracosensei',
+      ios: 'youtube://www.youtube.com/@teracosensei',
+      androidPkg: 'com.google.android.youtube'
+    },
+    ai: {
+      title: 'てらこ先生AI', color: '#EF6C00', label: 'Geminiでひらく',
+      web: 'https://gemini.google.com/gem/446a8d7df5f2?usp=sharing',
+      ios: null,                                   // iPhone で Gem をアプリでひらく書き方は未確認 → ウェブ（ユニバーサルリンク）
+      androidPkg: 'com.google.android.apps.bard',
+      howto: '<h2>はじめての方へ</h2><ol><li>スマホに「Gemini」のアプリを入れておくと、すぐ使えます</li><li>Googleのアカウントでログインしてください</li><li>聞きたいことを、ふつうの言葉で書いて送ります</li></ol>'
+    }
+  };
+  var key = (location.search.match(/[?&]app=([a-z]+)/) || [])[1] || 'youtube';
+  var a = APPS[key] || APPS.youtube;
+  var ua = navigator.userAgent;
+  var isAndroid = /Android/i.test(ua), isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+  function intentUrl(web, pkg) {
+    var u = web.replace(/^https:\/\//, '');
+    var hashAt = u.indexOf('#'); if (hashAt >= 0) u = u.slice(0, hashAt);
+    return 'intent://' + u + '#Intent;scheme=https;package=' + pkg + ';S.browser_fallback_url=' + enc(web) + ';end';
+  }
+  var appUrl = isAndroid ? intentUrl(a.web, a.androidPkg) : (isIOS && a.ios) ? a.ios : a.web;
+
+  document.title = a.title + ' | TERACO.LABO';
+  document.getElementById('title').textContent = a.title;
+  document.documentElement.style.setProperty('--main', a.color);
+  var btn = document.getElementById('open');
+  btn.textContent = a.label; btn.href = appUrl;
+  var web = document.getElementById('web');
+  web.href = a.web + (a.web.indexOf('?') < 0 ? '?' : '&') + 'openExternalBrowser=1';
+  if (a.howto) { var h = document.getElementById('howto'); h.innerHTML = a.howto; h.hidden = false; }
+
+  // ひとりでにアプリへ（ひらけなかったときは、このページのボタンが残る）
+  if (isAndroid || (isIOS && a.ios)) {
+    document.getElementById('lead').textContent = 'アプリがひらかないときは、下のボタンを押してください';
+    setTimeout(function () { location.href = appUrl; }, 300);
+  } else {
+    document.getElementById('lead').textContent = '下のボタンを押してください';
+  }
+})();
+</script>
+</body>
+</html>
