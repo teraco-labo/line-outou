@@ -13,6 +13,10 @@
   ・iPhone  … アプリ用の住所（youtube:// など）でひらく。ひらけなければ、ボタンからウェブへ
   藤崎さん「アプリでログインしているのにブラウザを呼び出されて、ログインがスムーズにできない」への対応
   どの書き方でアプリがひらくかは実機で確かめる → go/test.html
+  2026-10-20 iPhone（LINEの中）での結果: ふつうの https のリンクを「押す」と、確認の窓なしでアプリがひらいた（Y3）。
+    youtube:// は確認の窓が出てからひらく（Y1）。→ ボタンは https のリンクにし、ひとりでに飛ばすのはやめた
+    （iPhone は、押したときだけアプリに渡す。アプリが無い人はウェブがひらく）
+  Android はまだ試していない。intent:// にするかは Android の結果を見てから（intentUrl は残してある）
 -->
 <style>
   :root{--bg:#faf8f4;--card:#fff;--ink:#2b2823;--sub:#8d867b;--red:#e62117;--ai:#EF6C00;}
@@ -66,7 +70,8 @@
     var hashAt = u.indexOf('#'); if (hashAt >= 0) u = u.slice(0, hashAt);
     return 'intent://' + u + '#Intent;scheme=https;package=' + pkg + ';S.browser_fallback_url=' + enc(web) + ';end';
   }
-  var appUrl = isAndroid ? intentUrl(a.web, a.androidPkg) : (isIOS && a.ios) ? a.ios : a.web;
+  var USE_INTENT = false;   // Android で intent:// がうまくいくと分かったら true に
+  var appUrl = (isAndroid && USE_INTENT) ? intentUrl(a.web, a.androidPkg) : a.web;
 
   document.title = a.title + ' | TERACO.LABO';
   document.getElementById('title').textContent = a.title;
@@ -77,13 +82,7 @@
   web.href = a.web + (a.web.indexOf('?') < 0 ? '?' : '&') + 'openExternalBrowser=1';
   if (a.howto) { var h = document.getElementById('howto'); h.innerHTML = a.howto; h.hidden = false; }
 
-  // ひとりでにアプリへ（ひらけなかったときは、このページのボタンが残る）
-  if (isAndroid || (isIOS && a.ios)) {
-    document.getElementById('lead').textContent = 'アプリがひらかないときは、下のボタンを押してください';
-    setTimeout(function () { location.href = appUrl; }, 300);
-  } else {
-    document.getElementById('lead').textContent = '下のボタンを押してください';
-  }
+  document.getElementById('lead').textContent = '下のボタンを押すと、アプリがひらきます';
 })();
 </script>
 </body>
