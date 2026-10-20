@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<meta name="robots" content="noindex">
+<title>アプリでひらく試験 | TERACO.LABO</title>
+<!-- 先生用の試験ページ（2026-10-20）。LINEのトークからこのページをひらき、どのボタンでアプリがひらいたかを確かめる -->
+<style>
+  body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,Roboto,sans-serif;background:#faf8f4;color:#2b2823;margin:0;padding:24px 16px 60px;line-height:1.6;}
+  h1{font-size:20px;margin:0 0 4px;} p.env{font-size:12px;color:#8d867b;word-break:break-all;margin:0 0 18px;}
+  h2{font-size:17px;margin:26px 0 8px;}
+  a{display:block;text-decoration:none;background:#fff;border:2px solid #ccc;border-radius:12px;padding:14px;margin:10px 0;color:#2b2823;font-size:17px;font-weight:700;}
+  a small{display:block;font-weight:400;font-size:12px;color:#8d867b;word-break:break-all;}
+</style>
+</head>
+<body>
+<h1>アプリでひらく試験</h1>
+<p class="env" id="env"></p>
+<h2>YouTube（てらこ先生チャンネル）</h2>
+<div id="yt"></div>
+<h2>てらこ先生AI（Gemini）</h2>
+<div id="ai"></div>
+<script>
+var enc = encodeURIComponent;
+var YT = 'https://www.youtube.com/@teracosensei', AI = 'https://gemini.google.com/gem/446a8d7df5f2?usp=sharing';
+var list = {
+  yt: [
+    ['Y1 アプリ用の住所（iPhone）', 'youtube://www.youtube.com/@teracosensei'],
+    ['Y2 intent（Android）', 'intent://www.youtube.com/@teracosensei#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=' + enc(YT) + ';end'],
+    ['Y3 ふつうのリンク', YT],
+    ['Y4 ふつうのリンク＋外のブラウザ', YT + '?openExternalBrowser=1']
+  ],
+  ai: [
+    ['A1 Geminiアプリ用の住所（iPhone）', 'googlegemini://gem/446a8d7df5f2'],
+    ['A2 Googleアプリ経由（iPhone）', 'googleapp://robin'],
+    ['A3 intent（Android・Geminiアプリ）', 'intent://gemini.google.com/gem/446a8d7df5f2?usp=sharing#Intent;scheme=https;package=com.google.android.apps.bard;S.browser_fallback_url=' + enc(AI) + ';end'],
+    ['A4 ふつうのリンク', AI],
+    ['A5 ふつうのリンク＋外のブラウザ', AI + '&openExternalBrowser=1']
+  ]
+};
+['yt', 'ai'].forEach(function (k) {
+  var box = document.getElementById(k);
+  list[k].forEach(function (x) {
+    var a = document.createElement('a'); a.href = x[1];
+    a.innerHTML = x[0] + '<small>' + x[1].replace(/</g, '&lt;') + '</small>';
+    box.appendChild(a);
+  });
+});
+document.getElementById('env').textContent = navigator.userAgent;
+</script>
+</body>
+</html>
