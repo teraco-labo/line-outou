@@ -91,7 +91,7 @@
       電話する
       <span class="sub">090-6738-1469</span>
     </a>
-    <a class="btn" href="https://line.me/R/oaMessage/@244jldgi/">
+    <a class="btn" id="askLine" href="https://line.me/R/oaMessage/@244jldgi/">
       LINEで聞く
       <span class="sub">このトークに、聞きたいことを書いて送ってください</span>
     </a>
@@ -109,6 +109,13 @@
 var KOMINKAN_FORMS = [
   { label: '公民館講座の申込みフォーム', url: 'https://docs.google.com/forms/d/e/1FAIpQLSeby0MPc-OUo0hYt2mXSKBrNN9jRlim9REOTBgg9Tnev_teig/viewform' }
 ];
+
+// 「LINEで聞く」の宛先。リッチメニューから ?oa=381traad で来たら、てらこ先生のLINEのトークへ戻す（2026-10-20）
+(function () {
+  var OA = { '244jldgi': '@244jldgi', '381traad': '@381traad' };
+  var m = location.search.match(/[?&]oa=([0-9a-z]+)/);
+  if (m && OA[m[1]]) document.getElementById('askLine').href = 'https://line.me/R/oaMessage/' + OA[m[1]] + '/';
+})();
 
 (function () {
   var box = document.getElementById('formList');
