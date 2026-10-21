@@ -28,6 +28,7 @@
   a.btn{display:block;text-decoration:none;margin-top:28px;background:var(--main);color:#fff;font-size:22px;font-weight:700;padding:22px 16px;border-radius:16px;box-shadow:0 4px 10px rgba(0,0,0,.08);}
   a.btn:active{transform:translateY(2px);box-shadow:none;}
   a.web{display:inline-block;margin-top:26px;color:var(--sub);font-size:15px;text-decoration:underline;text-underline-offset:4px;}
+  .note{margin-top:22px;text-align:left;background:#fff8e6;border:1px solid #f0dfb4;border-radius:12px;padding:12px 16px;font-size:14px;line-height:1.7;color:#5a5246;}
   .howto{margin-top:40px;text-align:left;background:var(--card);border:1px solid #e7e0d4;border-radius:14px;padding:18px 18px 16px;font-size:15px;}
   .howto h2{font-size:16px;margin-bottom:6px;}
   .howto ol{padding-left:1.3em;}
@@ -38,6 +39,7 @@
 <div class="wrap">
   <h1 id="title">アプリでひらきます</h1>
   <p class="lead" id="lead">少しお待ちください</p>
+  <p class="note" id="note" hidden></p>
   <a class="btn" id="open" href="#">アプリでひらく</a>
   <a class="web" id="web" href="#">うまくひらかないときは、こちら</a>
   <div class="howto" id="howto" hidden></div>
@@ -50,7 +52,8 @@
       title: 'てらこ先生の動画', color: '#e62117', label: 'YouTubeでひらく',
       web: 'https://www.youtube.com/@teracosensei',
       ios: 'youtube://www.youtube.com/@teracosensei',
-      androidPkg: 'com.google.android.youtube'
+      androidPkg: 'com.google.android.youtube',
+      note: '動画はデータの量が多めです。Wi-Fiにつないで見るのがおすすめです。<br>外で見るときは、携帯会社のデータの契約（ギガ）も確かめておくと安心です。'
     },
     ai: {
       title: 'てらこ先生AI', color: '#EF6C00', label: 'てらこ先生AIをひらく',
@@ -82,6 +85,7 @@
   btn.textContent = a.label; btn.href = appUrl;
   var web = document.getElementById('web');
   web.href = a.web + (a.web.indexOf('?') < 0 ? '?' : '&') + 'openExternalBrowser=1';
+  if (a.note) { var n = document.getElementById('note'); n.innerHTML = a.note; n.hidden = false; }
   if (a.howto) { var h = document.getElementById('howto'); h.innerHTML = a.howto; h.hidden = false; }
 
   document.getElementById('lead').textContent = a.external ? '下のボタンを押してください' : '下のボタンを押すと、アプリがひらきます';
