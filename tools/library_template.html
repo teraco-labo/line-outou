@@ -302,6 +302,11 @@
   .gate input{flex:1;min-width:0;font-size:18px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;}
   .gate button{font:inherit;font-weight:700;color:#fff;background:var(--accent);border:0;border-radius:10px;padding:0 20px;cursor:pointer;}
   .gate .msg{font-size:13px;color:var(--accent);margin-top:8px;min-height:18px;}
+  /* さがす（2026-10-25 藤崎さん「講座が増えてきたら検索機能がいるね」） */
+  .search{display:block;width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:12px 16px;margin:0 0 18px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);}
+  .search:focus{outline:2px solid var(--accent-soft);border-color:var(--accent);}
+  .hit-none{display:none;color:var(--sub);font-size:14px;text-align:center;margin:12px 0 24px;}
+  .is-hidden{display:none !important;}
 </style>
 </head>
 <body>
@@ -314,6 +319,8 @@
     <p class="lead">講座で使う教材を、いつでも読み返せます</p>
   </header>
 
+  <input class="search" id="q" type="search" placeholder="さがす（例：LINE、体験会、第2回）" aria-label="講座と教材をさがす">
+  <p class="hit-none" id="hitNone">見つかりませんでした。ほかの言葉でさがしてみてください</p>
   <!-- 講座の一覧は tools/build_library.py が library.json から作る。ここを手で直さない -->
   {{COURSES}}
   {{GATE}}
@@ -348,6 +355,34 @@ if ({{LOCK_SCRIPT}}) {
     } catch (_) { msg.textContent = '番号がちがいます'; }
   });
 }
+</script>
+<script>
+// さがす：講座名・回の題名・説明に入っている言葉で、当てはまる回だけを残して開く（消すと元に戻る）
+(function () {
+  const q = document.getElementById('q'), none = document.getElementById('hitNone');
+  if (!q) return;
+  const norm = s => (s || '').replace(/\s+/g, '').toLowerCase();
+  q.addEventListener('input', () => {
+    const w = norm(q.value);
+    let hits = 0;
+    document.querySelectorAll('details.group-acc').forEach(g => {
+      let gHit = false;
+      g.querySelectorAll('details.acc').forEach(c => {
+        const title = c.querySelector('summary') ? c.querySelector('summary').textContent : '';
+        let cHit = false;
+        const eps = c.querySelectorAll('.ep');
+        eps.forEach(ep => { const ok = !w || norm(title + ep.textContent).includes(w); ep.classList.toggle('is-hidden', !ok); if (ok) cHit = true; });
+        if (!eps.length) cHit = !w || norm(c.textContent).includes(w);
+        c.classList.toggle('is-hidden', !cHit);
+        if (w) c.open = cHit;
+        if (cHit) { gHit = true; if (w) hits++; }
+      });
+      g.classList.toggle('is-hidden', !!w && !gHit);
+      if (w) g.open = gHit;
+    });
+    none.style.display = w && !hits ? 'block' : 'none';
+  });
+})();
 </script>
 <script src="https://teraco-labo.github.io/line-outou/applink.js" defer></script>
 </body>
