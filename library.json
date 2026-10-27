@@ -136,12 +136,7 @@
           "slides": "materials/hajimete-ai-session01-slides.pdf",
           "new": true,
           "text": "materials/hajimete-ai-session01-text.pdf",
-          "videos": [
-            {
-              "url": "https://youtu.be/RTRBlxoCDkM",
-              "label": "はじめてのAI 第1回「AIに頼んでみよう」（5分）"
-            }
-          ]
+          "videos": []
         },
         {
           "num": "02",
@@ -149,7 +144,8 @@
           "sub": "音声入力（いわゆる文字起こし）で送る・ちがう文字を直す・声で相談する",
           "slides": "materials/hajimete-ai-session02-slides.pdf",
           "new": true,
-          "text": "materials/hajimete-ai-session02-text.pdf"
+          "text": "materials/hajimete-ai-session02-text.pdf",
+          "videos": []
         }
       ],
       "tools": []
@@ -416,12 +412,7 @@
           "slides": "materials/otonano-ai-course-session01-slides.pdf",
           "new": true,
           "text": "materials/otonano-ai-course-session01-text.pdf",
-          "videos": [
-            {
-              "url": "https://youtu.be/3WT2mdzeHSA",
-              "label": "第1回「いい答えを引き出す3つのコツ」（4分）"
-            }
-          ]
+          "videos": []
         },
         {
           "num": "02",
@@ -430,12 +421,7 @@
           "slides": "materials/otonano-ai-course-session02-slides.pdf",
           "new": true,
           "text": "materials/otonano-ai-course-session02-text.pdf",
-          "videos": [
-            {
-              "url": "https://youtu.be/aeG_MHgPNnQ",
-              "label": "第2回「Gemini Notebook で調べて、5つの形にまとめる」（4分）"
-            }
-          ]
+          "videos": []
         },
         {
           "num": "03",
@@ -453,12 +439,7 @@
           "slides": "materials/otonano-ai-course-session04-slides.pdf",
           "new": true,
           "text": "materials/otonano-ai-course-session04-music-video.pdf",
-          "videos": [
-            {
-              "url": "https://youtu.be/tbJbqKtNek0",
-              "label": "第4回「言葉で頼んで、音楽と短い動画をつくる」（4分）"
-            }
-          ]
+          "videos": []
         },
         {
           "num": "05",
@@ -467,12 +448,7 @@
           "slides": "materials/otonano-ai-course-session05-slides.pdf",
           "new": true,
           "text": "materials/otonano-ai-course-session05-text.pdf",
-          "videos": [
-            {
-              "url": "https://youtu.be/PI0ntCUci5g",
-              "label": "第5回「話しかけるだけでアプリができる」（4分）"
-            }
-          ]
+          "videos": []
         }
       ],
       "tools": [
@@ -520,8 +496,8 @@
           "text": "materials/pc-basics-ai-session01-text.pdf",
           "videos": [
             {
-              "url": "https://youtu.be/Xd1ibUADk9U",
-              "label": "第1回「マウスでパソコンを動かす」（4分）"
+              "url": "https://youtu.be/4qJpoFl6yO0",
+              "label": "第1回「マウスでパソコンを動かす」（8分）"
             }
           ]
         },
@@ -532,7 +508,12 @@
           "slides": "materials/pc-basics-ai-session02-slides.pdf",
           "new": true,
           "text": "materials/pc-basics-ai-session02-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/kQbIyVGTfSw",
+              "label": "第2回「文字を打って、調べる」（7分）"
+            }
+          ]
         },
         {
           "num": "03",
@@ -541,7 +522,12 @@
           "slides": "materials/pc-basics-ai-session03-slides.pdf",
           "new": true,
           "text": "materials/pc-basics-ai-session03-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/DaDAMikHE9k",
+              "label": "第3回「文章を書いて、しまっておく」（6分）"
+            }
+          ]
         },
         {
           "num": "04",
@@ -550,7 +536,12 @@
           "slides": "materials/pc-basics-ai-session04-slides.pdf",
           "new": true,
           "text": "materials/pc-basics-ai-session04-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/1SyFHaOsoIU",
+              "label": "第4回「写真とファイルを整理して、安心して使う」（6分）"
+            }
+          ]
         }
       ],
       "tools": []
