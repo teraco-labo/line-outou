@@ -294,6 +294,14 @@
   @media(max-width:430px){.group-acc .group-body{padding:2px 0 24px;} .acc-body{padding:4px 12px 12px;} .acc>summary{padding:16px 14px;}
     .ep{gap:8px;} .ep .num{width:20px;} .btn{padding:0 11px;font-size:12.5px;}}
   /* ===== プロンプト/リンク集（2026-10-13） ===== */
+  .grip{flex:none;width:18px;height:24px;margin-left:8px;cursor:grab;touch-action:none;opacity:.45;border-radius:4px;
+    background-image:radial-gradient(circle,var(--sub) 1.6px,transparent 1.8px);background-size:6px 6px;background-position:3px 3px;}
+  .grip:hover{opacity:.9;}
+  .acc>summary:has(.grip){grid-template-columns:1fr auto auto auto;}
+  .dragging{opacity:.75;outline:2px dashed var(--accent);outline-offset:2px;}
+  body.drg{user-select:none;-webkit-user-select:none;cursor:grabbing;}
+  .edit-note{position:sticky;top:0;z-index:5;background:var(--accent);color:#fff;font-size:13px;text-align:center;padding:8px 12px;border-radius:0 0 10px 10px;margin:0 0 12px;}
+  .ord-toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#222;color:#fff;border-radius:10px;padding:10px 16px;font-size:14px;z-index:9;}
   .sub-h{font-size:12px;font-weight:700;color:var(--sub);letter-spacing:.12em;margin:18px 4px 8px;}
   .sub-h:first-child{margin-top:4px;}
   .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:2px 16px;margin-bottom:6px;}
@@ -390,6 +398,69 @@ if ({{LOCK_SCRIPT}}) {
     });
     none.style.display = w && !hits ? 'block' : 'none';
   });
+})();
+</script>
+<script>
+// 並び替え（2026-10-27 藤崎さん「図書館も同じようにドラッグで並び替えできるようにして」）
+// 並びは Teraco Shelf と同じ倉庫の order.json。誰でも読めるので、開いたときにこの並びで出す。
+// つまみ（点々）は Teraco Shelf の「図書館を並び替える」から開いたとき（?edit=1 と書き込みの合図つき）だけ出す。生徒さんには出ない
+(function () {
+  const URL_ = '{{ORDER_URL}}'; if (!URL_) return;
+  const wrap = document.querySelector('.wrap');
+  let order = {}, PUT = null;
+  const m = location.hash.match(/put=([^&]+)/);
+  if (m) { try { sessionStorage.setItem('lib-put', decodeURIComponent(m[1])); } catch (_) {} history.replaceState(null, '', location.pathname + location.search); }
+  try { PUT = sessionStorage.getItem('lib-put'); } catch (_) {}
+  const edit = /[?&]edit=1/.test(location.search) && !!PUT;
+  const boxes = () => [[wrap, 'top']].concat([...document.querySelectorAll('.grp[data-g]')].map(g => [g, g.dataset.g]));
+  const items = p => [...p.children].filter(c => c.tagName === 'DETAILS' && c.dataset.k);
+  const keyOf = p => p === wrap ? 'top' : p.dataset.g;
+  function toast(t) { let el = document.querySelector('.ord-toast'); if (!el) { el = document.createElement('div'); el.className = 'ord-toast'; document.body.appendChild(el); }
+    el.textContent = t; el.hidden = false; clearTimeout(el._t); el._t = setTimeout(() => { el.hidden = true; }, 3000); }
+  function renumber() { let i = 1; wrap.querySelectorAll(':scope>details.group-acc, :scope>.old-wrap>details.group-acc').forEach(d => { const n = d.querySelector('.group-no'); if (n) n.textContent = String(i++).padStart(2, '0'); }); }
+  function apply() {
+    boxes().forEach(([box, k]) => {
+      const want = order[k]; if (!want || !want.length) return;
+      const arr = items(box); if (arr.length < 2) return;
+      const pos = {}; want.forEach((x, i) => { pos[x] = i; });
+      const sorted = arr.map((el, i) => [el.dataset.k in pos ? pos[el.dataset.k] : 1e4 + i, el]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+      const ph = document.createComment(''); box.insertBefore(ph, arr[0]); sorted.forEach(el => box.insertBefore(el, ph)); ph.remove();
+    });
+    renumber();
+    if (edit) boxes().forEach(([box]) => items(box).forEach(d => {
+      const sm = d.querySelector(':scope>summary'); if (!sm || sm.querySelector('.grip')) return;
+      const g = document.createElement('span'); g.className = 'grip'; g.title = 'ドラッグで並び替え';
+      const chev = sm.querySelector('.group-chev,.chev'); sm.insertBefore(g, chev || null);
+    }));
+  }
+  if (edit) { const n = document.createElement('div'); n.className = 'edit-note'; n.textContent = '並び替えモード：右の点々をドラッグすると並びが変わります（生徒さんには出ません）'; wrap.prepend(n); }
+  document.addEventListener('click', ev => { if (ev.target.classList && ev.target.classList.contains('grip')) { ev.preventDefault(); ev.stopPropagation(); } }, true);
+  document.addEventListener('pointerdown', ev => {
+    const g = ev.target.closest && ev.target.closest('.grip'); if (!g) return;
+    ev.preventDefault();
+    const el = g.closest('details'), par = el.parentElement; let moved = false;
+    el.classList.add('dragging'); document.body.classList.add('drg');
+    const mv = e => {
+      if (e.clientY < 70) window.scrollBy(0, -14); else if (e.clientY > innerHeight - 70) window.scrollBy(0, 14);
+      const sib = items(par).filter(c => c !== el && !c.classList.contains('is-hidden'));
+      let before = null;
+      for (const s of sib) { const r = s.getBoundingClientRect(); if (e.clientY < r.top + r.height / 2) { before = s; break; } }
+      if (before) { if (el.nextElementSibling !== before) { par.insertBefore(el, before); moved = true; } }
+      else { const last = sib[sib.length - 1]; if (last && last.nextSibling !== el) { par.insertBefore(el, last.nextSibling); moved = true; } }
+    };
+    const up = () => {
+      document.removeEventListener('pointermove', mv); document.removeEventListener('pointerup', up); document.removeEventListener('pointercancel', up);
+      el.classList.remove('dragging'); document.body.classList.remove('drg');
+      if (!moved) return;
+      order[keyOf(par)] = items(par).map(c => c.dataset.k); renumber();
+      fetch(PUT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ order }) })
+        .then(r => toast(r.ok ? '並びを保存しました' : '保存できませんでした（シェルフから開き直してください）'))
+        .catch(() => toast('保存できませんでした（ネットの接続を確かめてください）'));
+    };
+    document.addEventListener('pointermove', mv); document.addEventListener('pointerup', up); document.addEventListener('pointercancel', up);
+  });
+  const lk = document.getElementById('locked'); if (lk) new MutationObserver(apply).observe(lk, { childList: true });
+  fetch(URL_ + '?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(j => { order = (j && j.order) || {}; apply(); }).catch(() => apply());
 })();
 </script>
 <script src="https://teraco-labo.github.io/line-outou/applink.js" defer></script>

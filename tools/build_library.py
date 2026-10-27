@@ -49,7 +49,7 @@ def course_html(c):
                     f'<span class="t">{e(ep["title"])}</span>{new}{sub}<div class="btns">{"".join(btns)}</div></div></div>')
     tools = "".join(f'<a class="tool-note" href="{e(t["url"])}"{ext(t["url"])}><span>{e(t["label"])}</span><span class="arrow">→</span></a>'
                     for t in c.get("tools", []))
-    return (f'<details class="acc"><summary>'
+    return (f'<details class="acc" data-k="c-{e(c["title"])}"><summary>'
             f'<span class="stitle">{e(c["title"])}{badge}</span><span class="count">{len(eps)}回</span><span class="chev">▶</span></summary>'
             f'<div class="acc-body">{"".join(rows)}{tools}</div></details>')
 
@@ -102,11 +102,16 @@ LOCK_ICON = ('<svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentC
              'stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>')
 
 
+def n_slides(cs):
+    """段の見出しの数：その段に置いてあるスライドの数（2026-10-27 藤崎さん「講座の数は、そのセクションに置いてあるすべてのスライドの数にして」）。"""
+    return sum(1 for c in cs for ep in c.get("episodes", []) if ep.get("slides"))
+
+
 def section(no, name, inner, count, lock=False):
-    """お客さん向けの大きな段（2026-10-10 藤崎さん「図書館はお客さんが見るから、大きいセクションを」）。"""
-    return (f'<details class="group-acc"><summary><span class="group-no">{no:02d}</span>'
+    """お客さん向けの大きな段（2026-10-10 藤崎さん「図書館はお客さんが見るから、大きいセクションを」）。count はスライドの数。"""
+    return (f'<details class="group-acc" data-k="s-{e(name)}"><summary><span class="group-no">{no:02d}</span>'
             f'<span class="group-name">{e(name)}{LOCK_ICON if lock else ""}</span>'
-            f'<span class="group-count">{count}講座</span><span class="group-chev">▶</span></summary>'
+            f'<span class="group-count">スライド{count}</span><span class="group-chev">▶</span></summary>'
             f'<div class="group-body">{inner}</div></details>')
 
 
@@ -119,12 +124,17 @@ AUD_LABEL = {"はじめての方へ": "はじめての方", "一般の方へ": "
 ARCHIVE = "以前の講座"
 
 
-def section_inner(cs, by_audience=True):
+def grp(key, cs):
+    """並び替えのひとまとまり（この中で講座の順番を動かせる）。key は並びの保存に使う名前。"""
+    return f'<div class="grp" data-g="{e(key)}">' + "".join(course_html(c) for c in cs) + "</div>"
+
+
+def section_inner(cs, by_audience=True, sec=""):
     """段の中身。対象が2種類以上あるときだけ小見出し（年齢・対象別）を付ける。"""
     auds = list(dict.fromkeys(c["audience"] for c in cs))
     if len(auds) < 2 or not by_audience:
-        return "".join(course_html(c) for c in cs)
-    return "".join(f'<p class="sub-h">{e(AUD_LABEL.get(a, a))}</p>' + "".join(course_html(c) for c in cs if c["audience"] == a)
+        return grp(sec, cs)
+    return "".join(f'<p class="sub-h">{e(AUD_LABEL.get(a, a))}</p>' + grp(f"{sec}|{a}", [c for c in cs if c["audience"] == a])
                    for a in auds)
 
 
@@ -140,16 +150,16 @@ for sec in SECTIONS:
     if not cs and not (locked and old):
         continue
     # 教室の段は対象の小見出しを付けない（教室の講座だけなので）
-    inner = section_inner(cs, by_audience=sec != LOCKED)
+    inner = section_inner(cs, by_audience=sec != LOCKED, sec=sec)
     if locked:
         if old:
-            inner += f'<p class="sub-h">{ARCHIVE}</p>' + "".join(course_html(c) for c in old)
+            inner += f'<p class="sub-h">{ARCHIVE}</p>' + grp(f"{sec}|{ARCHIVE}", old)
         (ROOT / "students.lock").write_text(lock_text(inner))
         (ROOT / "students-check.lock").write_text(lock_text("teraco-students-ok"))
         inner = ('<form class="gate" id="gate"><div class="gate-t">番号を入れると開きます</div>'
                  '<div class="row"><input id="pw" type="password" inputmode="numeric" autocomplete="current-password" aria-label="番号">'
                  '<button type="submit" id="go">開く</button></div><div class="msg" id="msg"></div></form><div id="locked"></div>')
-    parts.append(section(len(parts) + 1, sec, inner, len(cs) + (len(old) if locked else 0), lock=locked))
+    parts.append(section(len(parts) + 1, sec, inner, n_slides(cs + (old if locked else [])), lock=locked))
 open_part = "".join(parts)
 n_links = len(parts) + 1
 
@@ -159,10 +169,10 @@ page = (ROOT / "tools/library_template.html").read_text(encoding="utf-8")
 old_public = [c for c in courses if in_archive(c) and not (LOCK and c["section"] == LOCKED)]
 old_part = ""
 if old_public:
-    oi = "".join(f'<p class="sub-h">{e(sec)}</p>' + "".join(course_html(c) for c in old_public if c["section"] == sec)
+    oi = "".join(f'<p class="sub-h">{e(sec)}</p>' + grp(f"{ARCHIVE}|{sec}", [c for c in old_public if c["section"] == sec])
                  for sec in SECTIONS if any(c["section"] == sec for c in old_public))
-    old_part = '<div class="old-wrap">' + section(n_links + 1, ARCHIVE, oi, len(old_public)) + "</div>"
-page = page.replace("{{COURSES}}", open_part).replace("{{GATE}}", gate).replace("{{LINKS}}", links_html(n_links) + old_part).replace("{{LOCK_SCRIPT}}", "true" if LOCK else "false").replace("{{CHANNEL}}", CHANNEL)
+    old_part = '<div class="old-wrap">' + section(n_links + 1, ARCHIVE, oi, n_slides(old_public)) + "</div>"
+page = page.replace("{{COURSES}}", open_part).replace("{{GATE}}", gate).replace("{{LINKS}}", links_html(n_links) + old_part).replace("{{LOCK_SCRIPT}}", "true" if LOCK else "false").replace("{{CHANNEL}}", CHANNEL).replace("{{ORDER_URL}}", DATA.get("order_url", ""))
 (ROOT / "index.html").write_text(page, encoding="utf-8")
 
 # 保管庫のページ（以前の講座）。検索サイトに載せない（noindex）
@@ -177,9 +187,9 @@ if arch:
     for sec in SECTIONS:
         cs = [c for c in arch if c["section"] == sec]
         if cs:
-            aparts.append(section(len(aparts) + 1, sec, section_inner(cs), len(cs)))
+            aparts.append(section(len(aparts) + 1, sec, section_inner(cs, sec=sec), n_slides(cs)))
     ap = (ap.replace("{{COURSES}}", "".join(aparts)).replace("{{GATE}}", "")
-            .replace("{{LINKS}}", links_html(len(aparts) + 1, archived=True)).replace("{{CHANNEL}}", "").replace("{{LOCK_SCRIPT}}", "false"))
+            .replace("{{LINKS}}", links_html(len(aparts) + 1, archived=True)).replace("{{CHANNEL}}", "").replace("{{ORDER_URL}}", "").replace("{{LOCK_SCRIPT}}", "false"))
     (ROOT / "archive.html").write_text(ap, encoding="utf-8")
     print(f"archive.html（保管庫）に 以前の講座 {len(arch)} を置きました")
 print(f"index.html を作り直しました（講座 {len(courses)}・鍵 {'あり' if LOCK else 'なし'}）")
