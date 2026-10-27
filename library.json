@@ -1,9 +1,11 @@
 {
   "_note": "てらこ図書館のデータ。講座を足すときはここに書いて python3 tools/build_library.py で index.html を作り直す（2026-10-10）。audience は「はじめての方へ／学生の方へ／一般の方へ／教室の生徒さんへ」。まだ授業でやっていない回は書かない（図書館には見せない）",
-  "lock_students": false,
+  "lock_students": true,
+  "_note_section": "section は図書館の大きな段（2026-10-27 藤崎さん「年代別（人別）から講座別に」）。「公民館スマホ講座／パソコン講座／AI講座／スマホ教室てらこ」のどれか。スマホ教室てらこ は lock_students が true のとき鍵つき（番号は ~/.config/teraco/student_pass にだけ置く）。audience は段の中の小見出し（年齢・対象別）に使う",
   "courses": [
     {
       "title": "体験会",
+      "section": "スマホ教室てらこ",
       "audience": "はじめての方へ",
       "episodes": [
         {
@@ -29,6 +31,7 @@
     },
     {
       "title": "「やさしい」AI講座",
+      "section": "AI講座",
       "audience": "はじめての方へ",
       "episodes": [
         {
@@ -73,6 +76,7 @@
     },
     {
       "title": "公民館スマホ講座",
+      "section": "公民館スマホ講座",
       "audience": "はじめての方へ",
       "episodes": [
         {
@@ -126,6 +130,7 @@
     },
     {
       "title": "はじめてのAI",
+      "section": "AI講座",
       "audience": "はじめての方へ",
       "episodes": [
         {
@@ -155,6 +160,7 @@
     },
     {
       "title": "「ずっと使える」スマホ講座（2026年8月）",
+      "section": "公民館スマホ講座",
       "audience": "はじめての方へ",
       "episodes": [
         {
@@ -200,6 +206,7 @@
     },
     {
       "title": "小学生「遊んで学ぶ」AI講座",
+      "section": "AI講座",
       "audience": "学生の方へ",
       "episodes": [
         {
@@ -240,6 +247,7 @@
     },
     {
       "title": "夏休みチャレンジ教室",
+      "section": "AI講座",
       "audience": "学生の方へ",
       "episodes": [
         {
@@ -262,6 +270,7 @@
     },
     {
       "title": "中学生「創って学ぶ」AI講座",
+      "section": "AI講座",
       "audience": "学生の方へ",
       "episodes": [
         {
@@ -333,6 +342,7 @@
     },
     {
       "title": "高校生「未来を描く」AI講座",
+      "section": "AI講座",
       "audience": "学生の方へ",
       "episodes": [
         {
@@ -400,6 +410,7 @@
     },
     {
       "title": "おとなのAI講座",
+      "section": "AI講座",
       "audience": "一般の方へ",
       "episodes": [
         {
@@ -501,6 +512,7 @@
     },
     {
       "title": "パソコンの基礎",
+      "section": "パソコン講座",
       "audience": "教室の生徒さんへ",
       "episodes": [
         {
@@ -549,6 +561,7 @@
     },
     {
       "title": "パソコンをもっと便利に",
+      "section": "パソコン講座",
       "audience": "教室の生徒さんへ",
       "episodes": [
         {
@@ -565,6 +578,7 @@
     },
     {
       "title": "パソコンAI実用講座",
+      "section": "パソコン講座",
       "audience": "教室の生徒さんへ",
       "episodes": [
         {
@@ -591,6 +605,7 @@
     },
     {
       "title": "Windows安心操作レッスン",
+      "section": "パソコン講座",
       "audience": "教室の生徒さんへ",
       "episodes": [
         {

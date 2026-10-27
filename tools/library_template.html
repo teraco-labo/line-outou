@@ -335,7 +335,7 @@
   </footer>
 </div>
 <script>
-// 「教室の生徒さんへ」の鍵（lock_students が true のときだけ働く）。番号はこのページの中だけで使い、どこにも送らない・残さない
+// 「スマホ教室てらこ」の段の鍵（lock_students が true のときだけ働く）。番号はこのページの中だけで使い、どこにも送らない・残さない
 if ({{LOCK_SCRIPT}}) {
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
   async function unlock(file, pass) {

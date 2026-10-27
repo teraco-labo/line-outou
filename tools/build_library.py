@@ -2,14 +2,14 @@
 """てらこ図書館の index.html を library.json から作り直す（2026-10-10）。
 
   python3 tools/build_library.py            # index.html を作り直す
-  python3 tools/build_library.py --lock     # 「教室の生徒さんへ」に鍵をかけて作る（library.json の lock_students を true にしたのと同じ）
+  python3 tools/build_library.py --lock     # 「スマホ教室てらこ」の段に鍵をかけて作る（library.json の lock_students を true にしたのと同じ）
 
 決まり（藤崎さん 2026-10-10・メモリ project_library_shelf_policy）
-- 並べ方は「対象の大きな段 → 講座 → 回 × 種類」（お客さんが見るので対象で分ける。Teraco Shelf は講座ごと＋印）
+- 並べ方は「講座の種類の段（公民館スマホ講座・パソコン講座・AI講座・スマホ教室てらこ）→ 対象の小見出し → 講座 → 回 × 種類」（2026-10-27 に対象別から講座別へ）
 - 回ごとのボタンは いつも同じ順番：スライド → 復習テキスト → 動画（無いものは出さない）
 - 図書館に出すのは生徒さんに見せてよい種類だけ（スライドの PDF・復習テキスト・動画）。
   投影用スライド・開催前チェック表・予備 PPTX・まだ授業でやっていない回は出さない（Teraco Shelf にだけある）
-- 鍵：「教室の生徒さんへ」の講座は、lock_students が true のとき中身を暗号化して students.lock に入れ、
+- 鍵：「スマホ教室てらこ」の段は、lock_students が true のとき中身を暗号化して students.lock に入れ、
   番号を入れたときだけブラウザの中で開く。番号は ~/.config/teraco/student_pass（1行）にだけ置く。
   鍵の方式は講師用（teacher/）と同じ PBKDF2 + AES-GCM。暗号化は tools/lock.mjs
 """
@@ -72,10 +72,14 @@ def short_label(label):
     return s or "テンプレート"
 
 
-def links_html(no):
-    """いちばん下の「プロンプト/リンク集」（2026-10-13 藤崎さん「中にプロンプトテンプレートがある感じに、中も見やすく」）。"""
+def links_html(no, archived=False):
+    """いちばん下の「テンプレート/リンク集」（2026-10-13 藤崎さん「中にプロンプトテンプレートがある感じに、中も見やすく」）。
+    archived=False は今の講座のテンプレート＋リンク、True は以前の講座のテンプレートだけ（保管庫のページ用。
+    2026-10-27 藤崎さん「リンク集の中で以前の講座に回したものとセットのものは一緒に以前の講座へ」）。"""
     rows, n = [], 0
     for c in DATA["courses"]:
+        if bool(c.get("archived")) != archived:
+            continue
         tools = c.get("tools", [])
         if not tools:
             continue
@@ -83,14 +87,14 @@ def links_html(no):
         btns = "".join(f'<a class="btn" href="{e(t["url"])}"{ext(t["url"])}>{e(short_label(t["label"]))}</a>' for t in tools)
         rows.append(f'<div class="tpl"><div class="name">{e(c["title"])}</div><div class="btns">{btns}</div></div>')
     body = f'<p class="sub-h">講座のプロンプトテンプレート</p><div class="panel">{"".join(rows)}</div>' if rows else ""
-    for g in DATA.get("links", []):
+    for g in ([] if archived else DATA.get("links", [])):
         body += f'<p class="sub-h">{e(g["group"])}</p>'
         for it in g["items"]:
             n += 1
             body += (f'<a class="linkbar" href="{e(it["url"])}"{ext(it["url"]) if it["url"].startswith("http") else ""}>'
                      f'<span class="stitle">{e(it["title"])}</span><span class="note">{e(it.get("note"))}</span><span class="go">→</span></a>')
     return (f'<details class="group-acc"><summary><span class="group-no">{no:02d}</span>'
-            f'<span class="group-name">プロンプト/リンク集</span><span class="group-count">{n}件</span>'
+            f'<span class="group-name">{"以前の講座のテンプレート" if archived else "テンプレート/リンク集"}</span><span class="group-count">{n}件</span>'
             f'<span class="group-chev">▶</span></summary><div class="group-body">{body}</div></details>')
 
 
@@ -107,25 +111,41 @@ def section(no, name, inner, count, lock=False):
 
 
 courses = DATA["courses"]
-ARCHIVE = "以前の講座"   # archived の講座はここにまとめる（2026-10-27 藤崎さん）。鍵をかけているときの生徒さん向けは、鍵の段に残す
+# 2026-10-27 藤崎さん「年代別（人別）になっているけど、講座別に変更しましょう」
+# 段は講座の種類で分け、年齢・対象（audience）は段の中の小見出しにする
+SECTIONS = ["公民館スマホ講座", "パソコン講座", "AI講座", "スマホ教室てらこ"]
+LOCKED = "スマホ教室てらこ"   # 鍵つきの段（番号は教室の皆さんに口頭で伝える）
+AUD_LABEL = {"はじめての方へ": "はじめての方", "一般の方へ": "大人の方", "学生の方へ": "学生の方", "教室の生徒さんへ": "教室の生徒さん"}
+ARCHIVE = "以前の講座"
+
+
+def section_inner(cs):
+    """段の中身。対象が2種類以上あるときだけ小見出し（年齢・対象別）を付ける。"""
+    auds = list(dict.fromkeys(c["audience"] for c in cs))
+    if len(auds) < 2:
+        return "".join(course_html(c) for c in cs)
+    return "".join(f'<p class="sub-h">{e(AUD_LABEL.get(a, a))}</p>' + "".join(course_html(c) for c in cs if c["audience"] == a)
+                   for a in auds)
+
+
 def in_archive(c):
-    return c.get("archived") and not (LOCK and c["audience"] == STUDENTS)
+    return bool(c.get("archived"))
 parts, gate = [], ""
 # 2026-10-27 藤崎さん「消しちゃうとアレなんで、アーカイブ的な感じで見えないところにおきたい」
 # → 以前の講座は図書館のページには出さず、保管庫のページ（archive.html）に置く。図書館からはリンクしない（Teraco Shelf からだけ開く）
-for no, aud in enumerate(AUD_ORDER, 1):
-    cs = ([c for c in courses if in_archive(c)] if aud == ARCHIVE
-          else [c for c in courses if c["audience"] == aud and not in_archive(c)])
+for sec in SECTIONS:
+    cs = [c for c in courses if c["section"] == sec and not in_archive(c)]
     if not cs:
         continue
-    inner = "".join(course_html(c) for c in cs)
-    if LOCK and aud == STUDENTS:
+    inner = section_inner(cs)
+    locked = LOCK and sec == LOCKED
+    if locked:
         (ROOT / "students.lock").write_text(lock_text(inner))
         (ROOT / "students-check.lock").write_text(lock_text("teraco-students-ok"))
         inner = ('<form class="gate" id="gate"><div class="gate-t">番号を入れると開きます</div>'
                  '<div class="row"><input id="pw" type="password" inputmode="numeric" autocomplete="current-password" aria-label="番号">'
                  '<button type="submit" id="go">開く</button></div><div class="msg" id="msg"></div></form><div id="locked"></div>')
-    parts.append(section(len(parts) + 1, aud, inner, len(cs), lock=LOCK and aud == STUDENTS))
+    parts.append(section(len(parts) + 1, sec, inner, len(cs), lock=locked))
 open_part = "".join(parts)
 n_links = len(parts) + 1
 
@@ -141,8 +161,13 @@ if arch:
     ap = ap.replace("<title>てらこ図書館", "<title>てらこ図書館 保管庫", 1)
     ap = ap.replace("<h1>てらこ図書館</h1>", "<h1>てらこ図書館 保管庫</h1>", 1)
     ap = ap.replace("講座で使う教材を、いつでも読み返せます", "以前の講座の教材です（今の講座は図書館にあります）", 1)
-    ap = (ap.replace("{{COURSES}}", section(1, ARCHIVE, "".join(course_html(c) for c in arch), len(arch)))
-            .replace("{{GATE}}", "").replace("{{LINKS}}", "").replace("{{LOCK_SCRIPT}}", "false"))
+    aparts = []
+    for sec in SECTIONS:
+        cs = [c for c in arch if c["section"] == sec]
+        if cs:
+            aparts.append(section(len(aparts) + 1, sec, section_inner(cs), len(cs)))
+    ap = (ap.replace("{{COURSES}}", "".join(aparts)).replace("{{GATE}}", "")
+            .replace("{{LINKS}}", links_html(len(aparts) + 1, archived=True)).replace("{{LOCK_SCRIPT}}", "false"))
     (ROOT / "archive.html").write_text(ap, encoding="utf-8")
     print(f"archive.html（保管庫）に 以前の講座 {len(arch)} を置きました")
 print(f"index.html を作り直しました（講座 {len(courses)}・鍵 {'あり' if LOCK else 'なし'}）")
