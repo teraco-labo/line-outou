@@ -257,6 +257,11 @@
 
   .home-text{display:block;text-align:right;font-size:12.5px;color:var(--accent);text-decoration:none;margin:-4px 6px 12px 0;}
   .home-text:hover{text-decoration:underline;}
+  .old-wrap{margin-top:40px;padding-top:8px;border-top:1px dashed var(--line);opacity:.92;}
+  .channel{display:flex;align-items:center;gap:10px;margin:28px 0 8px;padding:16px 18px;border-radius:14px;background:#c4302b;color:#fff;text-decoration:none;}
+  .channel .ch-t{font-weight:700;font-size:15px;}
+  .channel .ch-s{font-size:13px;opacity:.95;flex:1;}
+  .channel .go{font-weight:700;}
   footer{
     text-align:center;
     margin-top:72px;
@@ -329,6 +334,7 @@
 
   <!-- ===== プロンプト/リンク集（tools/build_library.py が library.json の links と講座のテンプレートから作る） ===== -->
   {{LINKS}}
+  {{CHANNEL}}
 
   <footer>
     <a href="https://teraco-labo.com/" target="_blank" rel="noopener">TERACO.LABO</a>

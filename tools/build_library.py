@@ -113,16 +113,16 @@ def section(no, name, inner, count, lock=False):
 courses = DATA["courses"]
 # 2026-10-27 藤崎さん「年代別（人別）になっているけど、講座別に変更しましょう」
 # 段は講座の種類で分け、年齢・対象（audience）は段の中の小見出しにする
-SECTIONS = ["公民館スマホ講座", "パソコン講座", "AI講座", "スマホ教室てらこ"]
+SECTIONS = ["スマホ講座", "パソコン講座", "AI講座", "スマホ教室てらこ"]   # 2026-10-27 公民館スマホ講座→スマホ講座
 LOCKED = "スマホ教室てらこ"   # 鍵つきの段（番号は教室の皆さんに口頭で伝える）
 AUD_LABEL = {"はじめての方へ": "はじめての方", "一般の方へ": "大人の方", "学生の方へ": "学生の方", "教室の生徒さんへ": "教室の生徒さん"}
 ARCHIVE = "以前の講座"
 
 
-def section_inner(cs):
+def section_inner(cs, by_audience=True):
     """段の中身。対象が2種類以上あるときだけ小見出し（年齢・対象別）を付ける。"""
     auds = list(dict.fromkeys(c["audience"] for c in cs))
-    if len(auds) < 2:
+    if len(auds) < 2 or not by_audience:
         return "".join(course_html(c) for c in cs)
     return "".join(f'<p class="sub-h">{e(AUD_LABEL.get(a, a))}</p>' + "".join(course_html(c) for c in cs if c["audience"] == a)
                    for a in auds)
@@ -131,26 +131,39 @@ def section_inner(cs):
 def in_archive(c):
     return bool(c.get("archived"))
 parts, gate = [], ""
-# 2026-10-27 藤崎さん「消しちゃうとアレなんで、アーカイブ的な感じで見えないところにおきたい」
-# → 以前の講座は図書館のページには出さず、保管庫のページ（archive.html）に置く。図書館からはリンクしない（Teraco Shelf からだけ開く）
+# 2026-10-27 藤崎さん「以前の講座というセクションも一覧とは別に下の方にあるといい」
+# → 以前の講座はリンク集のさらに下に別の段で出す。教室の以前の講座は、鍵の段の中の「以前の講座」の小見出しに置く
 for sec in SECTIONS:
     cs = [c for c in courses if c["section"] == sec and not in_archive(c)]
-    if not cs:
-        continue
-    inner = section_inner(cs)
+    old = [c for c in courses if c["section"] == sec and in_archive(c)]
     locked = LOCK and sec == LOCKED
+    if not cs and not (locked and old):
+        continue
+    # 教室の段は対象の小見出しを付けない（教室の講座だけなので）
+    inner = section_inner(cs, by_audience=sec != LOCKED)
     if locked:
+        if old:
+            inner += f'<p class="sub-h">{ARCHIVE}</p>' + "".join(course_html(c) for c in old)
         (ROOT / "students.lock").write_text(lock_text(inner))
         (ROOT / "students-check.lock").write_text(lock_text("teraco-students-ok"))
         inner = ('<form class="gate" id="gate"><div class="gate-t">番号を入れると開きます</div>'
                  '<div class="row"><input id="pw" type="password" inputmode="numeric" autocomplete="current-password" aria-label="番号">'
                  '<button type="submit" id="go">開く</button></div><div class="msg" id="msg"></div></form><div id="locked"></div>')
-    parts.append(section(len(parts) + 1, sec, inner, len(cs), lock=locked))
+    parts.append(section(len(parts) + 1, sec, inner, len(cs) + (len(old) if locked else 0), lock=locked))
 open_part = "".join(parts)
 n_links = len(parts) + 1
 
+# 動画は YouTube の限定公開。図書館から見に行けて、チャンネル登録へも誘う（2026-10-27 藤崎さん「Youtubeへ誘導も兼ねる（チャンネル登録してね）」）
+CHANNEL = ('<a class="channel" href="https://www.youtube.com/@teracosensei?sub_confirmation=1" target="_blank" rel="noopener">'
+           '<span class="ch-t">YouTube「てらこ先生」</span><span class="ch-s">チャンネル登録してね</span><span class="go">→</span></a>')
 page = (ROOT / "tools/library_template.html").read_text(encoding="utf-8")
-page = page.replace("{{COURSES}}", open_part).replace("{{GATE}}", gate).replace("{{LINKS}}", links_html(n_links)).replace("{{LOCK_SCRIPT}}", "true" if LOCK else "false")
+old_public = [c for c in courses if in_archive(c) and not (LOCK and c["section"] == LOCKED)]
+old_part = ""
+if old_public:
+    oi = "".join(f'<p class="sub-h">{e(sec)}</p>' + "".join(course_html(c) for c in old_public if c["section"] == sec)
+                 for sec in SECTIONS if any(c["section"] == sec for c in old_public))
+    old_part = '<div class="old-wrap">' + section(n_links + 1, ARCHIVE, oi, len(old_public)) + "</div>"
+page = page.replace("{{COURSES}}", open_part).replace("{{GATE}}", gate).replace("{{LINKS}}", links_html(n_links) + old_part).replace("{{LOCK_SCRIPT}}", "true" if LOCK else "false").replace("{{CHANNEL}}", CHANNEL)
 (ROOT / "index.html").write_text(page, encoding="utf-8")
 
 # 保管庫のページ（以前の講座）。検索サイトに載せない（noindex）
@@ -167,7 +180,7 @@ if arch:
         if cs:
             aparts.append(section(len(aparts) + 1, sec, section_inner(cs), len(cs)))
     ap = (ap.replace("{{COURSES}}", "".join(aparts)).replace("{{GATE}}", "")
-            .replace("{{LINKS}}", links_html(len(aparts) + 1, archived=True)).replace("{{LOCK_SCRIPT}}", "false"))
+            .replace("{{LINKS}}", links_html(len(aparts) + 1, archived=True)).replace("{{CHANNEL}}", "").replace("{{LOCK_SCRIPT}}", "false"))
     (ROOT / "archive.html").write_text(ap, encoding="utf-8")
     print(f"archive.html（保管庫）に 以前の講座 {len(arch)} を置きました")
 print(f"index.html を作り直しました（講座 {len(courses)}・鍵 {'あり' if LOCK else 'なし'}）")
