@@ -103,15 +103,17 @@ LOCK_ICON = ('<svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentC
 
 
 def n_slides(cs):
-    """段の見出しの数：その段に置いてあるスライドの数（2026-10-27 藤崎さん「講座の数は、そのセクションに置いてあるすべてのスライドの数にして」）。"""
-    return sum(1 for c in cs for ep in c.get("episodes", []) if ep.get("slides"))
+    """段の見出しの数：「〇講座・スライド〇」（2026-10-27 藤崎さん「そのセクションに置いてあるすべてのスライドの数」
+    →「こんな感じで」とシェルフの「5講座・36ファイル」の形を指定）。"""
+    return f'{len(cs)}講座・スライド{sum(1 for c in cs for ep in c.get("episodes", []) if ep.get("slides"))}'
+
 
 
 def section(no, name, inner, count, lock=False):
     """お客さん向けの大きな段（2026-10-10 藤崎さん「図書館はお客さんが見るから、大きいセクションを」）。count はスライドの数。"""
     return (f'<details class="group-acc" data-k="s-{e(name)}"><summary><span class="group-no">{no:02d}</span>'
             f'<span class="group-name">{e(name)}{LOCK_ICON if lock else ""}</span>'
-            f'<span class="group-count">スライド{count}</span><span class="group-chev">▶</span></summary>'
+            f'<span class="group-count">{count}</span><span class="group-chev">▶</span></summary>'
             f'<div class="group-body">{inner}</div></details>')
 
 
