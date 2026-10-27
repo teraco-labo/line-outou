@@ -294,7 +294,7 @@
   @media(max-width:430px){.group-acc .group-body{padding:2px 0 24px;} .acc-body{padding:4px 12px 12px;} .acc>summary{padding:16px 14px;}
     .ep{gap:8px;} .ep .num{width:20px;} .btn{padding:0 11px;font-size:12.5px;}}
   /* ===== プロンプト/リンク集（2026-10-13） ===== */
-  .grip{flex:none;width:18px;height:24px;margin-left:8px;cursor:grab;touch-action:none;opacity:.45;border-radius:4px;
+  .grip{flex:none;width:22px;height:28px;margin-left:8px;cursor:grab;touch-action:none;opacity:.6;border-radius:4px;
     background-image:radial-gradient(circle,var(--sub) 1.6px,transparent 1.8px);background-size:6px 6px;background-position:3px 3px;}
   .grip:hover{opacity:.9;}
   .acc>summary:has(.grip){grid-template-columns:1fr auto auto auto;}
@@ -404,15 +404,26 @@ if ({{LOCK_SCRIPT}}) {
 <script>
 // 並び替え（2026-10-27 藤崎さん「図書館も同じようにドラッグで並び替えできるようにして」）
 // 並びは Teraco Shelf と同じ倉庫の order.json。誰でも読めるので、開いたときにこの並びで出す。
-// つまみ（点々）は Teraco Shelf の「図書館を並び替える」から開いたとき（?edit=1 と書き込みの合図つき）だけ出す。生徒さんには出ない
+// つまみ（点々）は Teraco Shelf の「図書館を並び替える」から一度開いた端末（藤崎さんの Mac・スマホ）にだけ出す。
+// 2026-10-27 藤崎さん「図書館をふつうに開いたときもドラッグで並び替えたい」→ 書き込みの合図をその端末に覚えさせ、
+// 以後はふつうに開いても点々が出る。合図はシェルフが作る期限つき（7日）。切れたらシェルフから開き直すと延びる。生徒さんの端末には合図が無いので出ない
 (function () {
   const URL_ = '{{ORDER_URL}}'; if (!URL_) return;
   const wrap = document.querySelector('.wrap');
   let order = {}, PUT = null;
   const m = location.hash.match(/put=([^&]+)/);
-  if (m) { try { sessionStorage.setItem('lib-put', decodeURIComponent(m[1])); } catch (_) {} history.replaceState(null, '', location.pathname + location.search); }
-  try { PUT = sessionStorage.getItem('lib-put'); } catch (_) {}
-  const edit = /[?&]edit=1/.test(location.search) && !!PUT;
+  if (m) { try { localStorage.setItem('lib-put', decodeURIComponent(m[1])); } catch (_) {} history.replaceState(null, '', location.pathname + location.search); }
+  try { PUT = localStorage.getItem('lib-put') || sessionStorage.getItem('lib-put'); } catch (_) {}
+  // 合図の期限（X-Amz-Date＋X-Amz-Expires）を見て、切れていれば点々は出さず、ひとことだけ出す
+  let expired = false;
+  if (PUT) try {
+    const p = new URL(PUT).searchParams, d = p.get('X-Amz-Date'), sec = +p.get('X-Amz-Expires');
+    if (d && sec) {
+      const t = Date.UTC(+d.slice(0, 4), +d.slice(4, 6) - 1, +d.slice(6, 8), +d.slice(9, 11), +d.slice(11, 13), +d.slice(13, 15));
+      if (Date.now() > t + sec * 1000 - 60000) { expired = true; PUT = null; }
+    }
+  } catch (_) {}
+  const edit = !!PUT;
   const boxes = () => [[wrap, 'top']].concat([...document.querySelectorAll('.grp[data-g]')].map(g => [g, g.dataset.g]));
   const items = p => [...p.children].filter(c => c.tagName === 'DETAILS' && c.dataset.k);
   const keyOf = p => p === wrap ? 'top' : p.dataset.g;
@@ -434,7 +445,9 @@ if ({{LOCK_SCRIPT}}) {
       const chev = sm.querySelector('.group-chev,.chev'); sm.insertBefore(g, chev || null);
     }));
   }
-  if (edit) { const n = document.createElement('div'); n.className = 'edit-note'; n.textContent = '並び替えモード：右の点々をドラッグすると並びが変わります（生徒さんには出ません）'; wrap.prepend(n); }
+  // 帯は「図書館を並び替える」から開いたときだけ（ふつうに開いたときは点々だけ。教室で映しても目立たない）
+  if (edit && /[?&]edit=1/.test(location.search)) { const n = document.createElement('div'); n.className = 'edit-note'; n.textContent = '並び替えモード：右の点々をドラッグすると並びが変わります（この端末では、次からふつうに開いても点々が出ます。生徒さんには出ません）'; wrap.prepend(n); }
+  if (expired) setTimeout(() => toast('並び替えの期限が切れました。シェルフの「図書館を並び替える」から一度開いてください'), 800);
   document.addEventListener('click', ev => { if (ev.target.classList && ev.target.classList.contains('grip')) { ev.preventDefault(); ev.stopPropagation(); } }, true);
   document.addEventListener('pointerdown', ev => {
     const g = ev.target.closest && ev.target.closest('.grip'); if (!g) return;
@@ -455,7 +468,7 @@ if ({{LOCK_SCRIPT}}) {
       if (!moved) return;
       order[keyOf(par)] = items(par).map(c => c.dataset.k); renumber();
       fetch(PUT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ order }) })
-        .then(r => toast(r.ok ? '並びを保存しました' : '保存できませんでした（シェルフから開き直してください）'))
+        .then(r => toast(r.ok ? '並びを保存しました' : '保存できませんでした（シェルフの「図書館を並び替える」から一度開き直してください）'))
         .catch(() => toast('保存できませんでした（ネットの接続を確かめてください）'));
     };
     document.addEventListener('pointermove', mv); document.addEventListener('pointerup', up); document.addEventListener('pointercancel', up);

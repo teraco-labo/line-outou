@@ -93,7 +93,8 @@ def links_html(no, archived=False):
             n += 1
             body += (f'<a class="linkbar" href="{e(it["url"])}"{ext(it["url"]) if it["url"].startswith("http") else ""}>'
                      f'<span class="stitle">{e(it["title"])}</span><span class="note">{e(it.get("note"))}</span><span class="go">→</span></a>')
-    return (f'<details class="group-acc"><summary><span class="group-no">{no:02d}</span>'
+    # data-k を付けて、リンク集の段も並び替えできるようにする（2026-10-27）
+    return (f'<details class="group-acc" data-k="s-{"old-links" if archived else "links"}"><summary><span class="group-no">{no:02d}</span>'
             f'<span class="group-name">{"以前の講座のテンプレート" if archived else "テンプレート/リンク集"}</span><span class="group-count">{n}件</span>'
             f'<span class="group-chev">▶</span></summary><div class="group-body">{body}</div></details>')
 
