@@ -153,9 +153,8 @@ for sec in SECTIONS:
 open_part = "".join(parts)
 n_links = len(parts) + 1
 
-# 動画は YouTube の限定公開。図書館から見に行けて、チャンネル登録へも誘う（2026-10-27 藤崎さん「Youtubeへ誘導も兼ねる（チャンネル登録してね）」）
-CHANNEL = ('<a class="channel" href="https://www.youtube.com/@teracosensei?sub_confirmation=1" target="_blank" rel="noopener">'
-           '<span class="ch-t">YouTube「てらこ先生」</span><span class="ch-s">チャンネル登録してね</span><span class="go">→</span></a>')
+# チャンネル登録のバナーは置かない（2026-10-27 藤崎さん「赤い YouTube のバナーはいらない。露骨すぎる。限定公開で見に来た人がいいなと思って登録してくれれば十分」）。動画の説明欄の一言だけにする
+CHANNEL = ""
 page = (ROOT / "tools/library_template.html").read_text(encoding="utf-8")
 old_public = [c for c in courses if in_archive(c) and not (LOCK and c["section"] == LOCKED)]
 old_part = ""

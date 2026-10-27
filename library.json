@@ -445,7 +445,12 @@
           "slides": "materials/otonano-ai-course-session03-slides.pdf",
           "new": true,
           "text": "materials/otonano-ai-course-session03-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/s2-pFWnWLHQ",
+              "label": "第3回「AI画像で、伝わる一枚をつくる」（5分）"
+            }
+          ]
         },
         {
           "num": "04",
