@@ -149,6 +149,8 @@ for sec in SECTIONS:
     old = [c for c in courses if c["section"] == sec and in_archive(c)]
     locked = LOCK and sec == LOCKED
     if not cs and not (locked and old):
+        if sec in DATA.get("preparing", []):   # 中身がまだ無い段は「準備中」で出す（2026-10-27）
+            parts.append(section(len(parts) + 1, sec, '<p class="prep">準備中です</p>', "準備中"))
         continue
     # 教室の段は対象の小見出しを付けない（教室の講座だけなので）
     inner = section_inner(cs, by_audience=sec != LOCKED, sec=sec)
