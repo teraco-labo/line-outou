@@ -15,7 +15,12 @@
           "slides": "materials/taiken-sumaho-slides.pdf",
           "text": "materials/taiken-sumaho-text.pdf",
           "new": true,
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/p_4cShD5_NU",
+              "label": "第1回「スマホ体験会」（5分）"
+            }
+          ]
         },
         {
           "num": "02",
@@ -24,7 +29,12 @@
           "slides": "materials/taiken-pc-slides.pdf",
           "text": "materials/taiken-pc-text.pdf",
           "new": true,
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/IXVmaNsISGU",
+              "label": "第2回「パソコン体験会」（4分）"
+            }
+          ]
         }
       ],
       "tools": []
@@ -150,7 +160,12 @@
           "slides": "materials/hajimete-ai-session02-slides.pdf",
           "new": true,
           "text": "materials/hajimete-ai-session02-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/P48SxU41Ivo",
+              "label": "第2回「声で AI と話そう」（4分）"
+            }
+          ]
         }
       ],
       "tools": []
@@ -588,7 +603,12 @@
           "slides": "materials/pc-benri-session01-slides.pdf",
           "new": true,
           "text": "materials/pc-benri-session01-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/UbOLPEHk-EA",
+              "label": "第1回「キーボードで近道」（4分）"
+            }
+          ]
         }
       ],
       "tools": []
