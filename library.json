@@ -68,7 +68,8 @@
           "videos": []
         }
       ],
-      "tools": []
+      "tools": [],
+      "archived": true
     },
     {
       "title": "公民館スマホ講座",
@@ -153,7 +154,7 @@
       "tools": []
     },
     {
-      "title": "「ずっと使える」スマホ講座（以前の版・2026年8月）",
+      "title": "「ずっと使える」スマホ講座（2026年8月）",
       "audience": "はじめての方へ",
       "episodes": [
         {
@@ -194,7 +195,8 @@
           "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#senior",
           "label": "プロンプトテンプレートを使う"
         }
-      ]
+      ],
+      "archived": true
     },
     {
       "title": "小学生「遊んで学ぶ」AI講座",
@@ -233,7 +235,8 @@
           "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#elementary",
           "label": "プロンプトテンプレートを使う"
         }
-      ]
+      ],
+      "archived": true
     },
     {
       "title": "夏休みチャレンジ教室",
@@ -254,7 +257,8 @@
           "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#summer",
           "label": "プロンプトテンプレートを使う"
         }
-      ]
+      ],
+      "archived": true
     },
     {
       "title": "中学生「創って学ぶ」AI講座",
@@ -324,7 +328,8 @@
           "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#middle-app",
           "label": "第6回のアプリ用テンプレートを使う"
         }
-      ]
+      ],
+      "archived": true
     },
     {
       "title": "高校生「未来を描く」AI講座",
@@ -390,7 +395,8 @@
           "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#high",
           "label": "プロンプトテンプレートを使う"
         }
-      ]
+      ],
+      "archived": true
     },
     {
       "title": "おとなのAI講座",
@@ -580,7 +586,8 @@
           "videos": []
         }
       ],
-      "tools": []
+      "tools": [],
+      "archived": true
     },
     {
       "title": "Windows安心操作レッスン",
@@ -628,7 +635,8 @@
           ]
         }
       ],
-      "tools": []
+      "tools": [],
+      "archived": true
     }
   ],
   "links": [
@@ -662,5 +670,6 @@
         }
       ]
     }
-  ]
+  ],
+  "_note_archived": "archived が true の講座は「以前の講座」の段にまとめる。HTML 形式の新作が1回も無い講座（2026-10-27 藤崎さん「新作以外の講座は以前の講座に移して。全体を整理しなおしたい」）。教材は消さない"
 }

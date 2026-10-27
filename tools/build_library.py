@@ -107,9 +107,13 @@ def section(no, name, inner, count, lock=False):
 
 
 courses = DATA["courses"]
+ARCHIVE = "以前の講座"   # archived の講座はここにまとめる（2026-10-27 藤崎さん）。鍵をかけているときの生徒さん向けは、鍵の段に残す
+def in_archive(c):
+    return c.get("archived") and not (LOCK and c["audience"] == STUDENTS)
 parts, gate = [], ""
-for no, aud in enumerate(AUD_ORDER, 1):
-    cs = [c for c in courses if c["audience"] == aud]
+for no, aud in enumerate(AUD_ORDER + [ARCHIVE], 1):
+    cs = ([c for c in courses if in_archive(c)] if aud == ARCHIVE
+          else [c for c in courses if c["audience"] == aud and not in_archive(c)])
     if not cs:
         continue
     inner = "".join(course_html(c) for c in cs)
@@ -119,7 +123,7 @@ for no, aud in enumerate(AUD_ORDER, 1):
         inner = ('<form class="gate" id="gate"><div class="gate-t">番号を入れると開きます</div>'
                  '<div class="row"><input id="pw" type="password" inputmode="numeric" autocomplete="current-password" aria-label="番号">'
                  '<button type="submit" id="go">開く</button></div><div class="msg" id="msg"></div></form><div id="locked"></div>')
-    parts.append(section(no, aud, inner, len(cs), lock=LOCK and aud == STUDENTS))
+    parts.append(section(len(parts) + 1, aud, inner, len(cs), lock=LOCK and aud == STUDENTS))
 open_part = "".join(parts)
 n_links = len(parts) + 1
 
