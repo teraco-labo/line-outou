@@ -136,7 +136,12 @@
           "slides": "materials/hajimete-ai-session01-slides.pdf",
           "new": true,
           "text": "materials/hajimete-ai-session01-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/kNB5eObAFZk",
+              "label": "はじめてのAI 第1回「AIに頼んでみよう」（5分）"
+            }
+          ]
         },
         {
           "num": "02",
@@ -412,7 +417,12 @@
           "slides": "materials/otonano-ai-course-session01-slides.pdf",
           "new": true,
           "text": "materials/otonano-ai-course-session01-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/sx4ETTAW8SM",
+              "label": "第1回「いい答えを引き出す3つのコツ」（4分）"
+            }
+          ]
         },
         {
           "num": "02",
@@ -421,7 +431,12 @@
           "slides": "materials/otonano-ai-course-session02-slides.pdf",
           "new": true,
           "text": "materials/otonano-ai-course-session02-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/bKyLbIsiNiI",
+              "label": "第2回「Gemini Notebook で調べて、5つの形にまとめる」（4分）"
+            }
+          ]
         },
         {
           "num": "03",
@@ -439,7 +454,12 @@
           "slides": "materials/otonano-ai-course-session04-slides.pdf",
           "new": true,
           "text": "materials/otonano-ai-course-session04-music-video.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/nd362qXOmTA",
+              "label": "第4回「言葉で頼んで、音楽と短い動画をつくる」（4分）"
+            }
+          ]
         },
         {
           "num": "05",
@@ -448,7 +468,12 @@
           "slides": "materials/otonano-ai-course-session05-slides.pdf",
           "new": true,
           "text": "materials/otonano-ai-course-session05-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/xItBMmF4Kto",
+              "label": "第5回「話しかけるだけでアプリができる」（4分）"
+            }
+          ]
         }
       ],
       "tools": [
