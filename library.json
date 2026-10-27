@@ -28,50 +28,6 @@
       "tools": []
     },
     {
-      "title": "「ずっと使える」スマホ講座",
-      "audience": "はじめての方へ",
-      "episodes": [
-        {
-          "num": "01",
-          "title": "LINEをもっと便利に使う",
-          "sub": "初心者向け・90分のLINE活用講座",
-          "slides": "https://drive.google.com/file/d/16vm-ajeF4LC7ITmpOnIKIWi7EzX5UTcP/view",
-          "new": false,
-          "text": "",
-          "videos": []
-        },
-        {
-          "num": "02",
-          "title": "Googleマップで行き先と時間を調べる",
-          "sub": "初心者向け・90分のGoogleマップ活用講座",
-          "slides": "https://drive.google.com/file/d/1bvHVXQWuR88vArAJeZtxl4ASPAdcvXdH/view",
-          "new": false,
-          "text": "",
-          "videos": [
-            {
-              "url": "https://youtu.be/-4WZ8mZt9X8",
-              "label": "Googleマップで評判のいいお店を探す方法"
-            }
-          ]
-        },
-        {
-          "num": "03",
-          "title": "インターネットで安全に調べる",
-          "sub": "初心者向け・90分の調べもの講座",
-          "slides": "https://drive.google.com/file/d/1iqWuNHrkkVdXWtHzpfI5GYSaGbSzSikN/view",
-          "new": false,
-          "text": "",
-          "videos": []
-        }
-      ],
-      "tools": [
-        {
-          "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#senior",
-          "label": "プロンプトテンプレートを使う"
-        }
-      ]
-    },
-    {
       "title": "「やさしい」AI講座",
       "audience": "はじめての方へ",
       "episodes": [
@@ -195,6 +151,50 @@
         }
       ],
       "tools": []
+    },
+    {
+      "title": "「ずっと使える」スマホ講座（以前の版・2026年8月）",
+      "audience": "はじめての方へ",
+      "episodes": [
+        {
+          "num": "01",
+          "title": "LINEをもっと便利に使う",
+          "sub": "初心者向け・90分のLINE活用講座",
+          "slides": "https://drive.google.com/file/d/16vm-ajeF4LC7ITmpOnIKIWi7EzX5UTcP/view",
+          "new": false,
+          "text": "",
+          "videos": []
+        },
+        {
+          "num": "02",
+          "title": "Googleマップで行き先と時間を調べる",
+          "sub": "初心者向け・90分のGoogleマップ活用講座",
+          "slides": "https://drive.google.com/file/d/1bvHVXQWuR88vArAJeZtxl4ASPAdcvXdH/view",
+          "new": false,
+          "text": "",
+          "videos": [
+            {
+              "url": "https://youtu.be/-4WZ8mZt9X8",
+              "label": "Googleマップで評判のいいお店を探す方法"
+            }
+          ]
+        },
+        {
+          "num": "03",
+          "title": "インターネットで安全に調べる",
+          "sub": "初心者向け・90分の調べもの講座",
+          "slides": "https://drive.google.com/file/d/1iqWuNHrkkVdXWtHzpfI5GYSaGbSzSikN/view",
+          "new": false,
+          "text": "",
+          "videos": []
+        }
+      ],
+      "tools": [
+        {
+          "url": "https://teraco-labo.github.io/teraco-prompt-engineering/#senior",
+          "label": "プロンプトテンプレートを使う"
+        }
+      ]
     },
     {
       "title": "小学生「遊んで学ぶ」AI講座",

@@ -36,9 +36,10 @@ def course_html(c):
     for ep in eps:
         btns = []
         if ep.get("slides"):
-            btns.append(f'<a class="btn main" href="{e(ep["slides"])}"{ext(ep["slides"])}>スライド</a>')
+            # 2026-10-27 藤崎さん「スライドは確認用（ページ数が多い）、復習テキストに印刷用で書いちゃおう」
+            btns.append(f'<a class="btn main" href="{e(ep["slides"])}"{ext(ep["slides"])}>スライド<small>確認用（見るだけ）</small></a>')
         if ep.get("text"):
-            btns.append(f'<a class="btn" href="{e(ep["text"])}"{ext(ep["text"])}>復習テキスト</a>')
+            btns.append(f'<a class="btn" href="{e(ep["text"])}"{ext(ep["text"])}>復習テキスト<small>印刷用</small></a>')
         for i, v in enumerate(ep.get("videos", [])):
             label = "動画" if i == 0 else f"動画{i + 1}"
             btns.append(f'<a class="btn" href="{e(v["url"])}"{ext(v["url"])} title="{e(v.get("label"))}">{label}</a>')
