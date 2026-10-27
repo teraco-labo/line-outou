@@ -111,7 +111,9 @@ ARCHIVE = "以前の講座"   # archived の講座はここにまとめる（202
 def in_archive(c):
     return c.get("archived") and not (LOCK and c["audience"] == STUDENTS)
 parts, gate = [], ""
-for no, aud in enumerate(AUD_ORDER + [ARCHIVE], 1):
+# 2026-10-27 藤崎さん「消しちゃうとアレなんで、アーカイブ的な感じで見えないところにおきたい」
+# → 以前の講座は図書館のページには出さず、保管庫のページ（archive.html）に置く。図書館からはリンクしない（Teraco Shelf からだけ開く）
+for no, aud in enumerate(AUD_ORDER, 1):
     cs = ([c for c in courses if in_archive(c)] if aud == ARCHIVE
           else [c for c in courses if c["audience"] == aud and not in_archive(c)])
     if not cs:
@@ -130,4 +132,17 @@ n_links = len(parts) + 1
 page = (ROOT / "tools/library_template.html").read_text(encoding="utf-8")
 page = page.replace("{{COURSES}}", open_part).replace("{{GATE}}", gate).replace("{{LINKS}}", links_html(n_links)).replace("{{LOCK_SCRIPT}}", "true" if LOCK else "false")
 (ROOT / "index.html").write_text(page, encoding="utf-8")
+
+# 保管庫のページ（以前の講座）。検索サイトに載せない（noindex）
+arch = [c for c in courses if in_archive(c)]
+if arch:
+    ap = (ROOT / "tools/library_template.html").read_text(encoding="utf-8")
+    ap = ap.replace("<head>", '<head>\n<meta name="robots" content="noindex,nofollow">', 1)
+    ap = ap.replace("<title>てらこ図書館", "<title>てらこ図書館 保管庫", 1)
+    ap = ap.replace("<h1>てらこ図書館</h1>", "<h1>てらこ図書館 保管庫</h1>", 1)
+    ap = ap.replace("講座で使う教材を、いつでも読み返せます", "以前の講座の教材です（今の講座は図書館にあります）", 1)
+    ap = (ap.replace("{{COURSES}}", section(1, ARCHIVE, "".join(course_html(c) for c in arch), len(arch)))
+            .replace("{{GATE}}", "").replace("{{LINKS}}", "").replace("{{LOCK_SCRIPT}}", "false"))
+    (ROOT / "archive.html").write_text(ap, encoding="utf-8")
+    print(f"archive.html（保管庫）に 以前の講座 {len(arch)} を置きました")
 print(f"index.html を作り直しました（講座 {len(courses)}・鍵 {'あり' if LOCK else 'なし'}）")
