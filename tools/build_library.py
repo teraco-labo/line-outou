@@ -103,10 +103,9 @@ LOCK_ICON = ('<svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentC
 
 
 def n_slides(cs):
-    """段の見出しの数：「〇講座・スライド〇」（2026-10-27 藤崎さん「そのセクションに置いてあるすべてのスライドの数」
-    →「こんな感じで」とシェルフの「5講座・36ファイル」の形を指定）。"""
-    return f'{len(cs)}講座・スライド{sum(1 for c in cs for ep in c.get("episodes", []) if ep.get("slides"))}'
-
+    """段の見出しの数：その段のスライドの数＝授業のコマ数を「〇講座」で出す（2026-10-27 藤崎さん
+    「講座の数をシンプルに書いてほしいです。スライド1個のことね。1コマのことね」）。"""
+    return f'{sum(1 for c in cs for ep in c.get("episodes", []) if ep.get("slides"))}講座'
 
 
 def section(no, name, inner, count, lock=False):
