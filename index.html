@@ -300,6 +300,8 @@
   .acc>summary:has(.grip){grid-template-columns:1fr auto auto auto;}
   .dragging{opacity:.75;outline:2px dashed var(--accent);outline-offset:2px;}
   body.drg{user-select:none;-webkit-user-select:none;cursor:grabbing;}
+  .tch{display:block;width:max-content;margin:10px auto 0;font-size:11px;opacity:.55;}
+  .tch[hidden]{display:none;}
   .edit-note{position:sticky;top:0;z-index:5;background:var(--accent);color:#fff;font-size:13px;text-align:center;padding:8px 12px;border-radius:0 0 10px 10px;margin:0 0 12px;}
   .ord-toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#222;color:#fff;border-radius:10px;padding:10px 16px;font-size:14px;z-index:9;}
   .prep{color:var(--sub);font-size:14px;text-align:center;padding:18px 8px;border:1px dashed var(--line);border-radius:12px;}
@@ -347,6 +349,7 @@
 
   <footer>
     <a href="https://teraco-labo.com/" target="_blank" rel="noopener">TERACO.LABO</a>
+    <a href="#" id="tch" class="tch" hidden>先生用</a>
   </footer>
 </div>
 <script>
@@ -404,26 +407,33 @@ if (true) {
 <script>
 // 並び替え（2026-10-27 藤崎さん「図書館も同じようにドラッグで並び替えできるようにして」）
 // 並びは Teraco Shelf と同じ倉庫の order.json。誰でも読めるので、開いたときにこの並びで出す。
-// つまみ（点々）は Teraco Shelf の「図書館を並び替える」から一度開いた端末（藤崎さんの Mac・スマホ）にだけ出す。
-// 2026-10-27 藤崎さん「図書館をふつうに開いたときもドラッグで並び替えたい」→ 書き込みの合図をその端末に覚えさせ、
-// 以後はふつうに開いても点々が出る。合図はシェルフが作る期限つき（7日）。切れたらシェルフから開き直すと延びる。生徒さんの端末には合図が無いので出ない
+// つまみ（点々）は藤崎さんの端末にだけ出す。2026-10-27 藤崎さん「普通にてらこ図書館を開いて、図書館の上で並び替えしたい」
+// → いちばん下の「先生用」を一度押して講師用の番号を入れると、その端末が番号を覚え、以後ふつうに開くだけで点々が出る。
+// 書き込みの合図（R2 の期限つきURL）は Mac が毎朝 library/editor.lock に番号で暗号化して置き直す（~/ai-office/bin/library_editor_key.py）。
+// 番号はこの端末の中だけで使い、どこにも送らない。生徒さんの端末には番号が無いので出ない。シェルフの「図書館を並び替える」（#put=）でも開ける
 (function () {
   const URL_ = 'https://pub-628eef6d4c264ae1a6404d8f32933d8e.r2.dev/library/order.json'; if (!URL_) return;
-  const wrap = document.querySelector('.wrap');
-  let order = {}, PUT = null;
+  const wrap = document.querySelector('.wrap'), tch = document.getElementById('tch');
+  let order = {}, PUT = null, edit = false;
+  const alive = u => { try {
+    const p = new URL(u).searchParams, d = p.get('X-Amz-Date'), sec = +p.get('X-Amz-Expires');
+    if (!d || !sec) return true;
+    return Date.now() < Date.UTC(+d.slice(0, 4), +d.slice(4, 6) - 1, +d.slice(6, 8), +d.slice(9, 11), +d.slice(11, 13), +d.slice(13, 15)) + sec * 1000 - 60000;
+  } catch (_) { return false; } };
   const m = location.hash.match(/put=([^&]+)/);
   if (m) { try { localStorage.setItem('lib-put', decodeURIComponent(m[1])); } catch (_) {} history.replaceState(null, '', location.pathname + location.search); }
-  try { PUT = localStorage.getItem('lib-put') || sessionStorage.getItem('lib-put'); } catch (_) {}
-  // 合図の期限（X-Amz-Date＋X-Amz-Expires）を見て、切れていれば点々は出さず、ひとことだけ出す
-  let expired = false;
-  if (PUT) try {
-    const p = new URL(PUT).searchParams, d = p.get('X-Amz-Date'), sec = +p.get('X-Amz-Expires');
-    if (d && sec) {
-      const t = Date.UTC(+d.slice(0, 4), +d.slice(4, 6) - 1, +d.slice(6, 8), +d.slice(9, 11), +d.slice(11, 13), +d.slice(13, 15));
-      if (Date.now() > t + sec * 1000 - 60000) { expired = true; PUT = null; }
-    }
-  } catch (_) {}
-  const edit = !!PUT;
+  let shelfPut = null; try { shelfPut = localStorage.getItem('lib-put'); } catch (_) {}
+  if (shelfPut && !alive(shelfPut)) shelfPut = null;
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  async function openKey(pass) {   // 番号で editor.lock を開いて、書き込みの合図を取り出す
+    const box = await (await fetch(URL_.replace(/order\.json$/, 'editor.lock') + '?t=' + Date.now(), { cache: 'no-store' })).json();
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64(box.salt), iterations: box.iter, hash: 'SHA-256' },
+      base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    const put = JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(box.iv) }, key, b64(box.data)))).put;
+    if (!put || !alive(put)) throw 0;
+    return put;
+  }
   const boxes = () => [[wrap, 'top']].concat([...document.querySelectorAll('.grp[data-g]')].map(g => [g, g.dataset.g]));
   const items = p => [...p.children].filter(c => c.tagName === 'DETAILS' && c.dataset.k);
   const keyOf = p => p === wrap ? 'top' : p.dataset.g;
@@ -445,9 +455,21 @@ if (true) {
       const chev = sm.querySelector('.group-chev,.chev'); sm.insertBefore(g, chev || null);
     }));
   }
-  // 帯は「図書館を並び替える」から開いたときだけ（ふつうに開いたときは点々だけ。教室で映しても目立たない）
-  if (edit && /[?&]edit=1/.test(location.search)) { const n = document.createElement('div'); n.className = 'edit-note'; n.textContent = '並び替えモード：右の点々をドラッグすると並びが変わります（この端末では、次からふつうに開いても点々が出ます。生徒さんには出ません）'; wrap.prepend(n); }
-  if (expired) setTimeout(() => toast('並び替えの期限が切れました。シェルフの「図書館を並び替える」から一度開いてください'), 800);
+  function enable(p) {
+    PUT = p; edit = true; apply(); if (tch) tch.hidden = true;
+    // 帯は「図書館を並び替える」から開いたときだけ（ふつうに開いたときは点々だけ。教室で映しても目立たない）
+    if (/[?&]edit=1/.test(location.search) && !document.querySelector('.edit-note')) { const n = document.createElement('div'); n.className = 'edit-note'; n.textContent = '並び替えモード：右の点々をドラッグすると並びが変わります（生徒さんには出ません）'; wrap.prepend(n); }
+  }
+  if (tch) {
+    tch.hidden = false;
+    tch.addEventListener('click', async ev => {
+      ev.preventDefault();
+      const pass = (prompt('講師用の番号を入れてください（この端末で並び替えができるようになります）') || '').trim();
+      if (!pass) return;
+      try { enable(await openKey(pass)); try { localStorage.setItem('lib-tpass', pass); } catch (_) {} toast('並び替えができます。右の点々をドラッグしてください'); }
+      catch (_) { toast('番号がちがうか、ネットにつながっていません'); }
+    });
+  }
   document.addEventListener('click', ev => { if (ev.target.classList && ev.target.classList.contains('grip')) { ev.preventDefault(); ev.stopPropagation(); } }, true);
   document.addEventListener('pointerdown', ev => {
     const g = ev.target.closest && ev.target.closest('.grip'); if (!g) return;
@@ -468,13 +490,18 @@ if (true) {
       if (!moved) return;
       order[keyOf(par)] = items(par).map(c => c.dataset.k); renumber();
       fetch(PUT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ order }) })
-        .then(r => toast(r.ok ? '並びを保存しました' : '保存できませんでした（シェルフの「図書館を並び替える」から一度開き直してください）'))
+        .then(r => toast(r.ok ? '並びを保存しました' : '保存できませんでした（少し時間をおいて、開き直してください）'))
         .catch(() => toast('保存できませんでした（ネットの接続を確かめてください）'));
     };
     document.addEventListener('pointermove', mv); document.addEventListener('pointerup', up); document.addEventListener('pointercancel', up);
   });
   const lk = document.getElementById('locked'); if (lk) new MutationObserver(apply).observe(lk, { childList: true });
-  fetch(URL_ + '?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(j => { order = (j && j.order) || {}; apply(); }).catch(() => apply());
+  fetch(URL_ + '?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(j => { order = (j && j.order) || {}; apply(); }).catch(() => apply())
+    .then(async () => {
+      if (shelfPut) return enable(shelfPut);
+      let pass = null; try { pass = localStorage.getItem('lib-tpass'); } catch (_) {}
+      if (pass) try { enable(await openKey(pass)); } catch (_) {}
+    });
 })();
 </script>
 <script src="https://teraco-labo.github.io/line-outou/applink.js" defer></script>
