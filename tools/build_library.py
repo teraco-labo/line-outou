@@ -153,8 +153,13 @@ for sec in SECTIONS:
         if sec in DATA.get("preparing", []):   # 中身がまだ無い段は「準備中」で出す（2026-10-27）
             parts.append(section(len(parts) + 1, sec, '<p class="prep">準備中です</p>', "準備中"))
         continue
-    # 教室の段は対象の小見出しを付けない（教室の講座だけなので）
-    inner = section_inner(cs, by_audience=sec != LOCKED, sec=sec)
+    # 教室の段は対象の小見出しを付けない（教室の講座だけなので）。
+    # 講座に sub（例：「教室のAI講座入門」）があれば、その小見出しの下にまとめる
+    # （2026-10-28 藤崎さん「はじめてのAIは、教室のAI講座入門っていうセクション作って入れて。図書館もそういうふうにして」。
+    #  段を別にすると鍵の外に出てしまうので、鍵の段の中の小見出しにした）
+    subs = list(dict.fromkeys(c["sub"] for c in cs if c.get("sub")))
+    inner = section_inner([c for c in cs if not c.get("sub")], by_audience=sec != LOCKED, sec=sec) if any(not c.get("sub") for c in cs) else ""
+    inner += "".join(f'<p class="sub-h">{e(sb)}</p>' + grp(f"{sec}|{sb}", [c for c in cs if c.get("sub") == sb]) for sb in subs)
     if locked:
         if old:
             inner += f'<p class="sub-h">{ARCHIVE}</p>' + grp(f"{sec}|{ARCHIVE}", old)
