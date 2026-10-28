@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="data:,">
-<title>ラジオを聴く | てらこ先生</title>
-<meta name="description" content="てらこ先生の「世界一わかりやすい」シリーズ。スマホニュースとAIニュース">
+<title>ラジオと動画 | てらこ先生</title>
+<meta name="description" content="てらこ先生のラジオ（スマホニュース・AIニュース）と動画（YouTube）">
 <style>
   :root{
     --bg:#faf8f4; --card:#ffffff; --ink:#2b2823; --sub:#8d867b; --line:#e7e0d4;
@@ -38,6 +38,11 @@
   .sumaho a.listen{background:var(--sumaho-btn);} .ai a.listen{background:var(--ai-btn);}
   a.listen:active{transform:translateY(2px);}
   a.spotify{display:block;text-align:center;font-size:15px;color:var(--sub);margin-top:10px;}
+  .sec{font-size:15px;font-weight:700;color:var(--sub);letter-spacing:.1em;margin:30px 4px -8px;}
+  .show.video .top{background:#E53935;}
+  .show .yt{width:72px;height:72px;border-radius:10px;flex:none;background:#fff;display:flex;align-items:center;justify-content:center;}
+  .show .yt i{width:0;height:0;border-left:26px solid #E53935;border-top:16px solid transparent;border-bottom:16px solid transparent;margin-left:6px;}
+  .video a.listen{background:#E53935;}
   .foot{margin-top:34px;text-align:center;font-size:14px;}
   .foot a{color:var(--sub);}
 </style>
@@ -46,9 +51,10 @@
 <div class="wrap">
   <header>
     <div class="brand">TERACO</div>
-    <h1>ラジオを聴く</h1>
+    <h1>ラジオと動画</h1>
   </header>
 
+  <p class="sec">ラジオ</p>
   <section class="show sumaho">
     <div class="top">
       <img src="https://teraco-labo.github.io/teraco-sumaho-news/cover.jpg" alt="">
@@ -72,6 +78,18 @@
       <div class="date" id="a-date"></div>
       <a class="listen one" href="https://teraco-labo.github.io/ai-news-digest/">聴く・読む</a>
       <a class="spotify" href="https://open.spotify.com/show/0kuCanHapeNX2ALHYvzbf3">Spotify でフォロー</a>
+    </div>
+  </section>
+
+  <!-- 2026-10-28 藤崎さん：リッチメニューの「ラジオと動画」から来る。ラジオはスマホニュースが先 -->
+  <p class="sec">動画</p>
+  <section class="show video">
+    <div class="top">
+      <div class="yt"><i></i></div>
+      <div><div class="name">YouTube<b>てらこ先生</b></div><div class="when">スマホ・パソコン・AIの動画</div></div>
+    </div>
+    <div class="body">
+      <a class="listen one" href="https://www.youtube.com/@teracosensei">YouTube で見る</a>
     </div>
   </section>
 
