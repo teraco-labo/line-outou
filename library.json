@@ -495,6 +495,15 @@
               "label": "第5回「話しかけるだけでアプリができる」（4分）"
             }
           ]
+        },
+        {
+          "num": "06",
+          "title": "AIと一緒に、人前で使えるスライドをつくる",
+          "sub": "Gemini に相談して構成案を作り、Canvas でスライドにして、Google スライドで絵を入れて仕上げる",
+          "slides": "materials/otonano-ai-course-session06-slides.pdf",
+          "new": true,
+          "text": "materials/otonano-ai-course-session06-text.pdf",
+          "videos": []
         }
       ],
       "tools": [
