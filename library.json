@@ -635,7 +635,54 @@
           "slides": "materials/sukkiri-sumaho-session01-slides.pdf",
           "new": true,
           "text": "materials/sukkiri-sumaho-session01-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/kX4zREI_ALU",
+              "label": "第1回「アプリを、片付けよう」（4分）"
+            }
+          ]
+        },
+        {
+          "num": "02",
+          "title": "写真と動画を、片付けよう",
+          "sub": "いらない動画を見つけて消す・ゴミ箱を空にする・アルバムに分ける・スクリーンショットの整理",
+          "slides": "materials/sukkiri-sumaho-session02-slides.pdf",
+          "new": true,
+          "text": "materials/sukkiri-sumaho-session02-text.pdf",
+          "videos": [
+            {
+              "url": "https://youtu.be/tf9h2sUHxVc",
+              "label": "第2回「写真と動画を、片付けよう」（4分）"
+            }
+          ]
+        },
+        {
+          "num": "03",
+          "title": "通知と設定を、片付けよう",
+          "sub": "うるさい通知をアプリごとに止める・文字の大きさ・画面の明るさ・電池を長持ちさせる",
+          "slides": "materials/sukkiri-sumaho-session03-slides.pdf",
+          "new": true,
+          "text": "materials/sukkiri-sumaho-session03-text.pdf",
+          "videos": [
+            {
+              "url": "https://youtu.be/eYn5cBMpVts",
+              "label": "第3回「通知と設定を、片付けよう」（3分）"
+            }
+          ]
+        },
+        {
+          "num": "04",
+          "title": "もしもに、備えよう",
+          "sub": "写真と連絡先のバックアップ・LINEのトークを守る・パスワードの控え方・買い替えの準備",
+          "slides": "materials/sukkiri-sumaho-session04-slides.pdf",
+          "new": true,
+          "text": "materials/sukkiri-sumaho-session04-text.pdf",
+          "videos": [
+            {
+              "url": "https://youtu.be/KJbFd0HT8K4",
+              "label": "第4回「もしもに、備えよう」（3分）"
+            }
+          ]
         }
       ],
       "tools": []
