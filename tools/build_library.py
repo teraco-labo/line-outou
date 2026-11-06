@@ -14,6 +14,7 @@
   鍵の方式は講師用（teacher/）と同じ PBKDF2 + AES-GCM。暗号化は tools/lock.mjs
 """
 import html, json, os, re, subprocess, sys, tempfile
+from urllib.parse import quote
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -28,6 +29,14 @@ def ext(url):
     return ' target="_blank" rel="noopener"'
 
 
+def mat(url, title):
+    """図書館の PDF（materials/〇〇.pdf）は、上に「てらこ図書館に戻る」が付く m/ で同じタブに開く（2026-11-06 富山さんの声：
+    スマホで PDF を開くと戻り道が無く、戻るで全部戻る・閉じてしまう）。それ以外（Drive・YouTube など）は今までどおり別タブ。"""
+    if url.startswith("materials/") and url.endswith(".pdf"):
+        return f'href="m/?f={quote(url)}&amp;t={quote(title)}"'
+    return f'href="{e(url)}"{ext(url)}'
+
+
 def course_html(c):
     eps = c.get("episodes", [])
     n_new = sum(1 for ep in eps if ep.get("new"))
@@ -37,9 +46,9 @@ def course_html(c):
         btns = []
         if ep.get("slides"):
             # 2026-10-27 藤崎さん「スライドは確認用（ページ数が多い）、復習テキストに印刷用で書いちゃおう」
-            btns.append(f'<a class="btn main" href="{e(ep["slides"])}"{ext(ep["slides"])}>スライド<small>確認用（見るだけ）</small></a>')
+            btns.append(f'<a class="btn main" {mat(ep["slides"], f'{c["title"]} 第{int(ep["num"]) if ep["num"].isdigit() else ep["num"]}回 スライド')}>スライド<small>確認用（見るだけ）</small></a>')
         if ep.get("text"):
-            btns.append(f'<a class="btn" href="{e(ep["text"])}"{ext(ep["text"])}>復習テキスト<small>印刷用</small></a>')
+            btns.append(f'<a class="btn" {mat(ep["text"], f'{c["title"]} 第{int(ep["num"]) if ep["num"].isdigit() else ep["num"]}回 復習テキスト')}>復習テキスト<small>印刷用</small></a>')
         for i, v in enumerate(ep.get("videos", [])):
             label = "動画" if i == 0 else f"動画{i + 1}"
             btns.append(f'<a class="btn" href="{e(v["url"])}"{ext(v["url"])} title="{e(v.get("label"))}">{label}</a>')
