@@ -65,6 +65,9 @@
     }
   };
   var key = (location.search.match(/[?&]app=([a-z]+)/) || [])[1] || 'youtube';
+  // てらこ先生AI は、ログインなしで LINE の中で答える版へ（2026-11-13 藤崎さん「リッチメニューから開けるように」）。
+  // Gem の設定（上の ai）は戻すとき用に残してある。戻すときはこの1行を消す
+  if (key === 'ai') { location.replace('https://teraco-labo.com/sensei-ai/'); return; }
   var a = APPS[key] || APPS.youtube;
   var ua = navigator.userAgent;
   var isAndroid = /Android/i.test(ua), isIOS = /iPhone|iPad|iPod/i.test(ua);
