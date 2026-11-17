@@ -503,7 +503,12 @@
           "slides": "materials/otonano-ai-course-session06-slides.pdf",
           "new": true,
           "text": "materials/otonano-ai-course-session06-text.pdf",
-          "videos": []
+          "videos": [
+            {
+              "url": "https://youtu.be/kAKvgKK4_pk",
+              "label": "第6回「AIと一緒に、人前で使えるスライドをつくる」（4分）"
+            }
+          ]
         }
       ],
       "tools": [
