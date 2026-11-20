@@ -126,7 +126,7 @@ def section(no, name, inner, count, lock=False):
             f'<div class="group-body">{inner}</div></details>')
 
 
-courses = DATA["courses"]
+courses = [c for c in DATA["courses"] if not c.get("teacher_only")]   # teacher_only の講座は講師用ページ（teacher/）だけに置く（2026-11-20 藤崎さん「体験会は先生用の方に入れといて」）
 # 2026-10-27 藤崎さん「年代別（人別）になっているけど、講座別に変更しましょう」
 # 段は講座の種類で分け、年齢・対象（audience）は段の中の小見出しにする
 SECTIONS = ["スマホ講座", "パソコン講座", "AI講座", "スマホ教室てらこ"]   # 2026-10-27 公民館スマホ講座→スマホ講座
@@ -153,12 +153,12 @@ def in_archive(c):
     return bool(c.get("archived"))
 parts, gate = [], ""
 # 2026-10-27 藤崎さん「以前の講座というセクションも一覧とは別に下の方にあるといい」
-# → 以前の講座はリンク集のさらに下に別の段で出す。教室の以前の講座は、鍵の段の中の「以前の講座」の小見出しに置く
+# → 以前の講座はリンク集のさらに下に別の段で出す（教室の以前の講座も 2026-11-20 からここ。鍵の段の中には置かない）
 for sec in SECTIONS:
     cs = [c for c in courses if c["section"] == sec and not in_archive(c)]
     old = [c for c in courses if c["section"] == sec and in_archive(c)]
     locked = LOCK and sec == LOCKED
-    if not cs and not (locked and old):
+    if not cs:
         if sec in DATA.get("preparing", []):   # 中身がまだ無い段は「準備中」で出す（2026-10-27）
             parts.append(section(len(parts) + 1, sec, '<p class="prep">準備中です</p>', "準備中"))
         continue
@@ -170,21 +170,20 @@ for sec in SECTIONS:
     inner = section_inner([c for c in cs if not c.get("sub")], by_audience=sec != LOCKED, sec=sec) if any(not c.get("sub") for c in cs) else ""
     inner += "".join(f'<p class="sub-h">{e(sb)}</p>' + grp(f"{sec}|{sb}", [c for c in cs if c.get("sub") == sb]) for sb in subs)
     if locked:
-        if old:
-            inner += f'<p class="sub-h">{ARCHIVE}</p>' + grp(f"{sec}|{ARCHIVE}", old)
         (ROOT / "students.lock").write_text(lock_text(inner))
         (ROOT / "students-check.lock").write_text(lock_text("teraco-students-ok"))
         inner = ('<form class="gate" id="gate"><div class="gate-t">番号を入れると開きます</div>'
                  '<div class="row"><input id="pw" type="password" inputmode="numeric" autocomplete="current-password" aria-label="番号">'
                  '<button type="submit" id="go">開く</button></div><div class="msg" id="msg"></div></form><div id="locked"></div>')
-    parts.append(section(len(parts) + 1, sec, inner, n_slides(cs + (old if locked else [])), lock=locked))
+    parts.append(section(len(parts) + 1, sec, inner, n_slides(cs), lock=locked))
 open_part = "".join(parts)
 n_links = len(parts) + 1
 
 # チャンネル登録のバナーは置かない（2026-10-27 藤崎さん「赤い YouTube のバナーはいらない。露骨すぎる。限定公開で見に来た人がいいなと思って登録してくれれば十分」）。動画の説明欄の一言だけにする
 CHANNEL = ""
 page = (ROOT / "tools/library_template.html").read_text(encoding="utf-8")
-old_public = [c for c in courses if in_archive(c) and not (LOCK and c["section"] == LOCKED)]
+# 教室（鍵の段）の以前の講座も、下の「以前の講座」の段にまとめる（2026-11-20 藤崎さん「以前の講座ってやつは、以前の講座に入れといていいよ」）
+old_public = [c for c in courses if in_archive(c)]
 old_part = ""
 if old_public:
     oi = "".join(f'<p class="sub-h">{e(sec)}</p>' + grp(f"{ARCHIVE}|{sec}", [c for c in old_public if c["section"] == sec])

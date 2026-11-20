@@ -37,7 +37,8 @@
           ]
         }
       ],
-      "tools": []
+      "tools": [],
+      "teacher_only": true
     },
     {
       "title": "「やさしい」AI講座",
@@ -826,5 +827,6 @@
     "パソコン講座"
   ],
   "order_url": "https://pub-628eef6d4c264ae1a6404d8f32933d8e.r2.dev/library/order.json",
-  "_note_order": "order_url は図書館の並び（段・講座の順番）の置き場所（Teraco Shelf と同じ倉庫・誰でも読める）。並び替えは Teraco Shelf の「図書館を並び替える」から開いたときだけできる（2026-10-27 藤崎さん「図書館も同じようにドラッグで並び替えできるようにして」）"
+  "_note_order": "order_url は図書館の並び（段・講座の順番）の置き場所（Teraco Shelf と同じ倉庫・誰でも読める）。並び替えは Teraco Shelf の「図書館を並び替える」から開いたときだけできる（2026-10-27 藤崎さん「図書館も同じようにドラッグで並び替えできるようにして」）",
+  "_note_teacher_only": "teacher_only が true の講座は図書館（生徒さん向け）に出さず、講師用ページ teacher/ の LECTURES にだけ置く（2026-11-20 藤崎さん「体験会は先生用の方に入れといてほしい。そっちで見るわ」）。教材は消さない"
 }
