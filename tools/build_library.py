@@ -133,6 +133,7 @@ SECTIONS = ["スマホ講座", "パソコン講座", "AI講座", "スマホ教�
 LOCKED = "スマホ教室てらこ"   # 鍵つきの段（番号は教室の皆さんに口頭で伝える）
 AUD_LABEL = {"はじめての方へ": "はじめての方", "一般の方へ": "大人の方", "学生の方へ": "学生の方", "教室の生徒さんへ": "教室の生徒さん"}
 ARCHIVE = "以前の講座"
+KINDS = ["スマホ", "パソコン", "AI"]   # 教室の段の中の分け方の順番（library.json の kind）
 
 
 def grp(key, cs):
@@ -167,7 +168,17 @@ for sec in SECTIONS:
     # （2026-10-28 藤崎さん「はじめてのAIは、教室のAI講座入門っていうセクション作って入れて。図書館もそういうふうにして」。
     #  段を別にすると鍵の外に出てしまうので、鍵の段の中の小見出しにした）
     subs = list(dict.fromkeys(c["sub"] for c in cs if c.get("sub")))
-    inner = section_inner([c for c in cs if not c.get("sub")], by_audience=sec != LOCKED, sec=sec) if any(not c.get("sub") for c in cs) else ""
+    if sec == LOCKED and any(c.get("kind") for c in cs):
+        # 教室の段は「スマホ／パソコン／AI」の順に、はじめから開いた小さな段で分ける（2026-11-20 藤崎さん「わかりにくいから」）。sub より kind を優先
+        ks = [k for k in KINDS if any(c.get("kind") == k for c in cs)]
+        inner = "".join(f'<details class="cls-acc" open><summary><span class="cls-name">{e(k)}</span><span class="cls-chev">▶</span></summary>'
+                        f'<div class="cls-body">{grp(f"{sec}|{k}", [c for c in cs if c.get("kind") == k])}</div></details>' for k in ks)
+        rest = [c for c in cs if c.get("kind") not in KINDS]
+        if rest:
+            inner += grp(f"{sec}|そのほか", rest)
+        subs = []
+    else:
+        inner = section_inner([c for c in cs if not c.get("sub")], by_audience=sec != LOCKED, sec=sec) if any(not c.get("sub") for c in cs) else ""
     inner += "".join(f'<p class="sub-h">{e(sb)}</p>' + grp(f"{sec}|{sb}", [c for c in cs if c.get("sub") == sb]) for sb in subs)
     if locked:
         (ROOT / "students.lock").write_text(lock_text(inner))

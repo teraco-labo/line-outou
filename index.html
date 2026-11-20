@@ -307,6 +307,14 @@
   .prep{color:var(--sub);font-size:14px;text-align:center;padding:18px 8px;border:1px dashed var(--line);border-radius:12px;}
   .sub-h{font-size:12px;font-weight:700;color:var(--sub);letter-spacing:.12em;margin:18px 4px 8px;}
   .sub-h:first-child{margin-top:4px;}
+  /* 教室の段の中の「スマホ／パソコン／AI」（2026-11-20）。はじめから開いている。見出しを押すと閉じる */
+  .cls-acc{margin:6px 0 14px;}
+  .cls-acc>summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 6px 8px;border-bottom:2px solid var(--accent-soft);}
+  .cls-acc>summary::-webkit-details-marker{display:none;}
+  .cls-acc .cls-name{font-size:16px;font-weight:700;color:var(--accent);letter-spacing:.08em;flex:1;}
+  .cls-acc .cls-chev{font-size:11px;color:var(--sub);transition:transform .2s;}
+  .cls-acc[open]>summary .cls-chev{transform:rotate(90deg);}
+  .cls-acc .cls-body{padding-top:8px;}
   .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:2px 16px;margin-bottom:6px;}
   .tpl{padding:12px 0;border-bottom:1px solid var(--hairline);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;}
   .tpl:last-child{border-bottom:none;}
