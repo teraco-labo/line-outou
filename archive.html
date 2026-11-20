@@ -362,8 +362,16 @@
   </footer>
 </div>
 <script>
-// 「スマホ教室てらこ」の段の鍵（lock_students が true のときだけ働く）。番号はこのページの中だけで使い、どこにも送らない・残さない
+// 「スマホ教室てらこ」の段の鍵（lock_students が true のときだけ働く）。番号はこの端末の中だけで使い、どこにも送らない
+// 2026-11-20 藤崎さん（生徒さんの声）「一回ロックで入ったら、そう簡単に出ないように」
+// → 一度開けた端末は番号を覚えておき、戻るボタン・開き直しでも自動で開く。開いていた段と見ていた位置も戻す
 if (false) {
+  const SK = 'lib-spass', OK = 'lib-open', YK = 'lib-y';
+  const ls = { get: k => { try { return localStorage.getItem(k); } catch (_) { return null; } },
+               set: (k, v) => { try { localStorage.setItem(k, v); } catch (_) {} },
+               del: k => { try { localStorage.removeItem(k); } catch (_) {} } };
+  const ss = { get: k => { try { return sessionStorage.getItem(k); } catch (_) { return null; } },
+               set: (k, v) => { try { sessionStorage.setItem(k, v); } catch (_) {} } };
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
   async function unlock(file, pass) {
     const box = await (await fetch(file, { cache: 'no-store' })).json();
@@ -372,17 +380,40 @@ if (false) {
       base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
     return new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(box.iv) }, key, b64(box.data)));
   }
-  document.getElementById('gate').addEventListener('submit', async ev => {
+  const gate = document.getElementById('gate');
+  const keyOf = d => d.dataset.k || (d.querySelector(':scope>summary') || {}).textContent || '';
+  // 開いている段を覚える（このタブの間だけ）
+  function saveOpen() {
+    ss.set(OK, JSON.stringify([...document.querySelectorAll('details')].filter(d => d.open).map(keyOf)));
+  }
+  document.addEventListener('toggle', saveOpen, true);
+  addEventListener('pagehide', () => { ss.set(YK, String(scrollY)); saveOpen(); });
+  function restore() {
+    let open = null; try { open = JSON.parse(ss.get(OK) || 'null'); } catch (_) {}
+    if (open) document.querySelectorAll('details').forEach(d => { if (open.includes(keyOf(d))) d.open = true; });
+    const y = +ss.get(YK); if (y) { scrollTo(0, y); setTimeout(() => scrollTo(0, y), 120); }
+  }
+  async function openWith(pass) {
+    if (await unlock('students-check.lock', pass) !== 'teraco-students-ok') throw 0;
+    document.getElementById('locked').innerHTML = await unlock('students.lock', pass);
+    gate.hidden = true;
+    ls.set(SK, pass);
+  }
+  gate.addEventListener('submit', async ev => {
     ev.preventDefault();
     const pass = document.getElementById('pw').value.trim(), msg = document.getElementById('msg');
     if (!pass) { msg.textContent = '番号を入れてください'; return; }
     msg.textContent = 'たしかめています…';
-    try {
-      if (await unlock('students-check.lock', pass) !== 'teraco-students-ok') throw 0;
-      document.getElementById('locked').innerHTML = await unlock('students.lock', pass);
-      document.getElementById('gate').hidden = true;
-    } catch (_) { msg.textContent = '番号がちがいます'; }
+    try { await openWith(pass); saveOpen(); } catch (_) { msg.textContent = '番号がちがいます'; }
   });
+  // 前に開けた端末は、番号を入れなくても開く（番号が変わっていたら、もう一度入れてもらう）
+  const saved = ls.get(SK);
+  // 中身を入れ終えてから見ていた位置に戻すので、ブラウザの自動の位置戻しは止める
+  try { history.scrollRestoration = 'manual'; } catch (_) {}
+  if (saved) {
+    gate.hidden = true;
+    openWith(saved).catch(() => { ls.del(SK); gate.hidden = false; }).finally(restore);
+  } else restore();
 }
 </script>
 <script>
