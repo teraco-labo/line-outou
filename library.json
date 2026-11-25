@@ -716,6 +716,29 @@
       "kind": "スマホ"
     },
     {
+      "title": "暮らしで使いこなす",
+      "section": "スマホ教室てらこ",
+      "audience": "教室の生徒さんへ",
+      "episodes": [
+        {
+          "num": "01",
+          "title": "LINEを、もっと便利に",
+          "sub": "大事なトークをピン留め・リプライで返事・リアクション・写真はアルバムに残す・位置情報で待ち合わせ場所を送る",
+          "slides": "materials/kurashi-tsukaikonasu-session01-slides.pdf",
+          "new": true,
+          "text": "materials/kurashi-tsukaikonasu-session01-text.pdf",
+          "videos": [
+            {
+              "url": "https://youtu.be/TLK4l35Yqzs",
+              "label": "第1回「LINEを、もっと便利に」（4分）"
+            }
+          ]
+        }
+      ],
+      "tools": [],
+      "kind": "スマホ"
+    },
+    {
       "title": "パソコンAI実用講座",
       "section": "スマホ教室てらこ",
       "audience": "教室の生徒さんへ",
